@@ -102,6 +102,7 @@ mapping_table = {
     'search_users': {
         'path': '/users.xml?query={{query}}&amp;role={{role}}&amp;page={{page}}',
         'method': 'GET',
+        'status': 200,
     },
     'show_user': {
         'path': '/users/{{user_id}}.xml',
