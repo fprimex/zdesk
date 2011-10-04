@@ -27,7 +27,7 @@ import re
 import urllib
 import urllib2
 import httplib2
-import dict2xml
+import simplejson as json
 
 from endpoints import mapping_table
 
@@ -52,14 +52,6 @@ class AuthenticationError(ZendeskError):
         return repr(self.msg)
 
 
-class XMLParseError(Exception):
-    def __init__(self, msg):
-        self.msg = msg
-
-    def __str__(self):
-        return repr(self.msg)
-
-
 class Zendesk(object):
     """ Python API Wrapper for Zendesk"""
 
@@ -77,7 +69,7 @@ class Zendesk(object):
         client_args - Pass arguments to http client in dict form.
             {'cache': False, 'timeout': 2}
         """
-        self.xml_data = None
+        self.post_data = None
 
         # Set attributes necessary for API
         self.zendesk_url = zendesk_url
@@ -89,7 +81,7 @@ class Zendesk(object):
         if self.headers is None:
             self.headers = {
                 'User-agent': 'Zendesk Python Library v%s' % __version__,
-                'Content-Type': 'application/xml'
+                'Content-Type': 'application/json'
             }
 
         # Set http client and authentication
@@ -107,7 +99,7 @@ class Zendesk(object):
             use an elegant Python technique to construct method execution on-
             demand. We simply provide a mapping table between Zendesk API calls
             and function names (with necessary parameters to replace
-            embedded keywords on GET or xml data on POST/PUT requests).
+            embedded keywords on GET or json data on POST/PUT requests).
 
             __getattr__() is used as callback method implemented so that
             when an object tries to call a method which is not defined here,
@@ -124,8 +116,8 @@ class Zendesk(object):
             method = api_map['method']
             path = api_map['path']
             status = api_map['status']
-            # Body can be passed from xml_data or in args
-            body = kwargs.get('xml_data') or self.xml_data
+            # Body can be passed from post_data or in args
+            body = kwargs.get('post_data') or self.post_data
             # Substitute mustache placeholders with data from keywords
             url = re.sub(
                 '\{\{(?P<m>[a-zA-Z_]+)\}\}',
@@ -138,11 +130,11 @@ class Zendesk(object):
                     self.client.request(
                         url,
                         method,
-                        body=body,
+                        body=json.dumps(body),
                         headers=self.headers
                     )
             # Use a response handler to determine success/fail
-            return self._response_handler(response, content, status)
+            return self._response_handler(response, json.loads(content), status)
 
         # Missing method is also not defined in our mapping table
         if api_call not in mapping_table:
@@ -169,16 +161,3 @@ class Zendesk(object):
         if response_status != status:
             raise ZendeskError(content, response_status)
         return response.get('location') or content or 'Success'
-
-    @staticmethod
-    def dict2xml(data_dict, pretty_print=True):
-        """ dict2xml converts a Python dictionary into an XML string
-            See examples for more complex formatting.
-        """
-        try:
-            return dict2xml.tostring(data_dict, pretty_print)
-        except Exception, error:
-            # Let's bubble everything up as an XML parsing error
-            raise XMLParseError(
-                'Dictionary -> XML Conversion Failed: "%s"' % error
-            )
