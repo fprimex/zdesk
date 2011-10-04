@@ -45,26 +45,26 @@ class ZendeskError(Exception):
 
 
 class AuthenticationError(ZendeskError):
-	def __init__(self, msg):
-		self.msg = msg
+    def __init__(self, msg):
+        self.msg = msg
 
-	def __str__(self):
-		return repr(self.msg)
+    def __str__(self):
+        return repr(self.msg)
 
 
 class XMLParseError(Exception):
-	def __init__(self, msg):
-		self.msg = msg
+    def __init__(self, msg):
+        self.msg = msg
 
-	def __str__(self):
-		return repr(self.msg)
+    def __str__(self):
+        return repr(self.msg)
 
 
 class Zendesk(object):
     """ Python API Wrapper for Zendesk"""
 
     def __init__(self, zendesk_url, zendesk_username=None,
-                       zendesk_password=None, headers=None, client_args={}):
+                 zendesk_password=None, headers=None, client_args={}):
         """
         Instantiates an instance of Zendesk. Takes optional parameters for
         HTTP Basic Authentication
@@ -114,7 +114,7 @@ class Zendesk(object):
             it looks to find a relationship in the the mapping table.  The
             table provides the structure of the API call and parameters passed
             in the method will populate missing data.
-            
+
             TODO:
                 Should probably url-encode GET query parameters on replacement
         """
@@ -135,12 +135,12 @@ class Zendesk(object):
             )
             # Make an http request (data replacements are finalized)
             response, content = \
-                self.client.request(
-                    url,
-                    method,
-                    body=body,
-                    headers=self.headers
-                )
+                    self.client.request(
+                        url,
+                        method,
+                        body=body,
+                        headers=self.headers
+                    )
             # Use a response handler to determine success/fail
             return self._response_handler(response, content, status)
 
@@ -182,4 +182,3 @@ class Zendesk(object):
             raise XMLParseError(
                 'Dictionary -> XML Conversion Failed: "%s"' % error
             )
-
