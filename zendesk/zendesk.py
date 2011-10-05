@@ -51,6 +51,13 @@ class AuthenticationError(ZendeskError):
         return repr(self.msg)
 
 
+re_identifier = re.compile(r".*/(?P<identifier>\d+)\.(json|xml)")
+def get_id_from_url(url):
+    match = re_identifier.match(url)
+    if match and match.group('identifier'):
+        return match.group('identifier')
+
+
 class Zendesk(object):
     """ Python API Wrapper for Zendesk"""
 
@@ -91,10 +98,10 @@ class Zendesk(object):
                 self.zendesk_password
             )
 
-    def create_ticket(self, post_data):
-        response = self._create_ticket(post_data=post_data)
+    def create_ticket(self, data):
+        response = self._create_ticket(data=data)
          #API does not return ticket id, returns ticket url
-        return int(re.findall("(\d*)\.json$", response)[0])
+        return int(get_id_from_url(response))
 
     def __getattr__(self, api_call):
         """
@@ -183,4 +190,3 @@ class Zendesk(object):
             return json.loads(content)
         else:
             return responses[response_status]
-
