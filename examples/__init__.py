@@ -2,7 +2,7 @@ import re
 from zendesk import Zendesk
 
 def get_id_from_url(url):
-    match = re.match(r".*/(?P<identifier>\d+)\.xml", url)
+    match = re.match(r".*/(?P<identifier>\d+)\.json", url)
     if match and match.group('identifier'):
         return match.group('identifier')
 
@@ -36,8 +36,7 @@ new_ticket = {
         },
     }
 }
-post_data = Zendesk.dict2xml(new_ticket)
-ticket_url = zendesk.create_ticket(xml_data=post_data)
+ticket_url = zendesk.create_ticket(data=new_ticket)
 ticket_id = get_id_from_url(ticket_url)
 
 # Show
@@ -60,8 +59,7 @@ new_org = {
         'name': 'Starbucks Corp'
     }
 }
-post_data = Zendesk.dict2xml(new_org)
-org_url = zendesk.create_organization(xml_data=post_data)
+org_url = zendesk.create_organization(data=new_org)
 org_id = get_id_from_url(org_url)
 
 # Show
@@ -86,8 +84,7 @@ new_user = {
         'roles': 4,
     }
 }
-post_data = Zendesk.dict2xml(new_user)
-user_url = zendesk.create_user(xml_data=post_data)
+user_url = zendesk.create_user(data=new_user)
 user_id = get_id_from_url(user_url)
 
 # Show
@@ -114,8 +111,7 @@ new_group = {
         }
     }
 }
-post_data = Zendesk.dict2xml(new_group)
-group_url = zendesk.create_group(xml_data=post_data)
+group_url = zendesk.create_group(data=new_group)
 group_id = get_id_from_url(group_url)
 
 # Show

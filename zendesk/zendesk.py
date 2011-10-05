@@ -68,7 +68,7 @@ class Zendesk(object):
         client_args - Pass arguments to http client in dict form.
             {'cache': False, 'timeout': 2}
         """
-        self.post_data = None
+        self.data = None
 
         # Set attributes necessary for API
         self.zendesk_url = zendesk_url
@@ -116,8 +116,8 @@ class Zendesk(object):
             path = api_map['path']
             status = api_map['status']
             valid_params = api_map.get('valid_params', ())
-            # Body can be passed from post_data or in args
-            body = kwargs.pop('post_data', None) or self.post_data
+            # Body can be passed from data or in args
+            body = kwargs.pop('data', None) or self.data
             # Substitute mustache placeholders with data from keywords
             url = re.sub(
                 '\{\{(?P<m>[a-zA-Z_]+)\}\}',

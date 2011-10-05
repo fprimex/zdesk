@@ -55,15 +55,14 @@ Example Use
 	        },
 	    }
 	}
-	post_data = Zendesk.dict2xml(new_ticket)
-	ticket_url = zendesk.create_ticket(xml_data=post_data)
+	ticket_url = zendesk.create_ticket(data=new_ticket)
 	ticket_id = get_id_from_url(ticket_url)
 
 	# Show
 	zendesk.show_ticket(ticket_id=ticket_id)
 
 	# Delete
-	zendesk.delete_ticket(ticket_id=ticket_id)           
+	zendesk.delete_ticket(ticket_id=ticket_id)
 
 	# More examples in `examples` folder!
 
