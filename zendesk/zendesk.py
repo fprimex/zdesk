@@ -26,7 +26,7 @@ __version__ = "1.0.0"
 import re
 import httplib2
 import simplejson as json
-
+from httplib import responses
 from endpoints import mapping_table
 
 
@@ -131,9 +131,6 @@ class Zendesk(object):
                         body=json.dumps(body),
                         headers=self.headers
                     )
-            # Deserialize json content if content exist. In some cases Zendesk 
-            # returns ' ' strings.
-            content = json.loads(content) if content.strip() else content
             # Use a response handler to determine success/fail
             return self._response_handler(response, content, status)
 
@@ -161,4 +158,13 @@ class Zendesk(object):
         response_status = int(response.get('status', 0))
         if response_status != status:
             raise ZendeskError(content, response_status)
-        return response.get('location') or content or 'Success'
+        
+        # Deserialize json content if content exist. In some cases Zendesk 
+        # returns ' ' strings. Also return false non strings (0, [], (), {})
+        if response.get('location'):
+            return response.get('location')
+        elif content.strip():
+            return json.loads(content)
+        else:
+            return responses[response_status]
+
