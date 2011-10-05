@@ -112,7 +112,7 @@ mapping_table = {
     'create_user': {
         'path': '/users.json',
         'method': 'POST',
-        'status': 201,
+        'status': 200,
     },
     'update_user': {
         'path': '/users/{{user_id}}.json',
