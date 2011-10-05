@@ -25,6 +25,7 @@ __version__ = "1.0.0"
 
 import re
 import httplib2
+import urllib
 import simplejson as json
 from httplib import responses
 from endpoints import mapping_table
@@ -114,15 +115,25 @@ class Zendesk(object):
             method = api_map['method']
             path = api_map['path']
             status = api_map['status']
+            valid_params = api_map.get('valid_params', ())
             # Body can be passed from post_data or in args
-            body = kwargs.get('post_data') or self.post_data
+            body = kwargs.pop('post_data', None) or self.post_data
             # Substitute mustache placeholders with data from keywords
             url = re.sub(
                 '\{\{(?P<m>[a-zA-Z_]+)\}\}',
                 # Optional pagination parameters will default to blank
-                lambda m: "%s" % kwargs.get(m.group(1), ''),
+                lambda m: "%s" % kwargs.pop(m.group(1), ''),
                 self.zendesk_url + path
             )
+            # Validate remaining kwargs against valid_params and add 
+            # params url encoded to url variable.
+            for kw in kwargs:
+                if kw not in valid_params:
+                    raise TypeError("%s() got an unexpected keyword argument "
+                                    "'%s'" % (api_call, kw))
+            else:
+                url += '?' + urllib.urlencode(kwargs)
+            
             # Make an http request (data replacements are finalized)
             response, content = \
                     self.client.request(

@@ -58,7 +58,8 @@ mapping_table = {
     },
     # Rest API: Tickets
     'list_tickets': {
-        'path': '/rules/{{view_id}}.json?page={{page}}',
+        'path': '/rules/{{view_id}}.json',
+        'valid_params': ('page', ),
         'method': 'GET',
         'status': 200,
     },
@@ -89,18 +90,21 @@ mapping_table = {
     },
     # Rest API: Attachment
     'create_attachment': {
-        'path': '/uploads.json?filename={{filename}}&amp;token={{token}}',
+        'path': '/uploads.json',
+        'valid_params': ('filename', 'tocken'),
         'method': 'POST',
         'status': 201,
     },
     # Rest API: Users
     'list_users': {
-        'path': '/users.json?page={{page}}',
+        'path': '/users.json',
+        'valid_params': ('page', ),
         'method': 'GET',
         'status': 200,
     },
     'search_users': {
-        'path': '/users.json?query={{query}}&amp;role={{role}}&amp;page={{page}}',
+        'path': '/users.json',
+        'valid_params': ('query', 'role', 'page'),
         'method': 'GET',
         'status': 200,
     },
@@ -156,7 +160,8 @@ mapping_table = {
         'status': 200,
     },
     'list_assets': {
-        'path': '/tags/{{tag_id}}.json?for={{asset_type}}&amp;page={{page}}',
+        'path': '/tags/{{tag_id}}.json',
+        'valid_params': ('asset_type', 'page'),
         'method': 'GET',
         'status': 200,
     },
@@ -173,13 +178,15 @@ mapping_table = {
         'status': 200,
     },
     'evaluate_macro': {
-        'path': '/macros/{{macro_id}}/apply.json?ticket_id={{ticket_id}}',
+        'path': '/macros/{{macro_id}}/apply.json',
+        'valid_params': ('ticket_id', ),
         'method': 'POST',
         'status': 201,
     },
     # Rest API: Search
     'search': {
-        'path': '/search.json?query={{query}}&amp;page={{page}}',
+        'path': '/search.json',
+        'valid_params': ('query', 'page'),
         'method': 'GET',
         'status': 200,
     },
