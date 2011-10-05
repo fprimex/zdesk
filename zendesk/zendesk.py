@@ -91,6 +91,11 @@ class Zendesk(object):
                 self.zendesk_password
             )
 
+    def create_ticket(self, post_data):
+        response = self._create_ticket(post_data=post_data)
+         #API does not return ticket id, returns ticket url
+        return int(re.findall("(\d*)\.json$", response)[0])
+
     def __getattr__(self, api_call):
         """
             Instead of writing out each API endpoint as a method here or
