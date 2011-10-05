@@ -2,7 +2,7 @@ import re
 from zendesk import Zendesk
 
 def get_id_from_url(url):
-    match = re.match(r".*/(?P<identifier>\d+)\.json", url)
+    match = re.match(r".*/(?P<identifier>\d+)\.(json|xml)", url)
     if match and match.group('identifier'):
         return match.group('identifier')
 

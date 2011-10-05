@@ -11,9 +11,9 @@ httplib2 is used for authentication and requests
 
     (pip install | easy_install) httplib2
 
-dict2xml is used to create XML documents that will be posted to
-Zendesk. This module is included with this distribution, but credit goes to
-Vojtech Rylko: https://github.com/vojtarylko/dict2xml
+simplejson is used to serialze and deserialze requests and responses
+
+    (pip install | easy_install) simplejson
 
 
 Installation
