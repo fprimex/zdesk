@@ -24,8 +24,6 @@ __author__ = "Max Gutman <max@eventbrite.com>"
 __version__ = "1.0.0"
 
 import re
-import urllib
-import urllib2
 import httplib2
 import simplejson as json
 
