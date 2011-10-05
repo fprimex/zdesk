@@ -131,8 +131,11 @@ class Zendesk(object):
                         body=json.dumps(body),
                         headers=self.headers
                     )
+            # Deserialize json content if content exist. In some cases Zendesk 
+            # returns ' ' strings.
+            content = json.loads(content) if content.strip() else content
             # Use a response handler to determine success/fail
-            return self._response_handler(response, json.loads(content), status)
+            return self._response_handler(response, content, status)
 
         # Missing method is also not defined in our mapping table
         if api_call not in mapping_table:
