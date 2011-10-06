@@ -88,10 +88,10 @@ user_url = zendesk.create_user(data=new_user)
 user_id = get_id_from_url(user_url)
 
 # Show
-zendesk.show_user(group_id=user_id)
+zendesk.show_user(user_id=user_id)
 
 # Delete
-zendesk.delete_user(group_id=user_id)
+zendesk.delete_user(user_id=user_id)
 
 
 ################################################################
