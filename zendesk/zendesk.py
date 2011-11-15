@@ -65,7 +65,8 @@ class Zendesk(object):
     """ Python API Wrapper for Zendesk"""
 
     def __init__(self, zendesk_url, zendesk_username=None,
-                 zendesk_password=None, headers=None, client_args={}):
+                 zendesk_password=None, use_api_token=True, headers=None, 
+                 client_args={}):
         """
         Instantiates an instance of Zendesk. Takes optional parameters for
         HTTP Basic Authentication
@@ -73,7 +74,10 @@ class Zendesk(object):
         Parameters:
         zendesk_url - https://company.zendesk.com (use http if not SSL enabled)
         zendesk_username - Specific to your Zendesk account (typically email)
-        zendesk_password - Specific to your Zendesk account
+        zendesk_password - Specific to your Zendesk account or your account's 
+            API token if use_api_token is True
+        use_api_token - use api token for authentication instead of user's 
+            actual password
         headers - Pass headers in dict form. This will override default.
         client_args - Pass arguments to http client in dict form.
             {'cache': False, 'timeout': 2}
@@ -83,6 +87,8 @@ class Zendesk(object):
         # Set attributes necessary for API
         self.zendesk_url = zendesk_url
         self.zendesk_username = zendesk_username
+        if use_api_token:
+            self.zendesk_username += "/token"
         self.zendesk_password = zendesk_password
 
         # Set headers
