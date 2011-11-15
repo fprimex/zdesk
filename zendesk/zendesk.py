@@ -26,7 +26,10 @@ __version__ = "1.0.0"
 import re
 import httplib2
 import urllib
-import simplejson as json
+try:
+    import simplejson as json
+except:
+    import json
 from httplib import responses
 from endpoints import mapping_table
 
