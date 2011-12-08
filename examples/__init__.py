@@ -1,11 +1,4 @@
-import re
 from zendesk import Zendesk
-
-def get_id_from_url(url):
-    match = re.match(r".*/(?P<identifier>\d+)\.(json|xml)", url)
-    if match and match.group('identifier'):
-        return match.group('identifier')
-
 
 ################################################################
 ## NEW CONNECTION CLIENT
@@ -49,6 +42,9 @@ new_ticket = {
     }
 }
 ticket_url = zendesk.create_ticket(data=new_ticket)
+
+# Need ticket ID?
+from zendesk import get_id_from_url
 ticket_id = get_id_from_url(ticket_url)
 
 # Show

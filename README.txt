@@ -26,7 +26,7 @@ Zendesk Python Library is available on pypi, so installation should be fairly si
 Example Use
 -----------------------------------------------------------------------------------------------------
 
-    from zendesk import Zendesk, get_id_from_url
+	from zendesk import Zendesk, get_id_from_url
 
 	################################################################
 	## NEW CONNECTION CLIENT
@@ -49,14 +49,14 @@ Example Use
 	        'description': 'please reheat my coffee',
 	        'set_tags': 'coffee drinks',
 	        'ticket_field_entries': [
-                {
-                    'ticket_field_id': 1,
-                    'value': 'venti'
-                },
-                {
-                    'ticket_field_id': 2,
-                    'value': '$10'
-                }
+	            {
+	                'ticket_field_id': 1,
+	                'value': 'venti'
+	            },
+	            {
+	                'ticket_field_id': 2,
+	                'value': '$10'
+	            }
 	        ]
 	    }
 	}
