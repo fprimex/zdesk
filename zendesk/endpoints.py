@@ -68,7 +68,7 @@ mapping_table = {
         'method': 'GET',
         'status': 200,
     },
-    '_create_ticket': {
+    'create_ticket': {
         'path': '/tickets.json',
         'method': 'POST',
         'status': 201,
@@ -91,7 +91,7 @@ mapping_table = {
     # Rest API: Attachment
     'create_attachment': {
         'path': '/uploads.json',
-        'valid_params': ('filename', 'tocken'),
+        'valid_params': ('filename', 'token'),
         'method': 'POST',
         'status': 201,
     },

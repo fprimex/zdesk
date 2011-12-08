@@ -21,7 +21,7 @@
 """
 
 __author__ = "Max Gutman <max@eventbrite.com>"
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 import re
 import httplib2
@@ -66,7 +66,7 @@ class Zendesk(object):
     """ Python API Wrapper for Zendesk"""
 
     def __init__(self, zendesk_url, zendesk_username=None,
-                 zendesk_password=None, use_api_token=True, headers=None, 
+                 zendesk_password=None, use_api_token=False, headers=None,
                  client_args={}):
         """
         Instantiates an instance of Zendesk. Takes optional parameters for
@@ -75,13 +75,15 @@ class Zendesk(object):
         Parameters:
         zendesk_url - https://company.zendesk.com (use http if not SSL enabled)
         zendesk_username - Specific to your Zendesk account (typically email)
-        zendesk_password - Specific to your Zendesk account or your account's 
+        zendesk_password - Specific to your Zendesk account or your account's
             API token if use_api_token is True
-        use_api_token - use api token for authentication instead of user's 
+        use_api_token - use api token for authentication instead of user's
             actual password
         headers - Pass headers in dict form. This will override default.
         client_args - Pass arguments to http client in dict form.
             {'cache': False, 'timeout': 2}
+            or a common one is to disable SSL certficate validation
+            {"disable_ssl_certificate_validation": True}
         """
         self.data = None
 
@@ -108,28 +110,23 @@ class Zendesk(object):
                 self.zendesk_password
             )
 
-    def create_ticket(self, data):
-        response = self._create_ticket(data=data)
-         #API does not return ticket id, returns ticket url
-        return int(get_id_from_url(response))
-
     def __getattr__(self, api_call):
         """
-            Instead of writing out each API endpoint as a method here or
-            binding the API endpoints at instance runttime, we can simply
-            use an elegant Python technique to construct method execution on-
-            demand. We simply provide a mapping table between Zendesk API calls
-            and function names (with necessary parameters to replace
-            embedded keywords on GET or json data on POST/PUT requests).
+        Instead of writing out each API endpoint as a method here or
+        binding the API endpoints at instance runttime, we can simply
+        use an elegant Python technique to construct method execution on-
+        demand. We simply provide a mapping table between Zendesk API calls
+        and function names (with necessary parameters to replace
+        embedded keywords on GET or json data on POST/PUT requests).
 
-            __getattr__() is used as callback method implemented so that
-            when an object tries to call a method which is not defined here,
-            it looks to find a relationship in the the mapping table.  The
-            table provides the structure of the API call and parameters passed
-            in the method will populate missing data.
+        __getattr__() is used as callback method implemented so that
+        when an object tries to call a method which is not defined here,
+        it looks to find a relationship in the the mapping table.  The
+        table provides the structure of the API call and parameters passed
+        in the method will populate missing data.
 
-            TODO:
-                Should probably url-encode GET query parameters on replacement
+        TODO:
+            Should probably url-encode GET query parameters on replacement
         """
         def call(self, **kwargs):
             """ """
@@ -147,7 +144,7 @@ class Zendesk(object):
                 lambda m: "%s" % kwargs.pop(m.group(1), ''),
                 self.zendesk_url + path
             )
-            # Validate remaining kwargs against valid_params and add 
+            # Validate remaining kwargs against valid_params and add
             # params url encoded to url variable.
             for kw in kwargs:
                 if kw not in valid_params:
@@ -155,13 +152,13 @@ class Zendesk(object):
                                     "'%s'" % (api_call, kw))
             else:
                 url += '?' + urllib.urlencode(kwargs)
-            
+
             # the 'search' endpoint in an open Zendesk site doesn't return a 401
-            # to force authentication. Inject the credentials in the headers to 
-            # ensure we get the results we're looking for 
+            # to force authentication. Inject the credentials in the headers to
+            # ensure we get the results we're looking for
             if re.match("^/search\..*", path):
                 self.headers["Authorization"] = "Basic %s" % (
-                    base64.b64encode(self.zendesk_username + ':' +  
+                    base64.b64encode(self.zendesk_username + ':' +
                                      self.zendesk_password))
             elif "Authorization" in self.headers:
                 del(self.headers["Authorization"])
@@ -186,14 +183,15 @@ class Zendesk(object):
 
     @staticmethod
     def _response_handler(response, content, status):
-        """ Handle response as callback
+        """ 
+        Handle response as callback
 
-            If the response status is different from status defined in the
-            mapping table, then we assume an error and raise proper exception
+        If the response status is different from status defined in the
+        mapping table, then we assume an error and raise proper exception
 
-            Zendesk's response is sometimes the url of a newly created user/
-            ticket/group/etc and they pass this through 'location'.  Otherwise,
-            the body of 'content' has our response.
+        Zendesk's response is sometimes the url of a newly created user/
+        ticket/group/etc and they pass this through 'location'.  Otherwise,
+        the body of 'content' has our response.
         """
         # Just in case
         if not response:
@@ -201,8 +199,8 @@ class Zendesk(object):
         response_status = int(response.get('status', 0))
         if response_status != status:
             raise ZendeskError(content, response_status)
-        
-        # Deserialize json content if content exist. In some cases Zendesk 
+
+        # Deserialize json content if content exist. In some cases Zendesk
         # returns ' ' strings. Also return false non strings (0, [], (), {})
         if response.get('location'):
             return response.get('location')
