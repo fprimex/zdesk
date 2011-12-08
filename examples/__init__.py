@@ -12,6 +12,15 @@ def get_id_from_url(url):
 ################################################################
 zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd')
 
+# Are you getting an error such as...
+# "SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed"?
+zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd',
+    client_args={
+        "disable_ssl_certificate_validation": True
+    }
+)
+
+
 ################################################################
 ## TICKETS
 ################################################################
@@ -21,19 +30,22 @@ zendesk.list_tickets(view_id=1) # Must have a view defined
 
 # Create
 new_ticket = {
-    'ticket': {
-        'requester-name': 'Howard Schultz',
-        'requester-email': 'howard@starbucks.com',
+    'ticket': { _
+        'requester_name': 'Howard Schultz',
+        'requester_email': 'howard@starbucks.com',
         'subject':'My Starbucks coffee is cold!',
         'description': 'please reheat my coffee',
-        'set-tags': 'coffee drinks',
-        'ticket-field-entries': {
-            '@type': 'array',
-            'ticket-field-entry': [
-                {'ticket-field-id': 1, 'value': 'venti'},
-                {'ticket-field-id': 2, 'value': '$10'}
-            ]
-        },
+        'set_tags': 'coffee drinks',
+        'ticket_field_entries': [
+            {
+                'ticket_field_id': 1,
+                'value': 'venti'
+            },
+            {
+                'ticket_field_id': 2,
+                'value': '$10'
+            }
+        ]
     }
 }
 ticket_url = zendesk.create_ticket(data=new_ticket)
@@ -105,10 +117,11 @@ zendesk.list_groups()
 new_group = {
     'group': {
         'name': 'Starbucks Group',
-        'agents': {
-            '@type': 'array',
-            'agent': 123,
-        }
+        'agents': [
+            {
+                'agent': 123
+            },
+        ]
     }
 }
 group_url = zendesk.create_group(data=new_group)

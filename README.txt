@@ -26,6 +26,8 @@ Zendesk Python Library is available on pypi, so installation should be fairly si
 Example Use
 -----------------------------------------------------------------------------------------------------
 
+    from zendesk import Zendesk, get_id_from_url
+
 	################################################################
 	## NEW CONNECTION CLIENT
 	################################################################
@@ -41,18 +43,21 @@ Example Use
 	# Create
 	new_ticket = {
 	    'ticket': {
-	        'requester-name': 'Howard Schultz',
-	        'requester-email': 'howard@starbucks.com',
+	        'requester_name': 'Howard Schultz',
+	        'requester_email': 'howard@starbucks.com',
 	        'subject':'My Starbucks coffee is cold!',
 	        'description': 'please reheat my coffee',
-	        'set-tags': 'coffee drinks',
-	        'ticket-field-entries': {
-	            '@type': 'array',
-	            'ticket-field-entry': [
-	                {'ticket-field-id': 1, 'value': 'venti'},
-	                {'ticket-field-id': 2, 'value': '$10'}
-	            ]
-	        },
+	        'set_tags': 'coffee drinks',
+	        'ticket_field_entries': [
+                {
+                    'ticket_field_id': 1,
+                    'value': 'venti'
+                },
+                {
+                    'ticket_field_id': 2,
+                    'value': '$10'
+                }
+	        ]
 	    }
 	}
 	ticket_url = zendesk.create_ticket(data=new_ticket)
