@@ -32,8 +32,14 @@ try:
 except:
     import json
 from httplib import responses
-from endpoints import mapping_table
+from endpoints import mapping_table as mapping_table_v1
+from endpoints_v2 import mapping_table as mapping_table_v2
 
+V2_COLLECTION_PARAMS = [
+        'page',
+        'per_page',
+        'sort_order',
+    ]
 
 class ZendeskError(Exception):
     def __init__(self, msg, error_code=None):
@@ -67,7 +73,7 @@ class Zendesk(object):
 
     def __init__(self, zendesk_url, zendesk_username=None,
                  zendesk_password=None, use_api_token=False, headers=None,
-                 client_args={}):
+                 client_args={}, api_version=1):
         """
         Instantiates an instance of Zendesk. Takes optional parameters for
         HTTP Basic Authentication
@@ -110,6 +116,16 @@ class Zendesk(object):
                 self.zendesk_password
             )
 
+        self.api_version = api_version
+        if self.api_version == 1:
+            self.mapping_table = mapping_table_v1
+        elif self.api_version == 2:
+            self.mapping_table = mapping_table_v2
+        else:
+            raise ValueError("Unsupported Zendesk API Version: %d" %
+                    (self.api_version,))
+
+
     def __getattr__(self, api_call):
         """
         Instead of writing out each API endpoint as a method here or
@@ -130,9 +146,12 @@ class Zendesk(object):
         """
         def call(self, **kwargs):
             """ """
-            api_map = mapping_table[api_call]
-            method = api_map['method']
+            api_map = self.mapping_table[api_call]
             path = api_map['path']
+            if self.api_version == 2:
+                path = "/api/v2" + path
+
+            method = api_map['method']
             status = api_map['status']
             valid_params = api_map.get('valid_params', ())
             # Body can be passed from data or in args
@@ -147,7 +166,9 @@ class Zendesk(object):
             # Validate remaining kwargs against valid_params and add
             # params url encoded to url variable.
             for kw in kwargs:
-                if kw not in valid_params:
+                if (kw not in valid_params and
+                    (self.api_version == 2 and kw not in V2_COLLECTION_PARAMS)
+                   ):
                     raise TypeError("%s() got an unexpected keyword argument "
                                     "'%s'" % (api_call, kw))
             else:
@@ -175,7 +196,7 @@ class Zendesk(object):
             return self._response_handler(response, content, status)
 
         # Missing method is also not defined in our mapping table
-        if api_call not in mapping_table:
+        if api_call not in self.mapping_table:
             raise AttributeError('Method "%s" Does Not Exist' % api_call)
 
         # Execute dynamic method and pass in keyword args as data to API call
