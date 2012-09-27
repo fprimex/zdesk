@@ -94,7 +94,7 @@ class Zendesk(object):
         self.data = None
 
         # Set attributes necessary for API
-        self.zendesk_url = zendesk_url
+        self.zendesk_url = zendesk_url.rstrip('/')
         self.zendesk_username = zendesk_username
         if use_api_token:
             self.zendesk_username += "/token"
