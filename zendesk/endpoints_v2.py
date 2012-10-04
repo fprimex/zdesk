@@ -106,7 +106,7 @@ mapping_table = {
     },
     'count_many_views': {
         'path': '/views/count_many.json',
-        'vaild_params': ('ids',),
+        'valid_params': ('ids',),
         'method': 'GET',
     },
     'count_view': {
@@ -349,7 +349,7 @@ mapping_table = {
         'valid_params': ['query'],
         'method': 'GET',
     },
-    'anonumous_search': {
+    'anonymous_search': {
         'path': '/portal_search.json',
         'valid_params': ['query'],
         'method': 'GET',
