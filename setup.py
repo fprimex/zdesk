@@ -6,7 +6,7 @@ setup(
 	# Basic package information.
 	name = 'Zendesk',
 	author = 'Max Gutman, Stefan Tjarks',
-	version = '1.1.0',
+	version = '1.1.1',
 	author_email = 'max@eventbrite.com',
 	packages = ['zendesk'],
 	include_package_data = True,
