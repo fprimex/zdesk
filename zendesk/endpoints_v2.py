@@ -13,6 +13,11 @@ mapping_table = {
         'path': '/tickets/{{ticket_id}}.json',
         'method': 'GET',
     },
+    'show_many_tickets': {
+        'path': '/tickets/show_many.json',
+        'valid_params': ['ids'],
+        'method': 'POST'
+    },
     'create_ticket': {
         'path': '/tickets.json',
         'method': 'POST',
