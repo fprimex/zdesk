@@ -317,28 +317,28 @@ mapping_table = {
     },
 
     # Organizations
-    'list_organzations': {
+    'list_organizations': {
         'path': '/organizations.json',
         'method': 'GET',
     },
-    'autocomplete_organzations': {
+    'autocomplete_organizations': {
         'path': '/organizations/autocomplete.json',
         'valid_params': ['name'],
         'method': 'GET',
     },
-    'show_organzation': {
+    'show_organization': {
         'path': '/organizations/{{organization_id}}.json',
         'method': 'GET',
     },
-    'create_organzation': {
+    'create_organization': {
         'path': '/organizations.json',
         'method': 'POST',
     },
-    'update_organzation': {
+    'update_organization': {
         'path': '/organizations/{{organization_id}}.json',
         'method': 'PUT',
     },
-    'delete_organzation': {
+    'delete_organization': {
         'path': '/organizations/{{organization_id}}.json',
         'method': 'DELETE',
     },
