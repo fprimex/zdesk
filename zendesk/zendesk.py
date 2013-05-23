@@ -68,6 +68,14 @@ def get_id_from_url(url):
         return match.group('identifier')
 
 
+def clean_kwargs(kwargs):
+    """Format the kwargs to conform to API"""
+
+    for key, value in kwargs.iteritems():
+        if hasattr(value, '__iter__'):
+            kwargs[key] = ','.join(map(str, value))
+
+
 class Zendesk(object):
     """ Python API Wrapper for Zendesk"""
 
@@ -172,6 +180,7 @@ class Zendesk(object):
                     raise TypeError("%s() got an unexpected keyword argument "
                                     "'%s'" % (api_call, kw))
             else:
+                clean_kwargs(kwargs)
                 url += '?' + urllib.urlencode(kwargs)
 
             # the 'search' endpoint in an open Zendesk site doesn't return a 401
