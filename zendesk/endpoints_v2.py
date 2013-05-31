@@ -351,7 +351,7 @@ mapping_table = {
     # Search
     'search': {
         'path': '/search.json',
-        'valid_params': ['query'],
+        'valid_params': ['query', 'sort_by', 'sort_order'],
         'method': 'GET',
     },
     'anonymous_search': {
@@ -565,6 +565,7 @@ mapping_table = {
     'upload_attachment': {
         'path': '/uploads.json',
         'method': 'POST',
+        'valid_params': ['filename', 'token'],
     },
 
     # Job Statuses
@@ -659,6 +660,6 @@ mapping_table = {
 # Patch mapping table with correct HTTP Status expected
 for method, api_map in mapping_table.iteritems():
     status = 200
-    if method.startswith('create_'):
+    if method.startswith('create_') or method == 'upload_attachment':
         status = 201
     api_map['status'] = status

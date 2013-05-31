@@ -193,12 +193,20 @@ class Zendesk(object):
             elif "Authorization" in self.headers:
                 del(self.headers["Authorization"])
 
+            # uploading of attachments requires diff mime-type
+            # see http://developer.zendesk.com/documentation/rest_api/attachments.html
+
+            if path == "/api/v2/uploads.json":
+                self.headers["Content-Type"] = "application/binary"
+            else:
+                body=json.dumps(body)
+
             # Make an http request (data replacements are finalized)
             response, content = \
                     self.client.request(
                         url,
                         method,
-                        body=json.dumps(body),
+                        body=body,
                         headers=self.headers
                     )
             # Use a response handler to determine success/fail
