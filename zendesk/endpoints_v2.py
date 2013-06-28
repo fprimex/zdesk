@@ -55,7 +55,7 @@ mapping_table = {
         'method': 'GET',
     },
     'mark_audit_as_trusted': {
-        'path': '/tickets/{{ticket_id}}/audits/{{audid_id}}/trust.json',
+        'path': '/tickets/{{ticket_id}}/audits/{{audit_id}}/trust.json',
         'method': 'PUT',
     },
 
@@ -371,8 +371,8 @@ mapping_table = {
         'path': '/forums.json',
         'method': 'GET',
     },
-    'list_forums_catagory': {
-        'path': '/catagories/{{catagory_id}}/forums.json',
+    'list_forums_category': {
+        'path': '/categories/{{category_id}}/forums.json',
         'method': 'GET',
     },
     'show_forum': {
