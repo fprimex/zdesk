@@ -129,7 +129,7 @@ mapping_table = {
         'method': 'GET',
     },
     'list_users_in_organization': {
-        'path': '/organization/{{organization_id}}/users.json',
+        'path': '/organizations/{{organization_id}}/users.json',
         'method': 'GET',
     },
     'show_user': {
@@ -283,7 +283,7 @@ mapping_table = {
         'method': 'GET',
     },
     'list_assignable_memberships_for_group': {
-        'path': 'groups/{{groups_id}}/group_memberships/assignable.json',
+        'path': '/groups/{{groups_id}}/group_memberships/assignable.json',
         'method': 'GET',
     },
     'show_membership': {
@@ -398,7 +398,7 @@ mapping_table = {
         'method': 'GET',
     },
     'list_forum_subscriptions_for_forum': {
-        'path': '/forum/{{forum_id}}/subscriptions.json',
+        'path': '/forums/{{forum_id}}/subscriptions.json',
         'method': 'GET',
     },
     'show_forum_subscription': {
@@ -507,7 +507,7 @@ mapping_table = {
         'method': 'GET',
     },
     'list_subscriptions_for_topic': {
-        'path': '/topic/{{topic_id}}/subscriptions.json',
+        'path': '/topics/{{topic_id}}/subscriptions.json',
         'method': 'GET',
     },
     'show_topic_subscription': {
@@ -529,7 +529,7 @@ mapping_table = {
         'method': 'GET',
     },
     'list_topic_votes_for_user': {
-        'path': '/user/{{user_id}}/topic_votes.json',
+        'path': '/users/{{user_id}}/topic_votes.json',
         'method': 'GET',
     },
     'show_topic_vote': {
