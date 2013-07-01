@@ -36,7 +36,7 @@ mapping_table = {
         'method': 'DELETE',
     },
     'delete_many_tickets': {
-        'path': 'tickets/destroy_many.json',
+        'path': '/tickets/destroy_many.json',
         'valid_params': ['ids'],
         'method': 'DELETE',
     },
