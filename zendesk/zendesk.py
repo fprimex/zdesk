@@ -36,32 +36,32 @@ from endpoints import mapping_table as mapping_table_v1
 from endpoints_v2 import mapping_table as mapping_table_v2
 
 V2_COLLECTION_PARAMS = [
-        'page',
-        'per_page',
-        'sort_order',
-    ]
+    'page',
+    'per_page',
+    'sort_order',
+]
+
 
 class ZendeskError(Exception):
-    def __init__(self, msg, error_code=None):
+    def __init__(self, msg, code, response):
         self.msg = msg
-        self.error_code = error_code
-        # Zendesk will throw a 401 response for un-authneticated call
-        if self.error_code == 401:
-            raise AuthenticationError(self.msg)
+        self.error_code = code
+        self.response = response
 
     def __str__(self):
-        return repr('%s: %s' % (self.error_code, self.msg))
+        return repr('%s: %s %s' % (self.error_code, self.msg, self.response))
 
 
 class AuthenticationError(ZendeskError):
-    def __init__(self, msg):
-        self.msg = msg
+    pass
 
-    def __str__(self):
-        return repr(self.msg)
 
+class RateLimitError(ZendeskError):
+    pass
 
 re_identifier = re.compile(r".*/(?P<identifier>\d+)\.(json|xml)")
+
+
 def get_id_from_url(url):
     match = re_identifier.match(url)
     if match and match.group('identifier'):
@@ -130,9 +130,7 @@ class Zendesk(object):
         elif self.api_version == 2:
             self.mapping_table = mapping_table_v2
         else:
-            raise ValueError("Unsupported Zendesk API Version: %d" %
-                    (self.api_version,))
-
+            raise ValueError("Unsupported Zendesk API Version: %d" % (self.api_version,))
 
     def __getattr__(self, api_call):
         """
@@ -174,9 +172,7 @@ class Zendesk(object):
             # Validate remaining kwargs against valid_params and add
             # params url encoded to url variable.
             for kw in kwargs:
-                if (kw not in valid_params and
-                    (self.api_version == 2 and kw not in V2_COLLECTION_PARAMS)
-                   ):
+                if (kw not in valid_params and (self.api_version == 2 and kw not in V2_COLLECTION_PARAMS)):
                     raise TypeError("%s() got an unexpected keyword argument "
                                     "'%s'" % (api_call, kw))
             else:
@@ -199,16 +195,10 @@ class Zendesk(object):
             if path == "/api/v2/uploads.json":
                 self.headers["Content-Type"] = "application/binary"
             else:
-                body=json.dumps(body)
+                body = json.dumps(body)
 
             # Make an http request (data replacements are finalized)
-            response, content = \
-                    self.client.request(
-                        url,
-                        method,
-                        body=body,
-                        headers=self.headers
-                    )
+            response, content = self.client.request(url, method, body=body, headers=self.headers)
             # Use a response handler to determine success/fail
             return self._response_handler(response, content, status)
 
@@ -221,7 +211,7 @@ class Zendesk(object):
 
     @staticmethod
     def _response_handler(response, content, status):
-        """ 
+        """
         Handle response as callback
 
         If the response status is different from status defined in the
@@ -230,13 +220,35 @@ class Zendesk(object):
         Zendesk's response is sometimes the url of a newly created user/
         ticket/group/etc and they pass this through 'location'.  Otherwise,
         the body of 'content' has our response.
+
+        response = {
+            'status': '429',
+            'x-zendesk-api-version': 'v2',
+            'content-location': 'https://takealot1372789905.zendesk.com/api/v2/search.json?query=twitter&sort_order=&sort_by=',
+            'x-content-type-options': 'nosniff',
+            'transfer-encoding': 'chunked',
+            'connection': 'keep-alive',
+            'content-length': '76',
+            'server': 'nginx/1.0.15',
+            'date': 'Fri, 05 Jul 2013 15:33:10 GMT',
+            'x-runtime': '119',
+            'etag': '"788813e9d5f7a30ad995b89094cc9745"',
+            'x-zendesk-origin-server': 'app27.sys.zendesk.com',
+            'cache-control': 'private, max-age=0, must-revalidate',
+            'x-zendesk-user-id': '421106531',
+            'retry-after': 10,
+            'content-type': 'application/json; charset=utf-8',
+            '-content-encoding': 'gzip'}
         """
-        # Just in case
-        if not response:
-            raise ZendeskError('Response Not Found')
         response_status = int(response.get('status', 0))
+
         if response_status != status:
-            raise ZendeskError(content, response_status)
+            if response_status == 401:
+                raise AuthenticationError(content, response_status, response)
+            elif response_status == 429:
+                raise RateLimitError(content, response_status, response)
+            else:
+                raise ZendeskError(content, response_status, response)
 
         # Deserialize json content if content exist. In some cases Zendesk
         # returns ' ' strings. Also return false non strings (0, [], (), {})
