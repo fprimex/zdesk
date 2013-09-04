@@ -122,14 +122,17 @@ mapping_table = {
     # Users
     'list_users': {
         'path': '/users.json',
+        'valid_params': ('role','page'),
         'method': 'GET',
     },
     'list_users_in_group': {
         'path': '/groups/{{group_id}}/users.json',
+        'valid_params': ('role','page'),
         'method': 'GET',
     },
     'list_users_in_organization': {
         'path': '/organization/{{organization_id}}/users.json',
+        'valid_params': ('role','page'),
         'method': 'GET',
     },
     'show_user': {
