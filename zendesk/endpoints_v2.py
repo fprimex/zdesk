@@ -351,6 +351,28 @@ mapping_table = {
         'method': 'DELETE',
     },
 
+    # Organization Fields
+    'list_organization_fields': {
+        'path': '/organization_fields.json',
+        'method': 'GET',
+    },
+    'show_organization_field': {
+        'path': '/organization_fields/{{organization_field_id}}.json',
+        'method': 'GET',
+    },
+    'create_organization_field': {
+        'path': '/organization_fields.json',
+        'method': 'POST',
+    },
+    'update_organization_field': {
+        'path': '/organization_fields/{{organization_field_id}}.json',
+        'method': 'PUT',
+    },
+    'delete_organization_field': {
+        'path': '/organization_fields/{{organization_field_id}}.json',
+        'method': 'DELETE',
+    },
+
     # Search
     'search': {
         'path': '/search.json',
