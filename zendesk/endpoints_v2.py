@@ -9,6 +9,10 @@ mapping_table = {
         'path': '/tickets.json',
         'method': 'GET',
     },
+    'list_recent_tickets': {
+        'path': '/tickets/recent.json',
+        'method': 'GET',
+    },
     'show_ticket': {
         'path': '/tickets/{{ticket_id}}.json',
         'method': 'GET',
@@ -162,6 +166,14 @@ mapping_table = {
     },
     'show_me': {
         'path': '/users/me.json',
+        'method': 'GET',
+    },
+    'list_user_requests': {
+        'path': '/users/{{user_id}}/tickets/requested.json',
+        'method': 'GET',
+    },
+    'list_user_ccd': {
+        'path': '/users/{{user_id}}/tickets/ccd.json',
         'method': 'GET',
     },
 
@@ -327,6 +339,10 @@ mapping_table = {
     # Organizations
     'list_organizations': {
         'path': '/organizations.json',
+        'method': 'GET',
+    },
+    'list_organization_tickets': {
+        'path': '/organizations/{{organization_id}}/tickets.json',
         'method': 'GET',
     },
     'autocomplete_organizations': {
