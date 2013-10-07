@@ -72,7 +72,7 @@ def clean_kwargs(kwargs):
     """Format the kwargs to conform to API"""
 
     for key, value in kwargs.iteritems():
-        if hasattr(value, '__iter__'):
+        if hasattr(value, '__iter__') and type(value) is not str:
             kwargs[key] = ','.join(map(str, value))
 
 
