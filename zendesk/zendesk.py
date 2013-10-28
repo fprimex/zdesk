@@ -36,10 +36,11 @@ from endpoints import mapping_table as mapping_table_v1
 from endpoints_v2 import mapping_table as mapping_table_v2
 
 V2_COLLECTION_PARAMS = [
-        'page',
-        'per_page',
-        'sort_order',
-    ]
+    'page',
+    'per_page',
+    'sort_order',
+]
+
 
 class ZendeskError(Exception):
     def __init__(self, msg, error_code=None):
@@ -62,6 +63,8 @@ class AuthenticationError(ZendeskError):
 
 
 re_identifier = re.compile(r".*/(?P<identifier>\d+)\.(json|xml)")
+
+
 def get_id_from_url(url):
     match = re_identifier.match(url)
     if match and match.group('identifier'):
@@ -118,7 +121,8 @@ class Zendesk(object):
 
         # Set http client and authentication
         self.client = httplib2.Http(**client_args)
-        if self.zendesk_username is not None and self.zendesk_password is not None:
+        if (self.zendesk_username is not None and
+                self.zendesk_password is not None):
             self.client.add_credentials(
                 self.zendesk_username,
                 self.zendesk_password
@@ -131,8 +135,7 @@ class Zendesk(object):
             self.mapping_table = mapping_table_v2
         else:
             raise ValueError("Unsupported Zendesk API Version: %d" %
-                    (self.api_version,))
-
+                             (self.api_version,))
 
     def __getattr__(self, api_call):
         """
@@ -175,17 +178,17 @@ class Zendesk(object):
             # params url encoded to url variable.
             for kw in kwargs:
                 if (kw not in valid_params and
-                    (self.api_version == 2 and kw not in V2_COLLECTION_PARAMS)
-                   ):
+                        (self.api_version == 2 and
+                         kw not in V2_COLLECTION_PARAMS)):
                     raise TypeError("%s() got an unexpected keyword argument "
                                     "'%s'" % (api_call, kw))
             else:
                 clean_kwargs(kwargs)
                 url += '?' + urllib.urlencode(kwargs)
 
-            # the 'search' endpoint in an open Zendesk site doesn't return a 401
-            # to force authentication. Inject the credentials in the headers to
-            # ensure we get the results we're looking for
+            # the 'search' endpoint in an open Zendesk site doesn't return a
+            # 401 to force authentication. Inject the credentials in the
+            # headers to ensure we get the results we're looking for
             if re.match("^/search\..*", path):
                 self.headers["Authorization"] = "Basic %s" % (
                     base64.b64encode(self.zendesk_username + ':' +
@@ -195,12 +198,12 @@ class Zendesk(object):
 
             # Make an http request (data replacements are finalized)
             response, content = \
-                    self.client.request(
-                        url,
-                        method,
-                        body=json.dumps(body),
-                        headers=self.headers
-                    )
+                self.client.request(
+                    url,
+                    method,
+                    body=json.dumps(body),
+                    headers=self.headers
+                )
             # Use a response handler to determine success/fail
             return self._response_handler(response, content, status)
 
