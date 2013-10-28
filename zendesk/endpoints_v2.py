@@ -374,8 +374,8 @@ mapping_table = {
         'path': '/forums.json',
         'method': 'GET',
     },
-    'list_forums_catagory': {
-        'path': '/catagories/{{catagory_id}}/forums.json',
+    'list_forums_category': {
+        'path': '/catagories/{{category_id}}/forums.json',
         'method': 'GET',
     },
     'show_forum': {
