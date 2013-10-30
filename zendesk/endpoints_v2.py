@@ -662,6 +662,6 @@ mapping_table = {
 # Patch mapping table with correct HTTP Status expected
 for method, api_map in mapping_table.iteritems():
     status = 200
-    if method.startswith('create_'):
+    if method.startswith('create_') and not method.startswith('create_many_'):
         status = 201
     api_map['status'] = status
