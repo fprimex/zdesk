@@ -480,7 +480,7 @@ mapping_table = {
         'method': 'GET',
     },
     'list_topic_comments_for_user': {
-        'path': '/users/{{user_id}}/top_comments.json',
+        'path': '/users/{{user_id}}/topic_comments.json',
         'method': 'GET',
     },
     'show_topic_comment': {
