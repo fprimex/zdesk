@@ -135,12 +135,8 @@ mapping_table = {
         'method': 'GET',
     },
     'list_users_in_organization': {
-<<<<<<< HEAD
-        'path': '/organization/{{organization_id}}/users.json',
-        'valid_params': ('role','page'),
-=======
         'path': '/organizations/{{organization_id}}/users.json',
->>>>>>> pr/9
+        'valid_params': ('role','page'),
         'method': 'GET',
     },
     'show_user': {

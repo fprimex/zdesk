@@ -131,12 +131,8 @@ class Zendesk(object):
         elif self.api_version == 2:
             self.mapping_table = mapping_table_v2
         else:
-<<<<<<< HEAD
             raise ValueError("Unsupported Zendesk API Version: %d" %
                              (self.api_version,))
-=======
-            raise ValueError("Unsupported Zendesk API Version: %d" % (self.api_version,))
->>>>>>> pr/10
 
     def __getattr__(self, api_call):
         """
@@ -178,13 +174,9 @@ class Zendesk(object):
             # Validate remaining kwargs against valid_params and add
             # params url encoded to url variable.
             for kw in kwargs:
-<<<<<<< HEAD
                 if (kw not in valid_params and
                         (self.api_version == 2 and
                          kw not in V2_COLLECTION_PARAMS)):
-=======
-                if (kw not in valid_params and (self.api_version == 2 and kw not in V2_COLLECTION_PARAMS)):
->>>>>>> pr/10
                     raise TypeError("%s() got an unexpected keyword argument "
                                     "'%s'" % (api_call, kw))
             else:
@@ -210,7 +202,6 @@ class Zendesk(object):
                 body = json.dumps(body)
 
             # Make an http request (data replacements are finalized)
-<<<<<<< HEAD
             response, content = \
                 self.client.request(
                     url,
@@ -218,9 +209,6 @@ class Zendesk(object):
                     body=json.dumps(body),
                     headers=self.headers
                 )
-=======
-            response, content = self.client.request(url, method, body=body, headers=self.headers)
->>>>>>> pr/10
             # Use a response handler to determine success/fail
             return self._response_handler(response, content, status)
 
