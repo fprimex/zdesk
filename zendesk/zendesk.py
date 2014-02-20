@@ -206,7 +206,7 @@ class Zendesk(object):
                 self.client.request(
                     url,
                     method,
-                    body=json.dumps(body),
+                    body=body,
                     headers=self.headers
                 )
             # Use a response handler to determine success/fail
