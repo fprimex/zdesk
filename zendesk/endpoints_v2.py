@@ -63,6 +63,18 @@ mapping_table = {
         'method': 'PUT',
     },
 
+    # Ticket Metrics
+    'list_metrics': {
+        'path': '/tickets/{{ticket_id}}/metrics.json',
+        'method': 'GET',
+    },
+
+    # Ticket Comments
+    'list_comments': {
+        'path': '/tickets/{{ticket_id}}/comments.json',
+        'method': 'GET',
+    },
+
     # Incremental Tickets
     'export_incremental_tickets': {
         'path': '/exports/tickets.json',
@@ -103,6 +115,10 @@ mapping_table = {
     },
     'get_view': {
         'path': '/views/{{view_id}}.json',
+        'method': 'GET',
+    },
+    'get_view_tickets': {
+        'path': '/views/{{view_id}}/tickets.json',
         'method': 'GET',
     },
     'execute_view': {
