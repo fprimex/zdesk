@@ -143,6 +143,11 @@ mapping_table = {
         'path': '/users/{{user_id}}.json',
         'method': 'GET',
     },
+    'show_many_users': {
+        'path': '/users/show_many.json',
+        'valid_params': ['ids'],
+        'method': 'POST',
+    },
     'create_user': {
         'path': '/users.json',
         'method': 'POST',
