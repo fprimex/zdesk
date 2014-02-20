@@ -91,7 +91,7 @@ mapping_table = {
         'path': '/ticket_fields/{{ticket_field_id}}.json',
         'method': 'DELETE',
     },
-    
+
     # Views
     'list_views': {
         'path': '/views.json',
@@ -120,6 +120,10 @@ mapping_table = {
     },
     'count_view': {
         'path': '/views/{{view_id}}/count.json',
+        'method': 'GET',
+    },
+    'list_tickets_in_view': {
+        'path':'/views/{{view_id}}/tickets.json',
         'method': 'GET',
     },
 
@@ -516,7 +520,7 @@ mapping_table = {
         'path': '/topics/{{topic_id}}.json',
         'method': 'DELETE',
     },
-    
+
     # Topic Comments
     'list_topic_comments': {
         'path': '/topics/{{topic_id}}/comments.json',
