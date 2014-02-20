@@ -164,6 +164,8 @@ class Zendesk(object):
             valid_params = api_map.get('valid_params', ())
             # Body can be passed from data or in args
             body = kwargs.pop('data', None) or self.data
+            # If requested, return all response information
+            complete_response = kwargs.pop('complete_response', False)
             # Substitute mustache placeholders with data from keywords
             url = re.sub(
                 '\{\{(?P<m>[a-zA-Z_]+)\}\}',
@@ -210,7 +212,8 @@ class Zendesk(object):
                     headers=self.headers
                 )
             # Use a response handler to determine success/fail
-            return self._response_handler(response, content, status)
+            return self._response_handler(response, content, status,
+                complete_response)
 
         # Missing method is also not defined in our mapping table
         if api_call not in self.mapping_table:
@@ -220,7 +223,7 @@ class Zendesk(object):
         return call.__get__(self)
 
     @staticmethod
-    def _response_handler(response, content, status):
+    def _response_handler(response, content, status, complete_response=False):
         """
         Handle response as callback
 
@@ -240,6 +243,16 @@ class Zendesk(object):
                 raise RateLimitError(content, response_status, response)
             else:
                 raise ZendeskError(content, response_status, response)
+
+        if complete_response:
+            if content.strip():
+                content = json.loads(content)
+
+            return {
+                'response': response,
+                'content': content,
+                'status': status
+            }
 
         # Deserialize json content if content exist. In some cases Zendesk
         # returns ' ' strings. Also return false non strings (0, [], (), {})
