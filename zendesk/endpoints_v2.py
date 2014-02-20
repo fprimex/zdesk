@@ -36,7 +36,7 @@ mapping_table = {
         'method': 'DELETE',
     },
     'delete_many_tickets': {
-        'path': 'tickets/destroy_many.json',
+        'path': '/tickets/destroy_many.json',
         'valid_params': ['ids'],
         'method': 'DELETE',
     },
@@ -55,7 +55,7 @@ mapping_table = {
         'method': 'GET',
     },
     'mark_audit_as_trusted': {
-        'path': '/tickets/{{ticket_id}}/audits/{{audid_id}}/trust.json',
+        'path': '/tickets/{{ticket_id}}/audits/{{audit_id}}/trust.json',
         'method': 'PUT',
     },
 
@@ -131,8 +131,12 @@ mapping_table = {
         'method': 'GET',
     },
     'list_users_in_organization': {
+<<<<<<< HEAD
         'path': '/organization/{{organization_id}}/users.json',
         'valid_params': ('role','page'),
+=======
+        'path': '/organizations/{{organization_id}}/users.json',
+>>>>>>> pr/9
         'method': 'GET',
     },
     'show_user': {
@@ -286,7 +290,7 @@ mapping_table = {
         'method': 'GET',
     },
     'list_assignable_memberships_for_group': {
-        'path': 'groups/{{groups_id}}/group_memberships/assignable.json',
+        'path': '/groups/{{groups_id}}/group_memberships/assignable.json',
         'method': 'GET',
     },
     'show_membership': {
@@ -332,7 +336,7 @@ mapping_table = {
     'autocomplete_organizations': {
         'path': '/organizations/autocomplete.json',
         'valid_params': ['name'],
-        'method': 'GET',
+        'method': 'POST',
     },
     'show_organization': {
         'path': '/organizations/{{organization_id}}.json',
@@ -374,8 +378,8 @@ mapping_table = {
         'path': '/forums.json',
         'method': 'GET',
     },
-    'list_forums_catagory': {
-        'path': '/catagories/{{catagory_id}}/forums.json',
+    'list_forums_category': {
+        'path': '/categories/{{category_id}}/forums.json',
         'method': 'GET',
     },
     'show_forum': {
@@ -401,7 +405,7 @@ mapping_table = {
         'method': 'GET',
     },
     'list_forum_subscriptions_for_forum': {
-        'path': '/forum/{{forum_id}}/subscriptions.json',
+        'path': '/forums/{{forum_id}}/subscriptions.json',
         'method': 'GET',
     },
     'show_forum_subscription': {
@@ -510,7 +514,7 @@ mapping_table = {
         'method': 'GET',
     },
     'list_subscriptions_for_topic': {
-        'path': '/topic/{{topic_id}}/subscriptions.json',
+        'path': '/topics/{{topic_id}}/subscriptions.json',
         'method': 'GET',
     },
     'show_topic_subscription': {
@@ -532,7 +536,7 @@ mapping_table = {
         'method': 'GET',
     },
     'list_topic_votes_for_user': {
-        'path': '/user/{{user_id}}/topic_votes.json',
+        'path': '/users/{{user_id}}/topic_votes.json',
         'method': 'GET',
     },
     'show_topic_vote': {
