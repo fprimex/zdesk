@@ -1,6 +1,9 @@
-#!/usr/bin/python
+from setuptools import setup
+import sys
 
-from distutils.core import setup
+extra = {}
+if sys.version_info >= (3,):
+    extra['use_2to3'] = True
 
 setup(
 	# Basic package information.
@@ -20,8 +23,11 @@ setup(
 		'Intended Audience :: Developers',
 		'License :: OSI Approved :: MIT License',
 		'Topic :: Software Development :: Libraries :: Python Modules',
-		'Topic :: Internet'
+		'Topic :: Internet',
+		'Programming Language :: Python :: 2',
+		'Programming Language :: Python :: 3',
 	],
+    **extra
 )
 
 
