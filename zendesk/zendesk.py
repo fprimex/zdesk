@@ -230,25 +230,6 @@ class Zendesk(object):
         Zendesk's response is sometimes the url of a newly created user/
         ticket/group/etc and they pass this through 'location'.  Otherwise,
         the body of 'content' has our response.
-
-        response = {
-            'status': '429',
-            'x-zendesk-api-version': 'v2',
-            'content-location': 'https://takealot1372789905.zendesk.com/api/v2/search.json?query=twitter&sort_order=&sort_by=',
-            'x-content-type-options': 'nosniff',
-            'transfer-encoding': 'chunked',
-            'connection': 'keep-alive',
-            'content-length': '76',
-            'server': 'nginx/1.0.15',
-            'date': 'Fri, 05 Jul 2013 15:33:10 GMT',
-            'x-runtime': '119',
-            'etag': '"788813e9d5f7a30ad995b89094cc9745"',
-            'x-zendesk-origin-server': 'app27.sys.zendesk.com',
-            'cache-control': 'private, max-age=0, must-revalidate',
-            'x-zendesk-user-id': '421106531',
-            'retry-after': 10,
-            'content-type': 'application/json; charset=utf-8',
-            '-content-encoding': 'gzip'}
         """
         response_status = int(response.get('status', 0))
 
