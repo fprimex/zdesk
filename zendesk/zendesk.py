@@ -166,6 +166,8 @@ class Zendesk(object):
             body = kwargs.pop('data', None) or self.data
             # If requested, return all response information
             complete_response = kwargs.pop('complete_response', False)
+            # Support specifying a mime-type other than application/json
+            mime_type = kwargs.pop('mime_type', 'application/json')
             # Substitute mustache placeholders with data from keywords
             url = re.sub(
                 '\{\{(?P<m>[a-zA-Z_]+)\}\}',
@@ -195,13 +197,11 @@ class Zendesk(object):
             elif "Authorization" in self.headers:
                 del(self.headers["Authorization"])
 
-            # uploading of attachments requires diff mime-type
-            # see http://developer.zendesk.com/documentation/rest_api/attachments.html
-
-            if path == "/api/v2/uploads.json":
-                self.headers["Content-Type"] = "application/binary"
-            else:
+            if mime_type == "application/json":
                 body = json.dumps(body)
+                self.headers["Content-Type"] = "application/json"
+            else:
+                self.headers["Content-Type"] = mime_type
 
             # Make an http request (data replacements are finalized)
             response, content = \
