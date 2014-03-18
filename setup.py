@@ -7,9 +7,9 @@ if sys.version_info >= (3,):
 
 setup(
 	# Basic package information.
-	name = 'Zendesk',
+	name = 'zdesk',
 	author = 'Brent Woodruff, Max Gutman, Stefan Tjarks',
-	version = '1.1.1',
+	version = '1.2.0',
 	author_email = 'brent@fprimex.com',
 	packages = ['zdesk'],
 	include_package_data = True,
