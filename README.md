@@ -26,7 +26,7 @@ Zendesk Python Library is available on pypi, so installation should be fairly si
 # Example Use
 
 ```python
-from zendesk import Zendesk, get_id_from_url
+from zdesk import Zendesk, get_id_from_url
 
 ################################################################
 ## NEW CONNECTION CLIENT
