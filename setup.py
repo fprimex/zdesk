@@ -8,9 +8,9 @@ if sys.version_info >= (3,):
 setup(
 	# Basic package information.
 	name = 'Zendesk',
-	author = 'Max Gutman, Stefan Tjarks',
+	author = 'Brent Woodruff, Max Gutman, Stefan Tjarks',
 	version = '1.1.1',
-	author_email = 'max@eventbrite.com',
+	author_email = 'brent@fprimex.com',
 	packages = ['zdesk'],
 	include_package_data = True,
 	install_requires = ['httplib2', 'simplejson'],
@@ -19,7 +19,7 @@ setup(
 	keywords = 'zendesk api helpdesk',
 	description = 'Python API Wrapper for Zendesk',
 	classifiers = [
-		'Development Status :: 4 - Beta',
+		'Development Status :: 5 - Production/Stable',
 		'Intended Audience :: Developers',
 		'License :: OSI Approved :: MIT License',
 		'Topic :: Software Development :: Libraries :: Python Modules',
