@@ -1,2 +1,2 @@
-from zendesk import *
+from zdesk import *
 from endpoints import *
