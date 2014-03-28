@@ -20,7 +20,7 @@ simplejson is used to serialze and deserialze requests and responses
 
 Zendesk Python Library is available on pypi, so installation should be fairly simple:
 
-    (pip install | easy_install) zendesk
+    (pip install | easy_install) zdesk
 
 
 # Example Use
