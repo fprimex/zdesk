@@ -154,3 +154,4 @@ zendesk.list_ticket_fields()
 # http://www.zendesk.com/api/search
 # make sure to url-encode the query
 results = zendesk.search(query='ticket+sort:desc', page=1)
+
