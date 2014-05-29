@@ -64,13 +64,13 @@ mapping_table = {
     },
 
     # Ticket Metrics
-    'list_metrics': {
+    'list_ticket_metrics': {
         'path': '/tickets/{{ticket_id}}/metrics.json',
         'method': 'GET',
     },
 
     # Ticket Comments
-    'list_comments': {
+    'list_ticket_comments': {
         'path': '/tickets/{{ticket_id}}/comments.json',
         'method': 'GET',
     },
@@ -235,11 +235,11 @@ mapping_table = {
         'path': '/requests/{{request_id}}.json',
         'method': 'PUT',
     },
-    'list_comments': {
+    'list_request_comments': {
         'path': '/requests/{{request_id}}/comments.json',
         'method': 'GET',
     },
-    'show_comment': {
+    'show_request_comment': {
         'path': '/requests/{{request_id}}/comments/{{comment_id}}.json',
         'method': 'GET',
     },
