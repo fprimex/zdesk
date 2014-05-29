@@ -23,7 +23,7 @@ zendesk.list_tickets(view_id=1) # Must have a view defined
 
 # Create
 new_ticket = {
-    'ticket': { _
+    'ticket': {
         'requester_name': 'Howard Schultz',
         'requester_email': 'howard@starbucks.com',
         'subject':'My Starbucks coffee is cold!',
