@@ -1,13 +1,13 @@
-from zendesk import Zendesk
+from zdesk import Zendesk
 
 ################################################################
 ## NEW CONNECTION CLIENT
 ################################################################
-zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd')
+zd = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd')
 
 # Are you getting an error such as...
 # "SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed"?
-zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd',
+zd = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd',
     client_args={
         "disable_ssl_certificate_validation": True
     }
@@ -19,7 +19,7 @@ zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'pas
 ################################################################
 
 # List
-zendesk.list_tickets(view_id=1) # Must have a view defined
+zd.list_tickets(view_id=1) # Must have a view defined
 
 # Create
 new_ticket = {
@@ -41,17 +41,17 @@ new_ticket = {
         ]
     }
 }
-ticket_url = zendesk.create_ticket(data=new_ticket)
+ticket_url = zd.create_ticket(data=new_ticket)
 
 # Need ticket ID?
-from zendesk import get_id_from_url
+from zd import get_id_from_url
 ticket_id = get_id_from_url(ticket_url)
 
 # Show
-zendesk.show_ticket(ticket_id=ticket_id)
+zd.show_ticket(ticket_id=ticket_id)
 
 # Delete
-zendesk.delete_ticket(ticket_id=ticket_id)
+zd.delete_ticket(ticket_id=ticket_id)
 
 
 ################################################################
@@ -59,7 +59,7 @@ zendesk.delete_ticket(ticket_id=ticket_id)
 ################################################################
 
 # List
-zendesk.list_organizations()
+zd.list_organizations()
 
 # Create
 new_org = {
@@ -67,14 +67,14 @@ new_org = {
         'name': 'Starbucks Corp'
     }
 }
-org_url = zendesk.create_organization(data=new_org)
+org_url = zd.create_organization(data=new_org)
 org_id = get_id_from_url(org_url)
 
 # Show
-zendesk.show_organization(organization_id=org_id)
+zd.show_organization(organization_id=org_id)
 
 # Delete
-zendesk.delete_organization(organization_id=org_id)
+zd.delete_organization(organization_id=org_id)
 
 
 ################################################################
@@ -82,7 +82,7 @@ zendesk.delete_organization(organization_id=org_id)
 ################################################################
 
 # List
-zendesk.list_users()
+zd.list_users()
 
 # Create
 new_user = {
@@ -92,14 +92,14 @@ new_user = {
         'roles': 4,
     }
 }
-user_url = zendesk.create_user(data=new_user)
+user_url = zd.create_user(data=new_user)
 user_id = get_id_from_url(user_url)
 
 # Show
-zendesk.show_user(user_id=user_id)
+zd.show_user(user_id=user_id)
 
 # Delete
-zendesk.delete_user(user_id=user_id)
+zd.delete_user(user_id=user_id)
 
 
 ################################################################
@@ -107,7 +107,7 @@ zendesk.delete_user(user_id=user_id)
 ################################################################
 
 # List
-zendesk.list_groups()
+zd.list_groups()
 
 # Create
 new_group = {
@@ -120,14 +120,14 @@ new_group = {
         ]
     }
 }
-group_url = zendesk.create_group(data=new_group)
+group_url = zd.create_group(data=new_group)
 group_id = get_id_from_url(group_url)
 
 # Show
-zendesk.show_group(group_id=group_id)
+zd.show_group(group_id=group_id)
 
 # Delete
-zendesk.delete_group(group_id=group_id)
+zd.delete_group(group_id=group_id)
 
 
 ################################################################
@@ -135,16 +135,16 @@ zendesk.delete_group(group_id=group_id)
 ################################################################
 
 # List
-zendesk.list_tags()
+zd.list_tags()
 
 # Show
-zendesk.list_assets(tag_id=123, asset_type='event') # event | entry
+zd.list_assets(tag_id=123, asset_type='event') # event | entry
 
 
 ################################################################
 ## TICKET TYPES
 ################################################################
-zendesk.list_ticket_fields()
+zd.list_ticket_fields()
 
 
 ################################################################
@@ -153,5 +153,5 @@ zendesk.list_ticket_fields()
 
 # http://www.zendesk.com/api/search
 # make sure to url-encode the query
-results = zendesk.search(query='ticket+sort:desc', page=1)
+results = zd.search(query='ticket+sort:desc', page=1)
 

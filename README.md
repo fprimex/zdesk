@@ -1,11 +1,13 @@
 # Zendesk API Wrapper for Python
 
-Python Zendesk is wrapper for the Zendesk API. This library provides an
-easy and flexible way for developers to communicate with their Zendesk
+Python Zendesk is wrapper for the Zendesk API version 2. This library provides
+an easy and flexible way for developers to communicate with their Zendesk
 account in their application. 
 
 
 ## Requirements
+
+Python 2 or Python 3
 
 httplib2 is used for authentication and requests
 
@@ -18,7 +20,8 @@ simplejson is used to serialze and deserialze requests and responses
 
 ## Installation
 
-Zendesk Python Library is available on pypi, so installation should be fairly simple:
+Zdesk Python Library is available on pypi, so to install zdesk and its
+dependencies, run:
 
     (pip install | easy_install) zdesk
 
@@ -28,19 +31,13 @@ Zendesk Python Library is available on pypi, so installation should be fairly si
 ```python
 from zdesk import Zendesk, get_id_from_url
 
-################################################################
-## NEW CONNECTION CLIENT
-################################################################
-zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd')
+# Create a new connection to your Zendesk
+zd = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd')
 
-################################################################
-## TICKETS
-################################################################
+# List tickets as defined by a view
+zd.list_tickets(view_id=1) # Must have a view defined
 
-# List
-zendesk.list_tickets(view_id=1) # Must have a view defined
-
-# Create
+# Create a new ticket
 new_ticket = {
     'ticket': {
         'requester_name': 'Howard Schultz',
@@ -60,14 +57,14 @@ new_ticket = {
         ]
     }
 }
-ticket_url = zendesk.create_ticket(data=new_ticket)
+ticket_url = zd.create_ticket(data=new_ticket)
 ticket_id = get_id_from_url(ticket_url)
 
-# Show
-zendesk.show_ticket(ticket_id=ticket_id)
+# Show a ticket
+zd.show_ticket(ticket_id=ticket_id)
 
-# Delete
-zendesk.delete_ticket(ticket_id=ticket_id)
+# Delete a ticket
+zd.delete_ticket(ticket_id=ticket_id)
 
 # More examples in `examples` folder!
 ```
