@@ -1,2 +1,0 @@
-v1.00, 2011-04-01 -- Initial release.
-v1.1, 2011-10-05 -- Moved from zendesk xml to json.
