@@ -115,11 +115,10 @@ class Zendesk(object):
                 self.zendesk_password is not None):
             self.client.add_credentials(
                 self.zendesk_username,
-                self.zendesk_password
-            )
+                self.zendesk_password)
 
-         if api_version != 2:
-             raise ValueError("Unsupported Zendesk API Version: %d" %
+        if api_version != 2:
+            raise ValueError("Unsupported Zendesk API Version: %d" %
                              api_version)
 
     def __getattr__(self, api_call):
