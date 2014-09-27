@@ -5,7 +5,7 @@ import pkg_resources
 import http.client
 
 import httplib2
-import simplejson
+import simplejson as json
 
 from .zdesk_api import ZendeskAPI
 
@@ -107,16 +107,22 @@ class Zendesk(ZendeskAPI):
                 raise TypeError("call to %s got an unexpected keyword argument "
                                 "'%s'" % (path, kw))
 
-        # TODO: might already have query params
-        path += '?' + urllib.parse.urlencode(kwargs)
+        for key, value in kwargs.items():
+            if hasattr(value, '__iter__') and not isinstance(value, str):
+                kwargs[key] = ','.join(map(str, value))
+
+        if query and kwargs:
+            query += '&'
+
+        url = self.zendesk_url + path + '?' + query + urllib.parse.urlencode(kwargs)
 
         # the 'search' endpoint in an open Zendesk site doesn't return a
         # 401 to force authentication. Inject the credentials in the
         # headers to ensure we get the results we're looking for
         if re.match("^/search\..*", path):
-            self.headers["Authorization"] = "Basic %s" % (
-                base64.b64encode(self.zendesk_username + ':' +
-                                 self.zendesk_password))
+            self.headers["Authorization"] = "Basic {}".format(
+                base64.b64encode(self.zendesk_username.encode('ascii') + b':' +
+                                 self.zendesk_password.encode('ascii')))
         elif "Authorization" in self.headers:
             del(self.headers["Authorization"])
 
