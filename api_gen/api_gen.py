@@ -179,8 +179,11 @@ for doc_file in iglob('*'):
 
 content = ''
 should_keep = ''
+names = list(duplicate_api_items.keys())
+names.sort()
 
-for name, dupe in duplicate_api_items.items():
+for name in names:
+    dupe = duplicate_api_items[name]
     item = api_items[name]
     if (
         dupe['path'] == item['path'] and

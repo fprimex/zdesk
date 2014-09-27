@@ -8,22 +8,22 @@ class ZendeskAPI:
     def call(self, path, query='', method='GET', status=200, data=None, **kwargs):
         pass
 
-    # Duplicate API endpoint discarded: users_search from users
-    # Duplicate API endpoint discarded: ticket_macro_apply from macros
-    # Duplicate API endpoint discarded: users_me from users
+    # Duplicate API endpoint discarded: activities_list from changes_roadmap
     # Duplicate API endpoint discarded: channels_voice_tickets_update from voice_integration
-    # Duplicate API endpoint discarded: view_show from views
-    # Duplicate API endpoint discarded: users_list from users
-    # Duplicate API endpoint discarded: ticket_show from tickets
     # Duplicate API endpoint discarded: macro_apply from macros
     # Duplicate API endpoint discarded: organization_show from organizations
-    # Duplicate API endpoint discarded: user_show from users
-    # Duplicate API endpoint discarded: activities_list from changes_roadmap
-    # Duplicate API endpoint discarded: user_fields_reorder from user_fields
-    # Duplicate API endpoint discarded: tickets_list from tickets
-    # Duplicate API endpoint discarded: requests_search from requests
     # Duplicate API endpoint discarded: organizations_list from organizations
     # Duplicate API endpoint discarded: request_show from requests
+    # Duplicate API endpoint discarded: requests_search from requests
+    # Duplicate API endpoint discarded: ticket_macro_apply from macros
+    # Duplicate API endpoint discarded: ticket_show from tickets
+    # Duplicate API endpoint discarded: tickets_list from tickets
+    # Duplicate API endpoint discarded: user_fields_reorder from user_fields
+    # Duplicate API endpoint discarded: user_show from users
+    # Duplicate API endpoint discarded: users_list from users
+    # Duplicate API endpoint discarded: users_me from users
+    # Duplicate API endpoint discarded: users_search from users
+    # Duplicate API endpoint discarded: view_show from views
 
     # Duplicate API endpoint that differs: tickets_update from tickets
     # tickets_update
@@ -1429,6 +1429,22 @@ class ZendeskAPI:
         path = path.format(ticket_id=ticket_id, id=id)
         return self.call(path, "PUT", **kwargs)
 
+    def ticket_comment_redact(self, ticket_id, id, **kwargs):
+        """
+        http://developer.zendesk.com/rest_api/docs/core/ticket_comments
+        """
+        path = "/api/v2/tickets/{ticket_id}/comments/{id}/redact.json"
+        path = path.format(ticket_id=ticket_id, id=id)
+        return self.call(path, "PUT", **kwargs)
+
+    def ticket_comments(self, ticket_id, **kwargs):
+        """
+        http://developer.zendesk.com/rest_api/docs/core/ticket_comments
+        """
+        path = "/api/v2/tickets/{ticket_id}/comments.json"
+        path = path.format(ticket_id=ticket_id)
+        return self.call(path, **kwargs)
+
     def ticket_create(self, id, **kwargs):
         """
         http://developer.zendesk.com/rest_api/docs/core/tickets
@@ -1646,20 +1662,6 @@ class ZendeskAPI:
         path = "/api/v2/tickets/{id}/tags.json"
         path = path.format(id=id)
         return self.call(path, "POST", data, **kwargs)
-
-    def tickets_:ticket_id_comments_:id_redact(self, **kwargs):
-        """
-        http://developer.zendesk.com/rest_api/docs/core/ticket_comments
-        """
-        path = "/api/v2/tickets/:ticket_id/comments/:id/redact.json"
-        return self.call(path, "PUT", **kwargs)
-
-    def tickets_:ticket_id_comments_list(self, **kwargs):
-        """
-        http://developer.zendesk.com/rest_api/docs/core/ticket_comments
-        """
-        path = "/api/v2/tickets/:ticket_id/comments.json"
-        return self.call(path, **kwargs)
 
     def tickets_destroy_many(self, ids, **kwargs):
         """
