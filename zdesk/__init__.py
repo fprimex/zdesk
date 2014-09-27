@@ -1,1 +1,1 @@
-from zdesk import Zendesk
+from .zdesk import Zendesk
