@@ -1,46 +1,21 @@
-"""
-    Python Zendesk is wrapper for the Zendesk API. This library provides an
-    easy and flexible way for developers to communicate with their Zendesk
-    account in their application.
-
-    Notes:
-    API THROTTLE is not handled in this library:
-        From Zendesk: The throttle will be applied once an API consumer
-        reaches a certain threshold in terms of a maximum of requests per
-        minute. Most clients will never hit this threshold, but those that do,
-        will get met by a HTTP 503 response code and a text body of
-        "Number of allowed API requests per minute exceeded"
-
-    TICKETS AS AN END-USER is not handled in this library:
-        There are a number of API calls for working with helpdesk tickets as
-        if you were the person (end-user) who originally created them. At the
-        moment, this library is primarily for admins and agents to interact
-
-    FORUMS, ENTRIES, POSTS have not yet been implemented
-
-"""
-
-__author__ = "Max Gutman <max@eventbrite.com>"
-__version__ = "1.1.1"
-
 import re
-import httplib2
 import urllib
 import base64
-try:
-    import simplejson as json
-except:
-    import json
-from httplib import responses
-from endpoints import mapping_table as mapping_table_v1
-from endpoints_v2 import mapping_table as mapping_table_v2
+import pkg_resources
+import httplib
 
-V2_COLLECTION_PARAMS = [
-    'page',
-    'per_page',
-    'sort_order',
-]
+import httplib2
+import simplejson
 
+from zdesk_api import ZendeskAPI
+
+common_params = [
+        'page',
+        'per_page',
+        'sort_order',
+        'mime_type',
+        'complete_response',
+    ]
 
 class ZendeskError(Exception):
     def __init__(self, msg, code, response):
@@ -59,29 +34,13 @@ class AuthenticationError(ZendeskError):
 class RateLimitError(ZendeskError):
     pass
 
-re_identifier = re.compile(r".*/(?P<identifier>\d+)\.(json|xml)")
 
-
-def get_id_from_url(url):
-    match = re_identifier.match(url)
-    if match and match.group('identifier'):
-        return match.group('identifier')
-
-
-def clean_kwargs(kwargs):
-    """Format the kwargs to conform to API"""
-
-    for key, value in kwargs.iteritems():
-        if hasattr(value, '__iter__') and type(value) is not str:
-            kwargs[key] = ','.join(map(str, value))
-
-
-class Zendesk(object):
+class Zendesk(ZendeskAPI):
     """ Python API Wrapper for Zendesk"""
 
-    def __init__(self, zendesk_url, zendesk_username=None,
-                 zendesk_password=None, use_api_token=False, headers=None,
-                 client_args={}, api_version=1):
+
+    def __init__(self, zendesk_url, zendesk_username=None, zendesk_password=None, use_api_token=False, headers=None,
+                 client_args=None, api_version=2):
         """
         Instantiates an instance of Zendesk. Takes optional parameters for
         HTTP Basic Authentication
@@ -99,7 +58,7 @@ class Zendesk(object):
             or a common one is to disable SSL certficate validation
             {"disable_ssl_certificate_validation": True}
         """
-        self.data = None
+        if not client_args: client_args = {}
 
         # Set attributes necessary for API
         self.zendesk_url = zendesk_url.rstrip('/')
@@ -111,8 +70,9 @@ class Zendesk(object):
         # Set headers
         self.headers = headers
         if self.headers is None:
+            version = pkg_resources.require("zdesk")[0].version
             self.headers = {
-                'User-agent': 'Zendesk Python Library v%s' % __version__,
+                'User-agent': 'Zdesk Python Library v%s' % version,
                 'Content-Type': 'application/json'
             }
 
@@ -125,102 +85,58 @@ class Zendesk(object):
                 self.zendesk_password
             )
 
-        self.api_version = api_version
-        if self.api_version == 1:
-            self.mapping_table = mapping_table_v1
-        elif self.api_version == 2:
-            self.mapping_table = mapping_table_v2
-        else:
+        if api_version != 2:
             raise ValueError("Unsupported Zendesk API Version: %d" %
-                             (self.api_version,))
+                             api_version)
 
-    def __getattr__(self, api_call):
+    def call(self, path, query='', method='GET', status=200, data=None, **kwargs):
         """
-        Instead of writing out each API endpoint as a method here or
-        binding the API endpoints at instance runttime, we can simply
-        use an elegant Python technique to construct method execution on-
-        demand. We simply provide a mapping table between Zendesk API calls
-        and function names (with necessary parameters to replace
-        embedded keywords on GET or json data on POST/PUT requests).
-
-        __getattr__() is used as callback method implemented so that
-        when an object tries to call a method which is not defined here,
-        it looks to find a relationship in the the mapping table.  The
-        table provides the structure of the API call and parameters passed
-        in the method will populate missing data.
-
-        TODO:
-            Should probably url-encode GET query parameters on replacement
+        Should probably url-encode GET query parameters on replacement
         """
-        def call(self, **kwargs):
-            """ """
-            api_map = self.mapping_table[api_call]
-            path = api_map['path']
-            if self.api_version == 2:
-                path = "/api/v2" + path
 
-            method = api_map['method']
-            status = api_map['status']
-            valid_params = api_map.get('valid_params', ())
-            # Body can be passed from data or in args
-            body = kwargs.pop('data', None) or self.data
-            # If requested, return all response information
-            complete_response = kwargs.pop('complete_response', False)
-            # Support specifying a mime-type other than application/json
-            mime_type = kwargs.pop('mime_type', 'application/json')
-            # Substitute mustache placeholders with data from keywords
-            url = re.sub(
-                '\{\{(?P<m>[a-zA-Z_]+)\}\}',
-                # Optional pagination parameters will default to blank
-                lambda m: "%s" % kwargs.pop(m.group(1), ''),
-                self.zendesk_url + path
-            )
-            # Validate remaining kwargs against valid_params and add
-            # params url encoded to url variable.
-            for kw in kwargs:
-                if (kw not in valid_params and
-                        (self.api_version == 2 and
-                         kw not in V2_COLLECTION_PARAMS)):
-                    raise TypeError("%s() got an unexpected keyword argument "
-                                    "'%s'" % (api_call, kw))
-            else:
-                clean_kwargs(kwargs)
-                url += '?' + urllib.urlencode(kwargs)
+        # If requested, return all response information
+        complete_response = kwargs.pop('complete_response', False)
 
-            # the 'search' endpoint in an open Zendesk site doesn't return a
-            # 401 to force authentication. Inject the credentials in the
-            # headers to ensure we get the results we're looking for
-            if re.match("^/search\..*", path):
-                self.headers["Authorization"] = "Basic %s" % (
-                    base64.b64encode(self.zendesk_username + ':' +
-                                     self.zendesk_password))
-            elif "Authorization" in self.headers:
-                del(self.headers["Authorization"])
+        # Support specifying a mime-type other than application/json
+        mime_type = kwargs.pop('mime_type', 'application/json')
 
-            if mime_type == "application/json":
-                body = json.dumps(body)
-                self.headers["Content-Type"] = "application/json"
-            else:
-                self.headers["Content-Type"] = mime_type
+        # Validate remaining kwargs against valid_params and add
+        # params url encoded to url variable.
+        for kw in kwargs:
+            if kw not in common_params:
+                raise TypeError("call to %s got an unexpected keyword argument "
+                                "'%s'" % (path, kw))
 
-            # Make an http request (data replacements are finalized)
-            response, content = \
-                self.client.request(
-                    url,
-                    method,
-                    body=body,
-                    headers=self.headers
-                )
-            # Use a response handler to determine success/fail
-            return self._response_handler(response, content, status,
-                complete_response)
+        # TODO: might already have query params
+        path += '?' + urllib.urlencode(kwargs)
 
-        # Missing method is also not defined in our mapping table
-        if api_call not in self.mapping_table:
-            raise AttributeError('Method "%s" Does Not Exist' % api_call)
+        # the 'search' endpoint in an open Zendesk site doesn't return a
+        # 401 to force authentication. Inject the credentials in the
+        # headers to ensure we get the results we're looking for
+        if re.match("^/search\..*", path):
+            self.headers["Authorization"] = "Basic %s" % (
+                base64.b64encode(self.zendesk_username + ':' +
+                                 self.zendesk_password))
+        elif "Authorization" in self.headers:
+            del(self.headers["Authorization"])
 
-        # Execute dynamic method and pass in keyword args as data to API call
-        return call.__get__(self)
+        if mime_type == "application/json":
+            body = json.dumps(data)
+            self.headers["Content-Type"] = "application/json"
+        else:
+            self.headers["Content-Type"] = mime_type
+
+        # Make an http request (data replacements are finalized)
+        response, content = self.client.request(
+                                url,
+                                method,
+                                body=body,
+                                headers=self.headers
+                            )
+
+        # Use a response handler to determine success/fail
+        return self._response_handler(response, content, status,
+            complete_response)
 
     @staticmethod
     def _response_handler(response, content, status, complete_response=False):
@@ -240,6 +156,7 @@ class Zendesk(object):
             if response_status == 401:
                 raise AuthenticationError(content, response_status, response)
             elif response_status == 429:
+                # FYI: Check the Retry-After header for how many seconds to sleep
                 raise RateLimitError(content, response_status, response)
             else:
                 raise ZendeskError(content, response_status, response)
@@ -261,4 +178,5 @@ class Zendesk(object):
         elif content.strip():
             return json.loads(content)
         else:
-            return responses[response_status]
+            return httplib.responses[response_status]
+
