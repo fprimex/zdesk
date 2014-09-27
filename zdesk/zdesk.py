@@ -1,13 +1,13 @@
 import re
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import base64
 import pkg_resources
-import httplib
+import http.client
 
 import httplib2
 import simplejson
 
-from zdesk_api import ZendeskAPI
+from .zdesk_api import ZendeskAPI
 
 common_params = [
         'page',
@@ -108,7 +108,7 @@ class Zendesk(ZendeskAPI):
                                 "'%s'" % (path, kw))
 
         # TODO: might already have query params
-        path += '?' + urllib.urlencode(kwargs)
+        path += '?' + urllib.parse.urlencode(kwargs)
 
         # the 'search' endpoint in an open Zendesk site doesn't return a
         # 401 to force authentication. Inject the credentials in the
@@ -178,5 +178,5 @@ class Zendesk(ZendeskAPI):
         elif content.strip():
             return json.loads(content)
         else:
-            return httplib.responses[response_status]
+            return http.client.responses[response_status]
 
