@@ -89,7 +89,7 @@ class Zendesk(ZendeskAPI):
             raise ValueError("Unsupported Zendesk API Version: %d" %
                              api_version)
 
-    def call(self, path, query='', method='GET', status=200, data=None, **kwargs):
+    def call(self, path, query=None, method='GET', status=200, data=None, **kwargs):
         """
         Should probably url-encode GET query parameters on replacement
         """
@@ -111,10 +111,10 @@ class Zendesk(ZendeskAPI):
             if hasattr(value, '__iter__') and not isinstance(value, str):
                 kwargs[key] = ','.join(map(str, value))
 
-        if query and kwargs:
-            query += '&'
+        if query:
+            kwargs.update(query)
 
-        url = self.zendesk_url + path + '?' + query + urllib.parse.urlencode(kwargs)
+        url = self.zendesk_url + path + '?' + urllib.parse.urlencode(kwargs)
 
         # the 'search' endpoint in an open Zendesk site doesn't return a
         # 401 to force authentication. Inject the credentials in the
@@ -133,6 +133,7 @@ class Zendesk(ZendeskAPI):
             self.headers["Content-Type"] = mime_type
 
         # Make an http request (data replacements are finalized)
+        print(url)
         response, content = self.client.request(
                                 url,
                                 method,

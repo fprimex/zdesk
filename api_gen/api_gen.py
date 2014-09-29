@@ -17,7 +17,7 @@ html_parser = html.parser.HTMLParser()
 
 skip_files=[
     'introduction',
-    'changes_roadmap,'
+    'changes_roadmap',
     ]
 
 api_actions = [
@@ -225,7 +225,6 @@ for name in names:
     item = api_items[name]
 
     path_fmt_args = ', '.join([p + '=' + p for p in item['path_params']])
-    query = ' + "&'.join([q + '=" + ' + sanitize(q) for q in item['query_params']])
 
     paramspec = ', '.join(item['path_params'])
     queryspec = ', '.join([sanitize(q) for q in item['query_params']])
@@ -243,21 +242,22 @@ for name in names:
     argspec += '**kwargs'
 
     content += '    def {}(self, {}):\n'.format(name, argspec)
-    content += '        """\n'
-    content += '        {}/{}\n'.format(dev_site, item['docpage'])
-    content += '        """\n'
-    content += '        path = "{}"\n'.format(item['path'])
+    content += '        "{}/{}"\n'.format(dev_site, item['docpage'])
+    content += '        api_path = "{}"\n'.format(item['path'])
 
-    if path_fmt_args:
-        content += '        path = path.format({})\n'.format(path_fmt_args)
+    if item['path_params']:
+        content += '        api_path = api_path.format({})\n'.format(path_fmt_args)
 
-    if query:
-        content += '        query = "{}\n'.format(query)
+    if item['query_params']:
+        content += '        api_query = {\n'
+        for q in item['query_params']:
+            content += '            "{}": {},\n'.format(q, sanitize(q))
+        content += '        }\n'
 
-    content += '        return self.call(path'
+    content += '        return self.call(api_path'
 
-    if query:
-        content += ', query'
+    if item['query_params']:
+        content += ', api_query'
 
     if item['method'] != 'GET':
         content += ', "{}"'.format(item['method'])
