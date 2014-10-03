@@ -18,6 +18,7 @@ html_parser = html.parser.HTMLParser()
 skip_files=[
     'introduction',
     'changes_roadmap',
+    'side_loading',
     ]
 
 api_actions = [
@@ -51,12 +52,12 @@ with open('api_template.py', 'r') as template_file:
 
 dev_site = 'http://developer.zendesk.com/rest_api/docs/core'
 #os.chdir('old.developer.zendesk.com/documentation/rest_api')
-os.chdir('developer.zendesk.com/rest_api/docs/core')
+#os.chdir('developer.zendesk.com/rest_api/docs/core')
 
 api_items = {}
 duplicate_api_items = {}
-for doc_file in iglob('*'):
-    if '.html' in doc_file or doc_file in skip_files:
+for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', '*', '*')):
+    if '.html' in doc_file or os.path.split(doc_file)[1] in skip_files:
         continue
 
     with open(doc_file, 'r') as doc:
@@ -78,7 +79,10 @@ for doc_file in iglob('*'):
             api_item = {}
             api_item['docpage'] = doc_file
             api_item['path_params'] = []
+            api_item['opt_path_params'] = []
+            api_item['opt_path'] = ''
             api_item['query_params'] = []
+            api_item['opt_query_params'] = []
             api_item['status'] = default_status
 
             api_item['method'] = match.group(1)
@@ -191,12 +195,54 @@ for name in names:
         dupe['status'] == item['status'] and
         False not in [i == j for i, j in itertools.zip_longest(
             dupe['path_params'], item['path_params'])] and
-        len(item['path_params']) == len(
-            set(dupe['path_params']) & set(item['path_params']))
+        len(item['query_params']) == len(
+            set(dupe['query_params']) & set(item['query_params']))
        ):
+        # Everything is the same, so discard this duplicate
         content += "    # Duplicate API endpoint discarded: {} from {}\n".format(name, dupe['docpage'])
+    elif (
+        dupe['method'] == item['method'] and
+        dupe['status'] == item['status'] and
+        len(item['query_params']) == len(
+            set(dupe['query_params']) & set(item['query_params']))
+        ):
+        # Only the path parameters differ, so we have optional arguments
+
+        # Common parameters are all required
+        required = set(dupe['path_params']) & set(item['path_params'])
+
+        # Optional parameters are only in one endpoint
+        optional = (set(dupe['path_params']) | set(item['path_params'])) - required
+
+        if len(set(item['path_params']) - required) == 0:
+            # The item is the base function and the dupe has the optional arguments
+            # Just need to add the optional arguments
+            item['opt_path_params'] = optional
+            item['opt_path'] = dupe['path']
+        elif len(set(dupe['path_params']) - required) == 0:
+            # The dupe is the base function and the item has the optional arguments
+            # Need to swap the dupe with the item and then add the optional arguments
+            dupe_path = dupe['path']
+            item = dupe
+            item['opt_path_params'] = optional
+            item['opt_path'] = dupe_path
+        else:
+            content += "    # Duplicate ambiguous API endpoint: {} from {}\n".format(name, dupe['docpage'])
+            continue
+    elif (
+        dupe['path'] == item['path'] and
+        dupe['method'] == item['method'] and
+        dupe['status'] == item['status'] and
+        False not in [i == j for i, j in itertools.zip_longest(
+            dupe['path_params'], item['path_params'])]
+        ):
+            # Only the query parameters differ, so we have optional, either/or arguments
+            item['opt_query_params'] = item['query_params']
+            item['opt_query_params'] += dupe['query_params']
+            item['query_params'] = []
     else:
         should_keep += "    # Duplicate API endpoint that differs: {} from {}\n".format(name, dupe['docpage'])
+        should_keep += "    # Original definition located here:    {} from {}\n".format(name, item['docpage'])
         should_keep += '    # {}\n'.format(name)
         should_keep += '    #    Path: {}\n'.format(dupe['path'])
         should_keep += '    #    Method: {}\n'.format(dupe['method'])
@@ -204,7 +250,7 @@ for name in names:
         should_keep += '    #    Parameters:\n'
         for param in dupe['path_params']:
             should_keep += '    #        {}\n'.format(param)
-        should_keep += '    #    Query Parameters:'
+        should_keep += '    #    Query Parameters:\n'
         for param in dupe['query_params']:
             should_keep += '    #        {}\n'.format(param)
 
@@ -232,6 +278,16 @@ for name in names:
         paramspec += ', '
     argspec = paramspec + queryspec
 
+    if item['opt_path_params']:
+        if argspec:
+            argspec += ', '
+        argspec += '=None, '.join(item['opt_path_params']) + '=None'
+
+    if item['opt_query_params']:
+        if argspec:
+            argspec += ', '
+        argspec += '=None, '.join([sanitize(q) for q in item['opt_query_params']]) + '=None'
+
     if item['method'] == 'POST':
         if argspec:
             argspec += ', '
@@ -248,15 +304,34 @@ for name in names:
     if item['path_params']:
         content += '        api_path = api_path.format({})\n'.format(path_fmt_args)
 
+    if item['opt_path']:
+        opt_test = ' and '.join(item['opt_path_params'])
+        if path_fmt_args:
+            path_fmt_args += ', '
+        path_fmt_args = path_fmt_args + ', '.join([p + '=' + p for p in item['opt_path_params']])
+        content += '        if {}:\n'.format(opt_test)
+        content += '            api_opt_path = "{}"\n'.format(item['opt_path'])
+        content += '            api_path = api_opt_path.format({})\n'.format(path_fmt_args)
+
     if item['query_params']:
         content += '        api_query = {\n'
         for q in item['query_params']:
             content += '            "{}": {},\n'.format(q, sanitize(q))
         content += '        }\n'
 
+    for q in item['opt_query_params']:
+        content += '        if {}:\n'.format(q)
+        content += '            api_query = {\n'
+        content += '                "{}": {},\n'.format(q, sanitize(q))
+        content += '            }\n'
+    if item['opt_query_params']:
+        opt_test = ' or '.join(item['opt_query_params'])
+        content += '        if not ({}):\n'.format(opt_test)
+        content += '            pass # todo: raise error here, one query is required\n'
+
     content += '        return self.call(api_path'
 
-    if item['query_params']:
+    if item['query_params'] or item['opt_query_params']:
         content += ', api_query'
 
     if item['method'] != 'GET':
