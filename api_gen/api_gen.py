@@ -50,7 +50,6 @@ default_status = '200'
 with open('api_template.py', 'r') as template_file:
     template = template_file.read()
 
-dev_site = 'http://developer.zendesk.com/rest_api/docs/core'
 #os.chdir('old.developer.zendesk.com/documentation/rest_api')
 #os.chdir('developer.zendesk.com/rest_api/docs/core')
 
@@ -298,7 +297,7 @@ for name in names:
     argspec += '**kwargs'
 
     content += '    def {}(self, {}):\n'.format(name, argspec)
-    content += '        "{}/{}"\n'.format(dev_site, item['docpage'])
+    content += '        "http://{}"\n'.format( item['docpage'])
     content += '        api_path = "{}"\n'.format(item['path'])
 
     if item['path_params']:

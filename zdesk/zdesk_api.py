@@ -7,11 +7,11 @@ class ZendeskAPI:
     def call(self, path, query=None, method='GET', status=200, data=None, **kwargs):
         pass
 
-    # Duplicate API endpoint discarded: channels_voice_tickets_update from voice_integration
-    # Duplicate API endpoint discarded: requests_search from requests
-    # Duplicate API endpoint discarded: user_fields_reorder from user_fields
-    # Duplicate API endpoint discarded: users_me from users
-    # Duplicate API endpoint discarded: users_search from users
+    # Duplicate API endpoint discarded: channels_voice_tickets_update from developer.zendesk.com/rest_api/docs/core/voice_integration
+    # Duplicate API endpoint discarded: help_center_articles_search from developer.zendesk.com/rest_api/docs/help_center/search
+    # Duplicate API endpoint discarded: help_center_incremental_articles from developer.zendesk.com/rest_api/docs/help_center/articles
+    # Duplicate API endpoint discarded: requests_search from developer.zendesk.com/rest_api/docs/core/requests
+    # Duplicate API endpoint discarded: user_fields_reorder from developer.zendesk.com/rest_api/docs/core/user_fields
 
 
     def account_settings_create(self, **kwargs):
@@ -547,6 +547,518 @@ class ZendeskAPI:
         "http://developer.zendesk.com/rest_api/docs/core/groups"
         api_path = "/api/v2/groups.json"
         return self.call(api_path, "POST", 201, data, **kwargs)
+
+    def help_center_answer_down_update(self, id, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/votes"
+        api_path = "/api/v2/help_center/answers/{id}/down.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "POST", data, **kwargs)
+
+    def help_center_answer_up_update(self, id, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/votes"
+        api_path = "/api/v2/help_center/answers/{id}/up.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "POST", data, **kwargs)
+
+    def help_center_article_attachments(self, article_id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/article_attachments"
+        api_path = "/api/v2/help_center/articles/{article_id}/attachments.json"
+        api_path = api_path.format(article_id=article_id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_article_attachments_block(self, article_id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/article_attachments"
+        api_path = "/api/v2/help_center/articles/{article_id}/attachments/block.json"
+        api_path = api_path.format(article_id=article_id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_article_attachments_inline(self, article_id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/article_attachments"
+        api_path = "/api/v2/help_center/articles/{article_id}/attachments/inline.json"
+        api_path = api_path.format(article_id=article_id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_article_attachments_update(self, id, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/article_attachments"
+        api_path = "/api/v2/help_center/articles/{id}/attachments.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "POST", 201, data, **kwargs)
+
+    def help_center_article_bulk_attachments_update(self, id, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/articles"
+        api_path = "/api/v2/help_center/articles/{id}/bulk_attachments.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "POST", data, **kwargs)
+
+    def help_center_article_comment_create(self, article_id, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/comments"
+        api_path = "/api/v2/help_center/articles/{article_id}/comments/{id}.json"
+        api_path = api_path.format(article_id=article_id, id=id)
+        return self.call(api_path, "PUT", **kwargs)
+
+    def help_center_article_comment_delete(self, id, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/comments"
+        api_path = "/api/v2/help_center/articles/{id}/comments/{id}.json"
+        api_path = api_path.format(id=id, id=id)
+        return self.call(api_path, "DELETE", **kwargs)
+
+    def help_center_article_comment_show(self, article_id, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/comments"
+        api_path = "/api/v2/help_center/articles/{article_id}/comments/{id}.json"
+        api_path = api_path.format(article_id=article_id, id=id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_article_comments(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/comments"
+        api_path = "/api/v2/help_center/articles/{id}/comments.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_article_comments_update(self, id, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/comments"
+        api_path = "/api/v2/help_center/articles/{id}/comments.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "POST", 201, data, **kwargs)
+
+    def help_center_article_create(self, id, locale=None, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/articles"
+        api_path = "/api/v2/help_center/articles/{id}.json"
+        api_path = api_path.format(id=id)
+        if locale:
+            api_opt_path = "/api/v2/help_center/{locale}/articles/{id}.json"
+            api_path = api_opt_path.format(id=id, locale=locale)
+        return self.call(api_path, "PUT", **kwargs)
+
+    def help_center_article_delete(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/articles"
+        api_path = "/api/v2/help_center/articles/{id}.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "DELETE", **kwargs)
+
+    def help_center_article_down_update(self, id, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/votes"
+        api_path = "/api/v2/help_center/articles/{id}/down.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "POST", data, **kwargs)
+
+    def help_center_article_label_delete(self, article_id, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/labels"
+        api_path = "/api/v2/help_center/articles/{article_id}/labels/{id}.json"
+        api_path = api_path.format(article_id=article_id, id=id)
+        return self.call(api_path, "DELETE", **kwargs)
+
+    def help_center_article_labels(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/labels"
+        api_path = "/api/v2/help_center/articles/{id}/labels.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_article_labels_update(self, id, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/labels"
+        api_path = "/api/v2/help_center/articles/{id}/labels.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "POST", 201, data, **kwargs)
+
+    def help_center_article_show(self, id, locale=None, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/articles"
+        api_path = "/api/v2/help_center/articles/{id}.json"
+        api_path = api_path.format(id=id)
+        if locale:
+            api_opt_path = "/api/v2/help_center/{locale}/articles/{id}.json"
+            api_path = api_opt_path.format(id=id, locale=locale)
+        return self.call(api_path, **kwargs)
+
+    def help_center_article_source_locale_create(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/articles"
+        api_path = "/api/v2/help_center/articles/{id}/source_locale.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "PUT", **kwargs)
+
+    def help_center_article_subscription_delete(self, article_id, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/subscriptions"
+        api_path = "/api/v2/help_center/articles/{article_id}/subscriptions/{id}.json"
+        api_path = api_path.format(article_id=article_id, id=id)
+        return self.call(api_path, "DELETE", **kwargs)
+
+    def help_center_article_subscription_show(self, article_id, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/subscriptions"
+        api_path = "/api/v2/help_center/articles/{article_id}/subscriptions/{id}.json"
+        api_path = api_path.format(article_id=article_id, id=id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_article_subscriptions(self, article_id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/subscriptions"
+        api_path = "/api/v2/help_center/articles/{article_id}/subscriptions.json"
+        api_path = api_path.format(article_id=article_id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_article_subscriptions_update(self, article_id, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/subscriptions"
+        api_path = "/api/v2/help_center/articles/{article_id}/subscriptions.json"
+        api_path = api_path.format(article_id=article_id)
+        return self.call(api_path, "POST", 201, data, **kwargs)
+
+    def help_center_article_translation_create(self, article_id, locale, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/translations"
+        api_path = "/api/v2/help_center/articles/{article_id}/translations/{locale}.json"
+        api_path = api_path.format(article_id=article_id, locale=locale)
+        return self.call(api_path, "PUT", **kwargs)
+
+    def help_center_article_translation_show(self, article_id, locale, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/translations"
+        api_path = "/api/v2/help_center/articles/{article_id}/translations/{locale}.json"
+        api_path = api_path.format(article_id=article_id, locale=locale)
+        return self.call(api_path, **kwargs)
+
+    def help_center_article_translations(self, article_id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/translations"
+        api_path = "/api/v2/help_center/articles/{article_id}/translations.json"
+        api_path = api_path.format(article_id=article_id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_article_translations_missing(self, article_id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/translations"
+        api_path = "/api/v2/help_center/articles/{article_id}/translations/missing.json"
+        api_path = api_path.format(article_id=article_id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_article_translations_update(self, article_id, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/translations"
+        api_path = "/api/v2/help_center/articles/{article_id}/translations.json"
+        api_path = api_path.format(article_id=article_id)
+        return self.call(api_path, "POST", 201, data, **kwargs)
+
+    def help_center_article_up_update(self, id, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/votes"
+        api_path = "/api/v2/help_center/articles/{id}/up.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "POST", data, **kwargs)
+
+    def help_center_article_votes(self, article_id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/votes"
+        api_path = "/api/v2/help_center/articles/{article_id}/votes.json"
+        api_path = api_path.format(article_id=article_id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_articles(self, locale, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/articles"
+        api_path = "/api/v2/help_center/{locale}/articles.json"
+        api_path = api_path.format(locale=locale)
+        return self.call(api_path, **kwargs)
+
+    def help_center_articles_attachment_delete(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/article_attachments"
+        api_path = "/api/v2/help_center/articles/attachments/{id}.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "DELETE", **kwargs)
+
+    def help_center_articles_attachment_show(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/article_attachments"
+        api_path = "/api/v2/help_center/articles/attachments/{id}.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_articles_attachments_update(self, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/article_attachments"
+        api_path = "/api/v2/help_center/articles/attachments.json"
+        return self.call(api_path, "POST", 201, data, **kwargs)
+
+    def help_center_articles_label_show(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/labels"
+        api_path = "/api/v2/help_center/articles/labels/{id}.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_articles_labels_list(self, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/labels"
+        api_path = "/api/v2/help_center/articles/labels.json"
+        return self.call(api_path, **kwargs)
+
+    def help_center_articles_list(self, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/articles"
+        api_path = "/api/v2/help_center/articles.json"
+        return self.call(api_path, **kwargs)
+
+    def help_center_articles_search(self, query, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/articles"
+        api_path = "/api/v2/help_center/articles/search.json"
+        api_query = {
+            "query": query,
+        }
+        return self.call(api_path, api_query, **kwargs)
+
+    def help_center_categories(self, locale, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/categories"
+        api_path = "/api/v2/help_center/{locale}/categories.json"
+        api_path = api_path.format(locale=locale)
+        return self.call(api_path, **kwargs)
+
+    def help_center_categories_list(self, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/categories"
+        api_path = "/api/v2/help_center/categories.json"
+        return self.call(api_path, **kwargs)
+
+    def help_center_categories_update(self, locale=None, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/categories"
+        api_path = "/api/v2/help_center/categories.json"
+        if locale:
+            api_opt_path = "/api/v2/help_center/{locale}/categories.json"
+            api_path = api_opt_path.format(locale=locale)
+        return self.call(api_path, "POST", 201, data, **kwargs)
+
+    def help_center_category_articles(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/articles"
+        api_path = "/api/v2/help_center/categories/{id}/articles.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_category_create(self, id, locale=None, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/categories"
+        api_path = "/api/v2/help_center/categories/{id}.json"
+        api_path = api_path.format(id=id)
+        if locale:
+            api_opt_path = "/api/v2/help_center/{locale}/categories/{id}.json"
+            api_path = api_opt_path.format(id=id, locale=locale)
+        return self.call(api_path, "PUT", **kwargs)
+
+    def help_center_category_delete(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/categories"
+        api_path = "/api/v2/help_center/categories/{id}.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "DELETE", **kwargs)
+
+    def help_center_category_sections(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/sections"
+        api_path = "/api/v2/help_center/categories/{id}/sections.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_category_sections_update(self, id, locale=None, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/sections"
+        api_path = "/api/v2/help_center/categories/{id}/sections.json"
+        api_path = api_path.format(id=id)
+        if locale:
+            api_opt_path = "/api/v2/help_center/{locale}/categories/{id}/sections.json"
+            api_path = api_opt_path.format(id=id, locale=locale)
+        return self.call(api_path, "POST", 201, data, **kwargs)
+
+    def help_center_category_show(self, id, locale=None, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/categories"
+        api_path = "/api/v2/help_center/categories/{id}.json"
+        api_path = api_path.format(id=id)
+        if locale:
+            api_opt_path = "/api/v2/help_center/{locale}/categories/{id}.json"
+            api_path = api_opt_path.format(id=id, locale=locale)
+        return self.call(api_path, **kwargs)
+
+    def help_center_category_source_locale_create(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/categories"
+        api_path = "/api/v2/help_center/categories/{id}/source_locale.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "PUT", **kwargs)
+
+    def help_center_category_translation_create(self, category_id, locale, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/translations"
+        api_path = "/api/v2/help_center/categories/{category_id}/translations/{locale}.json"
+        api_path = api_path.format(category_id=category_id, locale=locale)
+        return self.call(api_path, "PUT", **kwargs)
+
+    def help_center_category_translations(self, category_id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/translations"
+        api_path = "/api/v2/help_center/categories/{category_id}/translations.json"
+        api_path = api_path.format(category_id=category_id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_category_translations_missing(self, category_id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/translations"
+        api_path = "/api/v2/help_center/categories/{category_id}/translations/missing.json"
+        api_path = api_path.format(category_id=category_id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_category_translations_update(self, category_id, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/translations"
+        api_path = "/api/v2/help_center/categories/{category_id}/translations.json"
+        api_path = api_path.format(category_id=category_id)
+        return self.call(api_path, "POST", 201, data, **kwargs)
+
+    def help_center_incremental_articles(self, start_time, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/articles"
+        api_path = "/api/v2/help_center/incremental/articles.json"
+        api_query = {
+            "start_time": start_time,
+        }
+        return self.call(api_path, api_query, **kwargs)
+
+    def help_center_locales_list(self, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/translations"
+        api_path = "/api/v2/help_center/locales.json"
+        return self.call(api_path, **kwargs)
+
+    def help_center_question_down_update(self, id, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/votes"
+        api_path = "/api/v2/help_center/questions/{id}/down.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "POST", data, **kwargs)
+
+    def help_center_question_up_update(self, id, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/votes"
+        api_path = "/api/v2/help_center/questions/{id}/up.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "POST", data, **kwargs)
+
+    def help_center_questions_search(self, query, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/search"
+        api_path = "/api/v2/help_center/questions/search.json"
+        api_query = {
+            "query": query,
+        }
+        return self.call(api_path, api_query, **kwargs)
+
+    def help_center_section_articles(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/articles"
+        api_path = "/api/v2/help_center/sections/{id}/articles.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_section_articles_update(self, id, locale=None, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/articles"
+        api_path = "/api/v2/help_center/sections/{id}/articles.json"
+        api_path = api_path.format(id=id)
+        if locale:
+            api_opt_path = "/api/v2/help_center/{locale}/sections/{id}/articles.json"
+            api_path = api_opt_path.format(id=id, locale=locale)
+        return self.call(api_path, "POST", 201, data, **kwargs)
+
+    def help_center_section_create(self, id, locale=None, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/sections"
+        api_path = "/api/v2/help_center/sections/{id}.json"
+        api_path = api_path.format(id=id)
+        if locale:
+            api_opt_path = "/api/v2/help_center/{locale}/sections/{id}.json"
+            api_path = api_opt_path.format(id=id, locale=locale)
+        return self.call(api_path, "PUT", **kwargs)
+
+    def help_center_section_delete(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/sections"
+        api_path = "/api/v2/help_center/sections/{id}.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "DELETE", **kwargs)
+
+    def help_center_section_show(self, id, locale=None, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/sections"
+        api_path = "/api/v2/help_center/sections/{id}.json"
+        api_path = api_path.format(id=id)
+        if locale:
+            api_opt_path = "/api/v2/help_center/{locale}/sections/{id}.json"
+            api_path = api_opt_path.format(id=id, locale=locale)
+        return self.call(api_path, **kwargs)
+
+    def help_center_section_source_locale_create(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/sections"
+        api_path = "/api/v2/help_center/sections/{id}/source_locale.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "PUT", **kwargs)
+
+    def help_center_section_subscription_delete(self, section_id, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/subscriptions"
+        api_path = "/api/v2/help_center/sections/{section_id}/subscriptions/{id}.json"
+        api_path = api_path.format(section_id=section_id, id=id)
+        return self.call(api_path, "DELETE", **kwargs)
+
+    def help_center_section_subscription_show(self, section_id, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/subscriptions"
+        api_path = "/api/v2/help_center/sections/{section_id}/subscriptions/{id}.json"
+        api_path = api_path.format(section_id=section_id, id=id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_section_subscriptions(self, section_id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/subscriptions"
+        api_path = "/api/v2/help_center/sections/{section_id}/subscriptions.json"
+        api_path = api_path.format(section_id=section_id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_section_subscriptions_update(self, section_id, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/subscriptions"
+        api_path = "/api/v2/help_center/sections/{section_id}/subscriptions.json"
+        api_path = api_path.format(section_id=section_id)
+        return self.call(api_path, "POST", 201, data, **kwargs)
+
+    def help_center_section_translation_create(self, section_id, locale, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/translations"
+        api_path = "/api/v2/help_center/sections/{section_id}/translations/{locale}.json"
+        api_path = api_path.format(section_id=section_id, locale=locale)
+        return self.call(api_path, "PUT", **kwargs)
+
+    def help_center_section_translations(self, section_id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/translations"
+        api_path = "/api/v2/help_center/sections/{section_id}/translations.json"
+        api_path = api_path.format(section_id=section_id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_section_translations_missing(self, section_id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/translations"
+        api_path = "/api/v2/help_center/sections/{section_id}/translations/missing.json"
+        api_path = api_path.format(section_id=section_id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_section_translations_update(self, section_id, data, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/translations"
+        api_path = "/api/v2/help_center/sections/{section_id}/translations.json"
+        api_path = api_path.format(section_id=section_id)
+        return self.call(api_path, "POST", 201, data, **kwargs)
+
+    def help_center_sections(self, locale, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/sections"
+        api_path = "/api/v2/help_center/{locale}/sections.json"
+        api_path = api_path.format(locale=locale)
+        return self.call(api_path, **kwargs)
+
+    def help_center_sections_list(self, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/sections"
+        api_path = "/api/v2/help_center/sections.json"
+        return self.call(api_path, **kwargs)
+
+    def help_center_translation_delete(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/translations"
+        api_path = "/api/v2/help_center/translations/{id}.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "DELETE", **kwargs)
+
+    def help_center_user_articles(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/articles"
+        api_path = "/api/v2/help_center/users/{id}/articles.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_user_comments(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/comments"
+        api_path = "/api/v2/help_center/users/{id}/comments.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_user_subscriptions(self, user_id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/subscriptions"
+        api_path = "/api/v2/help_center/users/{user_id}/subscriptions.json"
+        api_path = api_path.format(user_id=user_id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_user_votes(self, user_id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/votes"
+        api_path = "/api/v2/help_center/users/{user_id}/votes.json"
+        api_path = api_path.format(user_id=user_id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_vote_delete(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/votes"
+        api_path = "/api/v2/help_center/votes/{id}.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, "DELETE", **kwargs)
+
+    def help_center_vote_show(self, id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/votes"
+        api_path = "/api/v2/help_center/votes/{id}.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, **kwargs)
 
     def import_topic_comments(self, id, data, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/topic_comments"
@@ -1705,13 +2217,10 @@ class ZendeskAPI:
         api_path = "/api/v2/users.json"
         return self.call(api_path, **kwargs)
 
-    def users_me(self, include, **kwargs):
-        "http://developer.zendesk.com/rest_api/docs/core/side_loading"
+    def users_me(self, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/core/users"
         api_path = "/api/v2/users/me.json"
-        api_query = {
-            "include": include,
-        }
-        return self.call(api_path, api_query, **kwargs)
+        return self.call(api_path, **kwargs)
 
     def users_me_merge(self, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/users"
@@ -1723,12 +2232,19 @@ class ZendeskAPI:
         api_path = "/api/v2/users/me/oauth/clients.json"
         return self.call(api_path, **kwargs)
 
-    def users_search(self, query, **kwargs):
+    def users_search(self, query=None, external_id=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/users"
         api_path = "/api/v2/users/search.json"
-        api_query = {
-            "query": query,
-        }
+        if query:
+            api_query = {
+                "query": query,
+            }
+        if external_id:
+            api_query = {
+                "external_id": external_id,
+            }
+        if not (query or external_id):
+            pass # todo: raise error here, one query is required
         return self.call(api_path, api_query, **kwargs)
 
     def users_show_many(self, ids, **kwargs):
