@@ -11,7 +11,11 @@ import itertools
 import inflection
 from bs4 import BeautifulSoup
 
-# $ wget -mk http://www.developer.zendesk.com/
+# Unless you're really going to hack on the API generator, don't hammer
+# the developer site needlessly. Currently, mirroring the whole site
+# results in about 26MB on disk. I may eventually do some more intelligent
+# scraping, downloading, and disk caching to avoid this wget.
+# $ wget -mk https://developer.zendesk.com/
 
 html_parser = html.parser.HTMLParser()
 
