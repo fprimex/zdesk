@@ -1,8 +1,15 @@
+import sys
 import re
-import urllib.request, urllib.parse, urllib.error
 import base64
 import pkg_resources
-import http.client
+
+if sys.version > '3':
+    from http.client import responses
+    from urllib.parse import urlencode
+else:
+    from httplib import responses
+    from urllib import urlencode
+
 
 import httplib2
 import simplejson as json
@@ -40,17 +47,18 @@ class Zendesk(ZendeskAPI):
 
 
     def __init__(self, zdesk_url, zdesk_email=None, zdesk_password=None,
-                 token=False, headers=None, client_args=None, api_version=2):
+                 zdesk_token=False, headers=None, client_args=None,
+                 api_version=2):
         """
         Instantiates an instance of Zendesk. Takes optional parameters for
         HTTP Basic Authentication
 
         Parameters:
-        zendesk_url - https://company.zendesk.com (use http if not SSL enabled)
-        zendesk_username - Specific to your Zendesk account (typically email)
-        zendesk_password - Specific to your Zendesk account or your account's
-            API token if use_api_token is True
-        use_api_token - use api token for authentication instead of user's
+        zdesk_url - https://company.zendesk.com (use http if not SSL enabled)
+        zdesk_email - Specific to your Zendesk account (typically email)
+        zdesk_password - Specific to your Zendesk account or your account's
+            API token if zdesk_token is True
+        zdesk_token - use api token for authentication instead of user's
             actual password
         headers - Pass headers in dict form. This will override default.
         client_args - Pass arguments to http client in dict form.
@@ -61,11 +69,11 @@ class Zendesk(ZendeskAPI):
         if not client_args: client_args = {}
 
         # Set attributes necessary for API
-        self.zendesk_url = zendesk_url.rstrip('/')
-        self.zendesk_username = zendesk_username
-        if use_api_token:
-            self.zendesk_username += "/token"
-        self.zendesk_password = zendesk_password
+        self.zdesk_url = zdesk_url.rstrip('/')
+        self.zdesk_email = zdesk_email
+        if zdesk_token:
+            self.zdesk_email += "/token"
+        self.zdesk_password = zdesk_password
 
         # Set headers
         self.headers = headers
@@ -78,11 +86,11 @@ class Zendesk(ZendeskAPI):
 
         # Set http client and authentication
         self.client = httplib2.Http(**client_args)
-        if (self.zendesk_username is not None and
-                self.zendesk_password is not None):
+        if (self.zdesk_email is not None and
+                self.zdesk_password is not None):
             self.client.add_credentials(
-                self.zendesk_username,
-                self.zendesk_password
+                self.zdesk_email,
+                self.zdesk_password
             )
 
         if api_version != 2:
@@ -115,15 +123,15 @@ class Zendesk(ZendeskAPI):
         if query:
             kwargs.update(query)
 
-        url = self.zendesk_url + path + '?' + urllib.parse.urlencode(kwargs)
+        url = self.zdesk_url + path + '?' + urlencode(kwargs)
 
         # the 'search' endpoint in an open Zendesk site doesn't return a
         # 401 to force authentication. Inject the credentials in the
         # headers to ensure we get the results we're looking for
         if re.match("^/search\..*", path):
             self.headers["Authorization"] = "Basic {}".format(
-                base64.b64encode(self.zendesk_username.encode('ascii') + b':' +
-                                 self.zendesk_password.encode('ascii')))
+                base64.b64encode(self.zdesk_email.encode('ascii') + b':' +
+                                 self.zdesk_password.encode('ascii')))
         elif "Authorization" in self.headers:
             del(self.headers["Authorization"])
 
@@ -134,7 +142,6 @@ class Zendesk(ZendeskAPI):
             self.headers["Content-Type"] = mime_type
 
         # Make an http request (data replacements are finalized)
-        print(url)
         response, content = self.client.request(
                                 url,
                                 method,
@@ -186,5 +193,5 @@ class Zendesk(ZendeskAPI):
         elif content.strip():
             return json.loads(content)
         else:
-            return http.client.responses[response_status]
+            return responses[response_status]
 
