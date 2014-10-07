@@ -116,7 +116,7 @@ for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', 
             param_indexes = []
             path_parts = url.path.split('/')
 
-            if path_parts[-1].startswith('{'):
+            if path_parts[-1].startswith('{') or api_item['method'] == 'POST':
                 # Getting a single object
                 # e.g. GET /api/v2/tickets/{id}.json
                 is_singular = True
@@ -167,9 +167,9 @@ for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', 
                 if api_item['method'] == 'DELETE':
                     name = name + '_delete'
                 elif api_item['method'] == 'PUT':
-                    name = name + '_create'
-                elif api_item['method'] == 'POST':
                     name = name + '_update'
+                elif api_item['method'] == 'POST':
+                    name = name + '_create'
                 elif api_item['method'] == 'GET' and is_singular:
                     name = name + '_show'
                 elif (
@@ -314,7 +314,7 @@ for name in names:
         paramspec += ', '
     argspec = paramspec + queryspec
 
-    if item['method'] == 'POST':
+    if item['method'] in ['POST', 'PUT']:
         if argspec:
             argspec += ', '
         argspec += 'data'
@@ -381,7 +381,7 @@ for name in names:
     if item['status'] != '200':
         content += ', {}'.format(item['status'])
 
-    if item['method'] == 'POST':
+    if item['method'] in ['POST', 'PUT']:
         content += ', data'
 
     content += ', **kwargs)\n\n'
