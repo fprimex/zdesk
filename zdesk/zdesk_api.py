@@ -9,10 +9,8 @@ class ZendeskAPI:
 
     # Duplicate API endpoint discarded: channels_voice_tickets_update from developer.zendesk.com/rest_api/docs/core/voice_integration
     # Duplicate API endpoint discarded: help_center_articles_search from developer.zendesk.com/rest_api/docs/help_center/search
-    # Duplicate API endpoint discarded: help_center_incremental_articles from developer.zendesk.com/rest_api/docs/help_center/articles
-    # Duplicate API endpoint discarded: requests_search from developer.zendesk.com/rest_api/docs/core/requests
+    # Duplicate API endpoint discarded: help_center_incremental_articles_list from developer.zendesk.com/rest_api/docs/help_center/articles
     # Duplicate API endpoint discarded: user_fields_reorder from developer.zendesk.com/rest_api/docs/core/user_fields
-
 
     def account_settings_create(self, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/account_settings"
@@ -24,10 +22,15 @@ class ZendeskAPI:
         api_path = "/api/v2/account/settings.json"
         return self.call(api_path, **kwargs)
 
-    def activities_list(self, **kwargs):
+    def activities_list(self, since=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/activity_stream"
         api_path = "/api/v2/activities.json"
-        return self.call(api_path, **kwargs)
+        api_query = {}
+        if since:
+            api_query.update({
+                "since": since,
+            })
+        return self.call(api_path, api_query, **kwargs)
 
     def activity_show(self, id, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/activity_stream"
@@ -158,17 +161,35 @@ class ZendeskAPI:
         api_path = api_path.format(id=id)
         return self.call(api_path, **kwargs)
 
-    def audit_logs_list(self, **kwargs):
+    def audit_logs_list(self, filter_source_type=None, filter_created_at=None, filter_actor_id=None, filter_ip_address=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/audit_logs"
         api_path = "/api/v2/audit_logs.json"
-        return self.call(api_path, **kwargs)
+        api_query = {}
+        if filter_source_type:
+            api_query.update({
+                "filter[source_type]": filter_source_type,
+            })
+        if filter_created_at:
+            api_query.update({
+                "filter[created_at]": filter_created_at,
+            })
+        if filter_actor_id:
+            api_query.update({
+                "filter[actor_id]": filter_actor_id,
+            })
+        if filter_ip_address:
+            api_query.update({
+                "filter[ip_address]": filter_ip_address,
+            })
+        return self.call(api_path, api_query, **kwargs)
 
     def autocomplete_tags(self, name, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/autocomplete"
         api_path = "/api/v2/autocomplete/tags.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "name": name,
-        }
+        })
         return self.call(api_path, api_query, **kwargs)
 
     def automation_create(self, id, **kwargs):
@@ -527,11 +548,20 @@ class ZendeskAPI:
         api_path = api_path.format(id=id)
         return self.call(api_path, **kwargs)
 
-    def group_users(self, id, **kwargs):
+    def group_users(self, id, role=None, permission_set=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/users"
         api_path = "/api/v2/groups/{id}/users.json"
         api_path = api_path.format(id=id)
-        return self.call(api_path, **kwargs)
+        api_query = {}
+        if role:
+            api_query.update({
+                "role": role,
+            })
+        if permission_set:
+            api_query.update({
+                "permission_set": permission_set,
+            })
+        return self.call(api_path, api_query, **kwargs)
 
     def groups_assignable_list(self, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/groups"
@@ -596,10 +626,10 @@ class ZendeskAPI:
         api_path = api_path.format(article_id=article_id, id=id)
         return self.call(api_path, "PUT", **kwargs)
 
-    def help_center_article_comment_delete(self, id, id, **kwargs):
+    def help_center_article_comment_delete(self, article_id, id, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/help_center/comments"
-        api_path = "/api/v2/help_center/articles/{id}/comments/{id}.json"
-        api_path = api_path.format(id=id, id=id)
+        api_path = "/api/v2/help_center/articles/{article_id}/comments/{id}.json"
+        api_path = api_path.format(article_id=article_id, id=id)
         return self.call(api_path, "DELETE", **kwargs)
 
     def help_center_article_comment_show(self, article_id, id, **kwargs):
@@ -633,7 +663,7 @@ class ZendeskAPI:
         "http://developer.zendesk.com/rest_api/docs/help_center/articles"
         api_path = "/api/v2/help_center/articles/{id}.json"
         api_path = api_path.format(id=id)
-        return self.call(api_path, "DELETE", **kwargs)
+        return self.call(api_path, "DELETE", 204, **kwargs)
 
     def help_center_article_down_update(self, id, data, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/help_center/votes"
@@ -678,7 +708,7 @@ class ZendeskAPI:
         "http://developer.zendesk.com/rest_api/docs/help_center/subscriptions"
         api_path = "/api/v2/help_center/articles/{article_id}/subscriptions/{id}.json"
         api_path = api_path.format(article_id=article_id, id=id)
-        return self.call(api_path, "DELETE", **kwargs)
+        return self.call(api_path, "DELETE", 204, **kwargs)
 
     def help_center_article_subscription_show(self, article_id, id, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/help_center/subscriptions"
@@ -774,17 +804,36 @@ class ZendeskAPI:
         api_path = "/api/v2/help_center/articles/labels.json"
         return self.call(api_path, **kwargs)
 
-    def help_center_articles_list(self, **kwargs):
+    def help_center_articles_list(self, label_names=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/help_center/articles"
         api_path = "/api/v2/help_center/articles.json"
-        return self.call(api_path, **kwargs)
+        api_query = {}
+        if label_names:
+            api_query.update({
+                "label_names": label_names,
+            })
+        return self.call(api_path, api_query, **kwargs)
 
-    def help_center_articles_search(self, query, **kwargs):
+    def help_center_articles_search(self, query=None, updated_before=None, locale=None, updated_after=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/help_center/articles"
         api_path = "/api/v2/help_center/articles/search.json"
-        api_query = {
-            "query": query,
-        }
+        api_query = {}
+        if query:
+            api_query.update({
+                "query": query,
+            })
+        if updated_before:
+            api_query.update({
+                "updated_before": updated_before,
+            })
+        if locale:
+            api_query.update({
+                "locale": locale,
+            })
+        if updated_after:
+            api_query.update({
+                "updated_after": updated_after,
+            })
         return self.call(api_path, api_query, **kwargs)
 
     def help_center_categories(self, locale, **kwargs):
@@ -798,7 +847,7 @@ class ZendeskAPI:
         api_path = "/api/v2/help_center/categories.json"
         return self.call(api_path, **kwargs)
 
-    def help_center_categories_update(self, locale=None, data, **kwargs):
+    def help_center_categories_update(self, data, locale=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/help_center/categories"
         api_path = "/api/v2/help_center/categories.json"
         if locale:
@@ -833,7 +882,7 @@ class ZendeskAPI:
         api_path = api_path.format(id=id)
         return self.call(api_path, **kwargs)
 
-    def help_center_category_sections_update(self, id, locale=None, data, **kwargs):
+    def help_center_category_sections_update(self, id, data, locale=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/help_center/sections"
         api_path = "/api/v2/help_center/categories/{id}/sections.json"
         api_path = api_path.format(id=id)
@@ -881,12 +930,13 @@ class ZendeskAPI:
         api_path = api_path.format(category_id=category_id)
         return self.call(api_path, "POST", 201, data, **kwargs)
 
-    def help_center_incremental_articles(self, start_time, **kwargs):
+    def help_center_incremental_articles_list(self, start_time, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/help_center/articles"
         api_path = "/api/v2/help_center/incremental/articles.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "start_time": start_time,
-        }
+        })
         return self.call(api_path, api_query, **kwargs)
 
     def help_center_locales_list(self, **kwargs):
@@ -909,10 +959,23 @@ class ZendeskAPI:
     def help_center_questions_search(self, query, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/help_center/search"
         api_path = "/api/v2/help_center/questions/search.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "query": query,
-        }
+        })
         return self.call(api_path, api_query, **kwargs)
+
+    def help_center_section_access_policy(self, section_id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/access_policies"
+        api_path = "/api/v2/help_center/sections/{section_id}/access_policy.json"
+        api_path = api_path.format(section_id=section_id)
+        return self.call(api_path, **kwargs)
+
+    def help_center_section_access_policy_create(self, section_id, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/help_center/access_policies"
+        api_path = "/api/v2/help_center/sections/{section_id}/access_policy.json"
+        api_path = api_path.format(section_id=section_id)
+        return self.call(api_path, "PUT", **kwargs)
 
     def help_center_section_articles(self, id, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/help_center/articles"
@@ -920,7 +983,7 @@ class ZendeskAPI:
         api_path = api_path.format(id=id)
         return self.call(api_path, **kwargs)
 
-    def help_center_section_articles_update(self, id, locale=None, data, **kwargs):
+    def help_center_section_articles_update(self, id, data, locale=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/help_center/articles"
         api_path = "/api/v2/help_center/sections/{id}/articles.json"
         api_path = api_path.format(id=id)
@@ -1076,6 +1139,50 @@ class ZendeskAPI:
         api_path = "/api/v2/imports/tickets.json"
         return self.call(api_path, "POST", 201, data, **kwargs)
 
+    def incremental_organizations_list(self, start_time=None, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/core/incremental_export"
+        api_path = "/api/v2/incremental/organizations.json"
+        api_query = {}
+        if start_time:
+            api_query.update({
+                "start_time": start_time,
+            })
+        return self.call(api_path, api_query, **kwargs)
+
+    def incremental_ticket_events_list(self, start_time=None, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/core/incremental_export"
+        api_path = "/api/v2/incremental/ticket_events.json"
+        api_query = {}
+        if start_time:
+            api_query.update({
+                "start_time": start_time,
+            })
+        return self.call(api_path, api_query, **kwargs)
+
+    def incremental_tickets_list(self, include=None, start_time=None, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/core/incremental_export"
+        api_path = "/api/v2/incremental/tickets.json"
+        api_query = {}
+        if include:
+            api_query.update({
+                "include": include,
+            })
+        if start_time:
+            api_query.update({
+                "start_time": start_time,
+            })
+        return self.call(api_path, api_query, **kwargs)
+
+    def incremental_users_list(self, start_time=None, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/core/incremental_export"
+        api_path = "/api/v2/incremental/users.json"
+        api_query = {}
+        if start_time:
+            api_query.update({
+                "start_time": start_time,
+            })
+        return self.call(api_path, api_query, **kwargs)
+
     def job_status_show(self, id, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/job_statuses"
         api_path = "/api/v2/job_statuses/{id}.json"
@@ -1106,6 +1213,11 @@ class ZendeskAPI:
     def locales_list(self, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/locales"
         api_path = "/api/v2/locales.json"
+        return self.call(api_path, **kwargs)
+
+    def locales_public_list(self, **kwargs):
+        "http://developer.zendesk.com/rest_api/docs/core/locales"
+        api_path = "/api/v2/locales/public.json"
         return self.call(api_path, **kwargs)
 
     def macro_apply(self, id, **kwargs):
@@ -1279,24 +1391,39 @@ class ZendeskAPI:
         api_path = api_path.format(id=id)
         return self.call(api_path, "POST", data, **kwargs)
 
-    def organization_tickets(self, organization_id, **kwargs):
+    def organization_tickets(self, organization_id, external_id=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/tickets"
         api_path = "/api/v2/organizations/{organization_id}/tickets.json"
         api_path = api_path.format(organization_id=organization_id)
-        return self.call(api_path, **kwargs)
+        api_query = {}
+        if external_id:
+            api_query.update({
+                "external_id": external_id,
+            })
+        return self.call(api_path, api_query, **kwargs)
 
-    def organization_users(self, id, **kwargs):
+    def organization_users(self, id, role=None, permission_set=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/users"
         api_path = "/api/v2/organizations/{id}/users.json"
         api_path = api_path.format(id=id)
-        return self.call(api_path, **kwargs)
+        api_query = {}
+        if role:
+            api_query.update({
+                "role": role,
+            })
+        if permission_set:
+            api_query.update({
+                "permission_set": permission_set,
+            })
+        return self.call(api_path, api_query, **kwargs)
 
     def organizations_autocomplete(self, name, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/organizations"
         api_path = "/api/v2/organizations/autocomplete.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "name": name,
-        }
+        })
         return self.call(api_path, api_query, **kwargs)
 
     def organizations_create_many(self, data, **kwargs):
@@ -1312,9 +1439,10 @@ class ZendeskAPI:
     def organizations_search(self, external_id, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/organizations"
         api_path = "/api/v2/organizations/search.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "external_id": external_id,
-        }
+        })
         return self.call(api_path, api_query, **kwargs)
 
     def organizations_update(self, data, **kwargs):
@@ -1325,17 +1453,19 @@ class ZendeskAPI:
     def portal_search(self, query, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/search"
         api_path = "/api/v2/portal/search.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "query": query,
-        }
+        })
         return self.call(api_path, api_query, **kwargs)
 
     def problems_autocomplete(self, text, data, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/tickets"
         api_path = "/api/v2/problems/autocomplete.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "text": text,
-        }
+        })
         return self.call(api_path, api_query, "POST", data, **kwargs)
 
     def problems_list(self, **kwargs):
@@ -1401,35 +1531,46 @@ class ZendeskAPI:
         api_path = api_path.format(id=id)
         return self.call(api_path, **kwargs)
 
-    def requests(self, status, **kwargs):
-        "http://developer.zendesk.com/rest_api/docs/core/requests"
-        api_path = "/api/v2/requests.json"
-        api_query = {
-            "status": status,
-        }
-        return self.call(api_path, api_query, **kwargs)
-
     def requests_ccd_list(self, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/requests"
         api_path = "/api/v2/requests/ccd.json"
         return self.call(api_path, **kwargs)
 
-    def requests_list(self, **kwargs):
+    def requests_list(self, status=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/requests"
         api_path = "/api/v2/requests.json"
-        return self.call(api_path, **kwargs)
+        api_query = {}
+        if status:
+            api_query.update({
+                "status": status,
+            })
+        return self.call(api_path, api_query, **kwargs)
 
     def requests_open_list(self, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/requests"
         api_path = "/api/v2/requests/open.json"
         return self.call(api_path, **kwargs)
 
-    def requests_search(self, query, **kwargs):
+    def requests_search(self, query=None, status=None, organization_id=None, cc_id=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/requests"
         api_path = "/api/v2/requests/search.json"
-        api_query = {
-            "query": query,
-        }
+        api_query = {}
+        if query:
+            api_query.update({
+                "query": query,
+            })
+        if status:
+            api_query.update({
+                "status": status,
+            })
+        if organization_id:
+            api_query.update({
+                "organization_id": organization_id,
+            })
+        if cc_id:
+            api_query.update({
+                "cc_id": cc_id,
+            })
         return self.call(api_path, api_query, **kwargs)
 
     def requests_solved_list(self, **kwargs):
@@ -1448,17 +1589,23 @@ class ZendeskAPI:
         api_path = api_path.format(id=id)
         return self.call(api_path, **kwargs)
 
-    def satisfaction_ratings_list(self, **kwargs):
+    def satisfaction_ratings_list(self, score=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/satisfaction_ratings"
         api_path = "/api/v2/satisfaction_ratings.json"
-        return self.call(api_path, **kwargs)
+        api_query = {}
+        if score:
+            api_query.update({
+                "score": score,
+            })
+        return self.call(api_path, api_query, **kwargs)
 
     def search(self, query, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/search"
         api_path = "/api/v2/search.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "query": query,
-        }
+        })
         return self.call(api_path, api_query, **kwargs)
 
     def sharing_agreements_list(self, **kwargs):
@@ -1487,9 +1634,10 @@ class ZendeskAPI:
     def suspended_tickets_destroy_many(self, ids, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/suspended_tickets"
         api_path = "/api/v2/suspended_tickets/destroy_many.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "ids": ids,
-        }
+        })
         return self.call(api_path, api_query, "DELETE", **kwargs)
 
     def suspended_tickets_list(self, **kwargs):
@@ -1500,9 +1648,10 @@ class ZendeskAPI:
     def suspended_tickets_recover_many(self, ids, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/suspended_tickets"
         api_path = "/api/v2/suspended_tickets/recover_many.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "ids": ids,
-        }
+        })
         return self.call(api_path, api_query, "PUT", **kwargs)
 
     def tags_list(self, **kwargs):
@@ -1751,9 +1900,10 @@ class ZendeskAPI:
     def tickets_destroy_many(self, ids, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/tickets"
         api_path = "/api/v2/tickets/destroy_many.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "ids": ids,
-        }
+        })
         return self.call(api_path, api_query, "DELETE", **kwargs)
 
     def tickets_list(self, **kwargs):
@@ -1764,15 +1914,21 @@ class ZendeskAPI:
     def tickets_mark_many_as_spam(self, ids, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/tickets"
         api_path = "/api/v2/tickets/mark_many_as_spam.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "ids": ids,
-        }
+        })
         return self.call(api_path, api_query, "PUT", **kwargs)
 
-    def tickets_recent_list(self, **kwargs):
+    def tickets_recent_list(self, external_id=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/tickets"
         api_path = "/api/v2/tickets/recent.json"
-        return self.call(api_path, **kwargs)
+        api_query = {}
+        if external_id:
+            api_query.update({
+                "external_id": external_id,
+            })
+        return self.call(api_path, api_query, **kwargs)
 
     def tickets_show_many(self, data, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/tickets"
@@ -1787,9 +1943,10 @@ class ZendeskAPI:
     def tickets_update_many_create(self, ids, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/tickets"
         api_path = "/api/v2/tickets/update_many.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "ids": ids,
-        }
+        })
         return self.call(api_path, api_query, "PUT", **kwargs)
 
     def topic_comment_create(self, topic_id, id, **kwargs):
@@ -1924,9 +2081,10 @@ class ZendeskAPI:
     def topics_show_many(self, ids, data, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/topics"
         api_path = "/api/v2/topics/show_many.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "ids": ids,
-        }
+        })
         return self.call(api_path, api_query, "POST", data, **kwargs)
 
     def topics_update(self, data, **kwargs):
@@ -2086,9 +2244,10 @@ class ZendeskAPI:
         "http://developer.zendesk.com/rest_api/docs/core/user_identities"
         api_path = "/api/v2/users/{user_id}/identities/{id}.json"
         api_path = api_path.format(user_id=user_id, id=id)
-        api_query = {
+        api_query = {}
+        api_query.update({
             "identity[verified]": identity_verified,
-        }
+        })
         return self.call(api_path, api_query, "PUT", **kwargs)
 
     def user_identity_delete(self, user_id, id, **kwargs):
@@ -2157,17 +2316,27 @@ class ZendeskAPI:
         api_path = api_path.format(id=id)
         return self.call(api_path, **kwargs)
 
-    def user_tickets_ccd(self, user_id, **kwargs):
+    def user_tickets_ccd(self, user_id, external_id=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/tickets"
         api_path = "/api/v2/users/{user_id}/tickets/ccd.json"
         api_path = api_path.format(user_id=user_id)
-        return self.call(api_path, **kwargs)
+        api_query = {}
+        if external_id:
+            api_query.update({
+                "external_id": external_id,
+            })
+        return self.call(api_path, api_query, **kwargs)
 
-    def user_tickets_requested(self, user_id, **kwargs):
+    def user_tickets_requested(self, user_id, external_id=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/tickets"
         api_path = "/api/v2/users/{user_id}/tickets/requested.json"
         api_path = api_path.format(user_id=user_id)
-        return self.call(api_path, **kwargs)
+        api_query = {}
+        if external_id:
+            api_query.update({
+                "external_id": external_id,
+            })
+        return self.call(api_path, api_query, **kwargs)
 
     def user_topic_comment_show(self, user_id, id, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/topic_comments"
@@ -2202,9 +2371,10 @@ class ZendeskAPI:
     def users_autocomplete(self, name, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/users"
         api_path = "/api/v2/users/autocomplete.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "name": name,
-        }
+        })
         return self.call(api_path, api_query, **kwargs)
 
     def users_create_many(self, data, **kwargs):
@@ -2212,10 +2382,19 @@ class ZendeskAPI:
         api_path = "/api/v2/users/create_many.json"
         return self.call(api_path, "POST", data, **kwargs)
 
-    def users_list(self, **kwargs):
+    def users_list(self, role=None, permission_set=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/users"
         api_path = "/api/v2/users.json"
-        return self.call(api_path, **kwargs)
+        api_query = {}
+        if role:
+            api_query.update({
+                "role": role,
+            })
+        if permission_set:
+            api_query.update({
+                "permission_set": permission_set,
+            })
+        return self.call(api_path, api_query, **kwargs)
 
     def users_me(self, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/users"
@@ -2235,24 +2414,24 @@ class ZendeskAPI:
     def users_search(self, query=None, external_id=None, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/users"
         api_path = "/api/v2/users/search.json"
+        api_query = {}
         if query:
-            api_query = {
+            api_query.update({
                 "query": query,
-            }
+            })
         if external_id:
-            api_query = {
+            api_query.update({
                 "external_id": external_id,
-            }
-        if not (query or external_id):
-            pass # todo: raise error here, one query is required
+            })
         return self.call(api_path, api_query, **kwargs)
 
     def users_show_many(self, ids, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/users"
         api_path = "/api/v2/users/show_many.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "ids": ids,
-        }
+        })
         return self.call(api_path, api_query, **kwargs)
 
     def users_update(self, data, **kwargs):
@@ -2312,12 +2491,13 @@ class ZendeskAPI:
         api_path = "/api/v2/views/compact.json"
         return self.call(api_path, **kwargs)
 
-    def views_count_many(self, ids, **kwargs):
+    def views_count_many_list(self, ids, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/views"
         api_path = "/api/v2/views/count_many.json"
-        api_query = {
+        api_query = {}
+        api_query.update({
             "ids": ids,
-        }
+        })
         return self.call(api_path, api_query, **kwargs)
 
     def views_list(self, **kwargs):
@@ -2339,6 +2519,5 @@ class ZendeskAPI:
         "http://developer.zendesk.com/rest_api/docs/core/views"
         api_path = "/api/v2/views.json"
         return self.call(api_path, "POST", 201, data, **kwargs)
-
 
 
