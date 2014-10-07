@@ -1,10 +1,6 @@
 from setuptools import setup
 import sys
 
-extra = {}
-if sys.version_info < (3,):
-    extra['use_3to2'] = True
-
 setup(
     # Basic package information.
     name = 'zdesk',
@@ -27,7 +23,6 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
     ],
-    **extra
 )
 
 

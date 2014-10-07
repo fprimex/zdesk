@@ -107,7 +107,8 @@ class Zendesk(ZendeskAPI):
                 raise TypeError("call to %s got an unexpected keyword argument "
                                 "'%s'" % (path, kw))
 
-        for key, value in kwargs.items():
+        for key in kwargs.keys():
+            value = kwargs[key]
             if hasattr(value, '__iter__') and not isinstance(value, str):
                 kwargs[key] = ','.join(map(str, value))
 
