@@ -1,0 +1,39 @@
+diff -r -u developer.zendesk.com.cleaned/rest_api/docs/core/ticket_comments developer.zendesk.com/rest_api/docs/core/ticket_comments
+--- developer.zendesk.com.cleaned/rest_api/docs/core/ticket_comments	2014-10-06 15:23:18.000000000 -0400
++++ developer.zendesk.com/rest_api/docs/core/ticket_comments	2014-10-06 15:53:06.000000000 -0400
+@@ -647,7 +647,7 @@
+       </h4>
+       <p>
+        <code>
+-        GET /api/v2/tickets/:ticket_id/comments.json
++        GET /api/v2/tickets/{ticket_id}/comments.json
+        </code>
+       </p>
+       <span class="anchor" id="allowed-for">
+@@ -666,7 +666,7 @@
+        Using curl
+       </h5>
+       <div class="highlight">
+-       <pre>curl https://<span class="o">{</span>subdomain<span class="o">}</span>.zendesk.com/api/v2/tickets/:ticket_id/comments.json <span class="se">\</span>
++       <pre>curl https://<span class="o">{</span>subdomain<span class="o">}</span>.zendesk.com/api/v2/tickets/{ticket_id}/comments.json <span class="se">\</span>
+   -H <span class="s2">"Content-Type: application/json"</span> -v -u <span class="o">{</span>email_address<span class="o">}</span>:<span class="o">{</span>password<span class="o">}</span>
+ </pre>
+       </div>
+@@ -701,7 +701,7 @@
+       </h4>
+       <p>
+        <code>
+-        PUT /api/v2/tickets/:ticket_id/comments/:id/redact.json
++        PUT /api/v2/tickets/{ticket_id}/comments/{id}/redact.json
+        </code>
+       </p>
+       <span class="anchor" id="allowed-for">
+@@ -720,7 +720,7 @@
+        Using curl
+       </h5>
+       <div class="highlight">
+-       <pre>curl https://<span class="o">{</span>subdomain<span class="o">}</span>.zendesk.com/api/v2/tickets/:ticket_id/comments/:id/redact.json <span class="se">\</span>
++       <pre>curl https://<span class="o">{</span>subdomain<span class="o">}</span>.zendesk.com/api/v2/tickets/{ticket_id}/comments/{id}/redact.json <span class="se">\</span>
+   -H <span class="s2">"Content-Type: application/json"</span> -v -u <span class="o">{</span>email_address<span class="o">}</span>:<span class="o">{</span>password<span class="o">}</span> -X PUT <span class="se">\</span>
+   -d <span class="s1">'{"text":"credit-card-number"}'</span>
+ </pre>

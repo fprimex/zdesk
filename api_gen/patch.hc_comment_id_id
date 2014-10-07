@@ -1,0 +1,12 @@
+diff -r -u developer.zendesk.com/rest_api/docs/help_center/comments developer.zendesk.com.patched/rest_api/docs/help_center/comments
+--- developer.zendesk.com/rest_api/docs/help_center/comments	2014-10-06 22:46:36.000000000 -0400
++++ developer.zendesk.com.patched/rest_api/docs/help_center/comments	2014-10-06 22:46:24.000000000 -0400
+@@ -805,7 +805,7 @@
+       </h4>
+       <p>
+        <code>
+-        DELETE /api/v2/help_center/articles/{article_id}/comments/{id}.json
++        DELETE /api/v2/help_center/articles/{id}/comments/{id}.json
+        </code>
+       </p>
+       <span class="anchor" id="allowed-for">

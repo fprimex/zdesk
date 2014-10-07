@@ -15,7 +15,23 @@ from bs4 import BeautifulSoup
 # the developer site needlessly. Currently, mirroring the whole site
 # results in about 26MB on disk. I may eventually do some more intelligent
 # scraping, downloading, and disk caching to avoid this wget.
+
+# That said, here is my usual process:
 # $ wget -mk https://developer.zendesk.com/
+# $ cp -R developer.zendesk.com developer.zendesk.com.orig
+# $ ./clean.py
+# $ cp -R developer.zendesk.com developer.zendesk.com.cleaned
+# For each patch.* file
+# $ patch -p0 < patch.file
+# $ ./api_gen.py
+
+# If I find that more patching is needed to get what I want, then:
+# $ vim edit whatever
+# $ diff -r -u developer.zendesk.com developer.zendesk.com.cleaned > api_gen.patch.new
+# If that all checks out, then api_gen.patch.new becomes the new api_gen.patch
+
+# Then, once all is well:
+# cp zdesk_api.py ../zdesk/
 
 html_parser = html.parser.HTMLParser()
 
@@ -76,7 +92,7 @@ for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', 
         #    line = re.sub('&#123;', '{', line)
         #    line = re.sub('&#125;', '}', line)
         #    print(line, end='')
-        match = re.match(r'(OPTIONS|GET|HEAD|POST|PUT|DELETE|TRACE|CONNECT) (.*)', text)
+        match = re.match(r'\s*(OPTIONS|GET|HEAD|POST|PUT|DELETE|TRACE|CONNECT) (.*)', text)
         if match:
             is_singular = False
             api_item = {}
@@ -91,14 +107,18 @@ for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', 
             api_item['method'] = match.group(1)
             path = match.group(2)
 
-            url = html_parser.unescape(path)
-            url = urllib.parse.urlsplit(url)
+            # parse into a url object for easily accessing the parts of the whole url
+            url = urllib.parse.urlsplit(path)
+
+            api_item['path'] = url.path
 
             # Split the path and remove the first (always empty) item and /api/v2
             param_indexes = []
             path_parts = url.path.split('/')
 
             if path_parts[-1].startswith('{'):
+                # Getting a single object
+                # e.g. GET /api/v2/tickets/{id}.json
                 is_singular = True
 
             del path_parts[0]
@@ -134,8 +154,6 @@ for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', 
             has_action = True in [action in expanded_parts
                     for action in api_actions]
 
-            api_item['path'] = re.sub(r'&#123;.*&#125;', '{}', url.path)
-
             query_params = urllib.parse.parse_qsl(url.query)
             for query_items in query_params:
                 api_item['query_params'].append(query_items[0])
@@ -156,8 +174,7 @@ for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', 
                     name = name + '_show'
                 elif (
                     api_item['method'] == 'GET' and
-                    len(api_item['path_params']) == 0 and
-                    len(api_item['query_params']) == 0
+                    len(api_item['path_params']) == 0
                    ):
                     name = name + '_list'
 
@@ -165,7 +182,9 @@ for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', 
             api_item['query_params'].reverse()
 
             if name in api_items:
-                duplicate_api_items[name] = api_item
+                if name not in duplicate_api_items:
+                    duplicate_api_items[name] = []
+                duplicate_api_items[name].append(api_item)
                 duplicate_status_group.append(name)
                 continue
 
@@ -174,13 +193,14 @@ for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', 
 
             continue
 
-        match = re.match(r'Status: ([0-9]{3})', text)
+        match = re.match(r'\s*Status: ([0-9]{3})', text)
         if match:
            status = match.group(1)
            for name in status_group:
                api_items[name]['status'] = status
            for name in duplicate_status_group:
-               duplicate_api_items[name]['status'] = status
+               for item in duplicate_api_items[name]:
+                   item['status'] = status
            del status_group[:]
            del duplicate_status_group[:]
 
@@ -190,79 +210,92 @@ names = list(duplicate_api_items.keys())
 names.sort()
 
 for name in names:
-    dupe = duplicate_api_items[name]
-    item = api_items[name]
-    if (
-        dupe['path'] == item['path'] and
-        dupe['method'] == item['method'] and
-        dupe['status'] == item['status'] and
-        False not in [i == j for i, j in itertools.zip_longest(
-            dupe['path_params'], item['path_params'])] and
-        len(item['query_params']) == len(
-            set(dupe['query_params']) & set(item['query_params']))
-       ):
-        # Everything is the same, so discard this duplicate
-        content += "    # Duplicate API endpoint discarded: {} from {}\n".format(name, dupe['docpage'])
-    elif (
-        dupe['method'] == item['method'] and
-        dupe['status'] == item['status'] and
-        len(item['query_params']) == len(
-            set(dupe['query_params']) & set(item['query_params']))
-        ):
-        # Only the path parameters differ, so we have optional arguments
+    for dupe in duplicate_api_items[name]:
+        item = api_items[name]
+        if (
+            dupe['path'] == item['path'] and
+            dupe['method'] == item['method'] and
+            dupe['status'] == item['status'] and
+            False not in [i == j for i, j in itertools.zip_longest(
+                dupe['path_params'], item['path_params'])] and
+            False not in [i == j for i, j in itertools.zip_longest(
+                sorted(dupe['query_params']), sorted(item['query_params']))]
+           ):
+            # Everything is the same, so discard this duplicate
+            content += "    # Duplicate API endpoint discarded: {} from {}\n".format(name, dupe['docpage'])
+        elif (
+            dupe['method'] == item['method'] and
+            dupe['status'] == item['status'] and
+            False not in [i == j for i, j in itertools.zip_longest(
+                sorted(dupe['query_params']), sorted(item['query_params']))]
+            ):
+            # Only the path parameters differ, so we have optional arguments
 
-        # Common parameters are all required
-        required = set(dupe['path_params']) & set(item['path_params'])
+            # Common parameters are all required
+            required = set(dupe['path_params']) & set(item['path_params'])
 
-        # Optional parameters are only in one endpoint
-        optional = (set(dupe['path_params']) | set(item['path_params'])) - required
+            # Optional parameters are only in one endpoint
+            optional = (set(dupe['path_params']) | set(item['path_params'])) - required
 
-        if len(set(item['path_params']) - required) == 0:
-            # The item is the base function and the dupe has the optional arguments
-            # Just need to add the optional arguments
-            item['opt_path_params'] = optional
-            item['opt_path'] = dupe['path']
-        elif len(set(dupe['path_params']) - required) == 0:
-            # The dupe is the base function and the item has the optional arguments
-            # Need to swap the dupe with the item and then add the optional arguments
-            dupe_path = dupe['path']
-            item = dupe
-            item['opt_path_params'] = optional
-            item['opt_path'] = dupe_path
+            if len(set(item['path_params']) - required) == 0:
+                # The item is the base function and the dupe has the optional arguments
+                # Just need to add the optional arguments
+                item['opt_path_params'] = optional
+                item['opt_path'] = dupe['path']
+            elif len(set(dupe['path_params']) - required) == 0:
+                # The dupe is the base function and the item has the optional arguments
+                # Need to swap the dupe with the item and then add the optional arguments
+                dupe_path = dupe['path']
+                item = dupe
+                item['opt_path_params'] = optional
+                item['opt_path'] = dupe_path
+            else:
+                content += "    # Duplicate ambiguous API endpoint: {} from {}\n".format(name, dupe['docpage'])
+                continue
+        elif (
+            dupe['path'] == item['path'] and
+            dupe['method'] == item['method'] and
+            dupe['status'] == item['status'] and
+            False not in [i == j for i, j in itertools.zip_longest(
+                dupe['path_params'], item['path_params'])]
+            ):
+                # Only the query parameters differ, so we have optional named arguments
+                item['opt_query_params'] = list(set(item['query_params'].copy() +
+                                               item['opt_query_params'] +
+                                               dupe['query_params']))
+                item['query_params'] = []
         else:
-            content += "    # Duplicate ambiguous API endpoint: {} from {}\n".format(name, dupe['docpage'])
-            continue
-    elif (
-        dupe['path'] == item['path'] and
-        dupe['method'] == item['method'] and
-        dupe['status'] == item['status'] and
-        False not in [i == j for i, j in itertools.zip_longest(
-            dupe['path_params'], item['path_params'])]
-        ):
-            # Only the query parameters differ, so we have optional, either/or arguments
-            item['opt_query_params'] = item['query_params']
-            item['opt_query_params'] += dupe['query_params']
-            item['query_params'] = []
-    else:
-        should_keep += "    # Duplicate API endpoint that differs: {} from {}\n".format(name, dupe['docpage'])
-        should_keep += "    # Original definition located here:    {} from {}\n".format(name, item['docpage'])
-        should_keep += '    # {}\n'.format(name)
-        should_keep += '    #    Path: {}\n'.format(dupe['path'])
-        should_keep += '    #    Method: {}\n'.format(dupe['method'])
-        should_keep += '    #    Status: {}\n'.format(dupe['status'])
-        should_keep += '    #    Parameters:\n'
-        for param in dupe['path_params']:
-            should_keep += '    #        {}\n'.format(param)
-        should_keep += '    #    Query Parameters:\n'
-        for param in dupe['query_params']:
-            should_keep += '    #        {}\n'.format(param)
+            should_keep += "\n"
+            should_keep += "    # Duplicate API endpoint that differs: {} from {}\n".format(name, dupe['docpage'])
+            should_keep += "    # Original definition located here:    {} from {}\n".format(name, item['docpage'])
+            should_keep += '    # {}\n'.format(name)
+            should_keep += '    #    Path: {}\n'.format(dupe['path'])
+            should_keep += '    #    Method: {}\n'.format(dupe['method'])
+            should_keep += '    #    Status: {}\n'.format(dupe['status'])
+            should_keep += '    #    Parameters:\n'
+            for param in dupe['path_params']:
+                should_keep += '    #        {}\n'.format(param)
+            should_keep += '    #    Query Parameters:\n'
+            for param in dupe['query_params']:
+                should_keep += '    #        {}\n'.format(param)
+            should_keep += '    # Original definition:\n'
+            should_keep += '    #    Path: {}\n'.format(item['path'])
+            should_keep += '    #    Method: {}\n'.format(item['method'])
+            should_keep += '    #    Status: {}\n'.format(item['status'])
+            should_keep += '    #    Parameters:\n'
+            for param in item['path_params']:
+                should_keep += '    #        {}\n'.format(param)
+            should_keep += '    #    Query Parameters:\n'
+            for param in item['query_params']:
+                should_keep += '    #        {}\n'.format(param)
+            should_keep += "\n"
 
 if should_keep:
     content += '\n'
     content += should_keep
 
 if content:
-    content += '\n\n'
+    content += '\n'
 
 names = list(api_items.keys())
 names.sort()
@@ -281,6 +314,11 @@ for name in names:
         paramspec += ', '
     argspec = paramspec + queryspec
 
+    if item['method'] == 'POST':
+        if argspec:
+            argspec += ', '
+        argspec += 'data'
+
     if item['opt_path_params']:
         if argspec:
             argspec += ', '
@@ -290,11 +328,6 @@ for name in names:
         if argspec:
             argspec += ', '
         argspec += '=None, '.join([sanitize(q) for q in item['opt_query_params']]) + '=None'
-
-    if item['method'] == 'POST':
-        if argspec:
-            argspec += ', '
-        argspec += 'data'
 
     if argspec:
         argspec += ', '
@@ -316,21 +349,26 @@ for name in names:
         content += '            api_opt_path = "{}"\n'.format(item['opt_path'])
         content += '            api_path = api_opt_path.format({})\n'.format(path_fmt_args)
 
+    if item['query_params'] or item['opt_query_params']:
+        content += '        api_query = {}\n'
+
     if item['query_params']:
-        content += '        api_query = {\n'
+        content += '        api_query.update({\n'
         for q in item['query_params']:
             content += '            "{}": {},\n'.format(q, sanitize(q))
-        content += '        }\n'
+        content += '        })\n'
 
     for q in item['opt_query_params']:
-        content += '        if {}:\n'.format(q)
-        content += '            api_query = {\n'
+        content += '        if {}:\n'.format(sanitize(q))
+        content += '            api_query.update({\n'
         content += '                "{}": {},\n'.format(q, sanitize(q))
-        content += '            }\n'
-    if item['opt_query_params']:
-        opt_test = ' or '.join(item['opt_query_params'])
-        content += '        if not ({}):\n'.format(opt_test)
-        content += '            pass # todo: raise error here, one query is required\n'
+        content += '            })\n'
+
+    # todo: query may be required
+    #if item['opt_query_params']:
+    #    opt_test = ' or '.join([sanitize(q) for q in item['opt_query_params']])
+    #    content += '        if not ({}):\n'.format(opt_test)
+    #    content += '            pass\n'
 
     content += '        return self.call(api_path'
 
@@ -348,5 +386,6 @@ for name in names:
 
     content += ', **kwargs)\n\n'
 
-print(template.format(content))
+with open('zdesk_api.py', 'w') as f:
+    f.write(template.format(content))
 

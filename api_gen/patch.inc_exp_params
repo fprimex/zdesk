@@ -1,0 +1,46 @@
+diff -r -u developer.zendesk.com.cleaned/rest_api/docs/core/incremental_export developer.zendesk.com/rest_api/docs/core/incremental_export
+--- developer.zendesk.com.cleaned/rest_api/docs/core/incremental_export	2014-10-06 16:22:38.000000000 -0400
++++ developer.zendesk.com/rest_api/docs/core/incremental_export	2014-10-06 16:39:47.000000000 -0400
+@@ -700,6 +700,12 @@
+        <code>
+         GET /api/v2/incremental/tickets.json
+        </code>
++       <code>
++        GET /api/v2/incremental/tickets.json?start_time={start_time}
++       </code>
++       <code>
++        GET /api/v2/incremental/tickets.json?include={include}
++       </code>
+       </p>
+       <span class="anchor" id="allowed-for">
+       </span>
+@@ -797,6 +803,9 @@
+        <code>
+         GET /api/v2/incremental/ticket_events.json
+        </code>
++       <code>
++        GET /api/v2/incremental/ticket_events.json?start_time={start_time}
++       </code>
+       </p>
+       <span class="anchor" id="allowed-for">
+       </span>
+@@ -873,6 +882,9 @@
+        <code>
+         GET /api/v2/incremental/organizations.json
+        </code>
++       <code>
++        GET /api/v2/incremental/organizations.json?start_time={start_time}
++       </code>
+       </p>
+       <span class="anchor" id="allowed-for">
+       </span>
+@@ -951,6 +963,9 @@
+        <code>
+         GET /api/v2/incremental/users.json
+        </code>
++       <code>
++        GET /api/v2/incremental/users.json?start_time={start_time}
++       </code>
+       </p>
+       <span class="anchor" id="allowed-for">
+       </span>
