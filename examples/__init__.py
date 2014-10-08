@@ -1,17 +1,38 @@
-from zendesk import Zendesk
+from __future__ import print_function
+
+import sys
+
+try:
+    import zdeskcfg
+except ImportError:
+    print('Could not import zdeskcfg, which is used to set up examples.')
+    print('Please `pip install zdeskcfg`, or see the PyPI page:')
+    print('https://pypi.python.org/pypi/zdeskcfg')
+    sys.exit()
+
+from zdesk import Zendesk
 
 ################################################################
 ## NEW CONNECTION CLIENT
 ################################################################
-zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd')
+# Create an object using the [zdesk] section of
+# ~/.zdeskcfg and the zdeskcfg module
+#zendesk = Zendesk(**zdeskcfg.get_ini_config())
+
+# Create an object using the [zdesk] and [sandbox] sections of
+# ~/.zdeskcfg and the zdeskcfg module
+zendesk = Zendesk(**zdeskcfg.get_ini_config(section='sandbox'))
+
+# Manually creating a new connection object
+#zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd')
 
 # Are you getting an error such as...
 # "SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed"?
-zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd',
-    client_args={
-        "disable_ssl_certificate_validation": True
-    }
-)
+#zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd',
+#    client_args={
+#        "disable_ssl_certificate_validation": True
+#    }
+#)
 
 
 ################################################################
@@ -19,11 +40,11 @@ zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'pas
 ################################################################
 
 # List
-zendesk.list_tickets(view_id=1) # Must have a view defined
+zendesk.tickets_list()
 
 # Create
 new_ticket = {
-    'ticket': { _
+    'ticket': {
         'requester_name': 'Howard Schultz',
         'requester_email': 'howard@starbucks.com',
         'subject':'My Starbucks coffee is cold!',
@@ -41,7 +62,7 @@ new_ticket = {
         ]
     }
 }
-ticket_url = zendesk.create_ticket(data=new_ticket)
+result = zendesk.ticket_create(data=new_ticket, complete_response=True)
 
 # Need ticket ID?
 from zendesk import get_id_from_url

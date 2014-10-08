@@ -121,9 +121,15 @@ class Zendesk(ZendeskAPI):
                 kwargs[key] = ','.join(map(str, value))
 
         if query:
-            kwargs.update(query)
+            if kwargs:
+                kwargs.update(query)
+            else:
+                kwargs = query
 
-        url = self.zdesk_url + path + '?' + urlencode(kwargs)
+        url = self.zdesk_url + path
+
+        if kwargs:
+            url += '?' + urlencode(kwargs)
 
         # the 'search' endpoint in an open Zendesk site doesn't return a
         # 401 to force authentication. Inject the credentials in the

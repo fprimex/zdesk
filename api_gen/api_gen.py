@@ -373,16 +373,16 @@ for name in names:
     content += '        return self.call(api_path'
 
     if item['query_params'] or item['opt_query_params']:
-        content += ', api_query'
+        content += ', query=api_query'
 
     if item['method'] != 'GET':
-        content += ', "{}"'.format(item['method'])
+        content += ', method="{}"'.format(item['method'])
 
     if item['status'] != '200':
-        content += ', {}'.format(item['status'])
+        content += ', status={}'.format(item['status'])
 
     if item['method'] in ['POST', 'PUT']:
-        content += ', data'
+        content += ', data=data'
 
     content += ', **kwargs)\n\n'
 
