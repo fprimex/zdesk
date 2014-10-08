@@ -15,7 +15,7 @@ setup(
     keywords = 'zendesk api helpdesk',
     description = 'Python API Wrapper for Zendesk',
     classifiers = [
-        'Development Status :: 5 - Production/Stable',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Topic :: Software Development :: Libraries :: Python Modules',
@@ -24,5 +24,4 @@ setup(
         'Programming Language :: Python :: 3',
     ],
 )
-
 
