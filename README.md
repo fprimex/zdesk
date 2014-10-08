@@ -4,8 +4,13 @@ Zdesk is a Python wrapper for the Zendesk API. This library provides an
 easy and flexible way for developers to communicate with their Zendesk
 account in their application.
 
+See the [Zendesk developer site](https://developer.zendesk.com/) for API
+documentation. The underlying `zdesk\_api` module has been automatically
+generated from this documentation.
 
 ## Requirements
+
+Zdesk works with both Python 2 and Python 3. Tested on Python 2.7.5 and 3.4.1.
 
 httplib2 is used for authentication and requests
 
@@ -14,7 +19,6 @@ httplib2 is used for authentication and requests
 simplejson is used to serialze and deserialze requests and responses
 
     (pip install | easy_install) simplejson
-
 
 ## Installation
 
