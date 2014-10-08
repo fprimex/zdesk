@@ -5,10 +5,11 @@ import pkg_resources
 
 if sys.version > '3':
     from http.client import responses
-    from urllib.parse import urlencode
+    from urllib.parse import urlencode, urlsplit
 else:
     from httplib import responses
     from urllib import urlencode
+    from urllib2 import urlsplit
 
 
 import httplib2
@@ -23,6 +24,15 @@ common_params = [
         'mime_type',
         'complete_response',
     ]
+
+
+def get_id_from_url(url):
+    url_id = urlsplit(url).path.split('/')[-1].split('.')[0]
+    if url_id.isdigit():
+        return url_id
+    else:
+        return None
+
 
 class ZendeskError(Exception):
     def __init__(self, msg, code, response):

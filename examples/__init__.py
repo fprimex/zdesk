@@ -64,15 +64,18 @@ new_ticket = {
 }
 result = zendesk.ticket_create(data=new_ticket, complete_response=True)
 
+# URL to the created ticket
+ticket_url = result['response']['location']
+
 # Need ticket ID?
 from zendesk import get_id_from_url
 ticket_id = get_id_from_url(ticket_url)
 
 # Show
-zendesk.show_ticket(ticket_id=ticket_id)
+zendesk.ticket_show(id=ticket_id)
 
 # Delete
-zendesk.delete_ticket(ticket_id=ticket_id)
+zendesk.ticket_delete(id=ticket_id)
 
 
 ################################################################
@@ -80,7 +83,7 @@ zendesk.delete_ticket(ticket_id=ticket_id)
 ################################################################
 
 # List
-zendesk.list_organizations()
+zendesk.organizations_list()
 
 # Create
 new_org = {
@@ -88,14 +91,15 @@ new_org = {
         'name': 'Starbucks Corp'
     }
 }
-org_url = zendesk.create_organization(data=new_org)
+result = zendesk.organization_create(data=new_org, complete_response=True)
+org_url = result['response']['location']
 org_id = get_id_from_url(org_url)
 
 # Show
-zendesk.show_organization(organization_id=org_id)
+zendesk.organization_show(id=org_id)
 
 # Delete
-zendesk.delete_organization(organization_id=org_id)
+zendesk.organization_delete(id=org_id)
 
 
 ################################################################
@@ -103,7 +107,7 @@ zendesk.delete_organization(organization_id=org_id)
 ################################################################
 
 # List
-zendesk.list_users()
+zendesk.users_list()
 
 # Create
 new_user = {
@@ -113,14 +117,15 @@ new_user = {
         'roles': 4,
     }
 }
-user_url = zendesk.create_user(data=new_user)
+result = zendesk.user_create(data=new_user, complete_response=True)
+user_url = result['response']['location']
 user_id = get_id_from_url(user_url)
 
 # Show
-zendesk.show_user(user_id=user_id)
+zendesk.user_show(id=user_id)
 
 # Delete
-zendesk.delete_user(user_id=user_id)
+zendesk.user_delete(id=user_id)
 
 
 ################################################################
@@ -128,7 +133,7 @@ zendesk.delete_user(user_id=user_id)
 ################################################################
 
 # List
-zendesk.list_groups()
+zendesk.groups_list()
 
 # Create
 new_group = {
@@ -141,14 +146,15 @@ new_group = {
         ]
     }
 }
-group_url = zendesk.create_group(data=new_group)
+result = zendesk.group_create(data=new_group, complete_response=True)
+group_url = result['response']['location']
 group_id = get_id_from_url(group_url)
 
 # Show
-zendesk.show_group(group_id=group_id)
+zendesk.group_show(id=group_id)
 
 # Delete
-zendesk.delete_group(group_id=group_id)
+zendesk.group_delete(id=group_id)
 
 
 ################################################################
@@ -156,22 +162,17 @@ zendesk.delete_group(group_id=group_id)
 ################################################################
 
 # List
-zendesk.list_tags()
-
-# Show
-zendesk.list_assets(tag_id=123, asset_type='event') # event | entry
+zendesk.tags_list()
 
 
 ################################################################
 ## TICKET TYPES
 ################################################################
-zendesk.list_ticket_fields()
+zendesk.ticket_fields_list()
 
 
 ################################################################
 ## SEARCH
 ################################################################
+results = zendesk.search(query='type:ticket sort:desc', page=1)
 
-# http://www.zendesk.com/api/search
-# make sure to url-encode the query
-results = zendesk.search(query='ticket+sort:desc', page=1)
