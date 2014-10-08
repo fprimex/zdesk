@@ -1,8 +1,8 @@
 # Zendesk API Wrapper for Python
 
-Python Zendesk is wrapper for the Zendesk API. This library provides an
+Zdesk is a Python wrapper for the Zendesk API. This library provides an
 easy and flexible way for developers to communicate with their Zendesk
-account in their application. 
+account in their application.
 
 
 ## Requirements
@@ -18,27 +18,42 @@ simplejson is used to serialze and deserialze requests and responses
 
 ## Installation
 
-Zendesk Python Library is available on pypi, so installation should be fairly simple:
+Zdesk is available on pypi, so installation should be fairly simple:
 
     (pip install | easy_install) zdesk
 
+## Related projects
+
+* [zdeskcfg](https://github.com/fprimex/zdeskcfg): Automatically configure your
+  zdesk scripts from a configuration file and command line arguments.
+* [zdgrab](https://github.com/fprimex/zdgrab): Download and decompress ticket attachments.
 
 # Example Use
 
 ```python
-from zdesk import Zendesk, get_id_from_url
+from zdesk import Zendesk
 
 ################################################################
 ## NEW CONNECTION CLIENT
 ################################################################
+# Manually creating a new connection object
 zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd')
+
+# Are you getting an error such as...
+# "SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed"?
+#zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd',
+#    client_args={
+#        "disable_ssl_certificate_validation": True
+#    }
+#)
+
 
 ################################################################
 ## TICKETS
 ################################################################
 
 # List
-zendesk.list_tickets(view_id=1) # Must have a view defined
+zendesk.tickets_list()
 
 # Create
 new_ticket = {
@@ -60,14 +75,24 @@ new_ticket = {
         ]
     }
 }
-ticket_url = zendesk.create_ticket(data=new_ticket)
+result = zendesk.ticket_create(data=new_ticket, complete_response=True)
+
+# URL to the created ticket
+ticket_url = result['response']['location']
+
+# Need ticket ID?
+from zendesk import get_id_from_url
 ticket_id = get_id_from_url(ticket_url)
 
 # Show
-zendesk.show_ticket(ticket_id=ticket_id)
+zendesk.ticket_show(id=ticket_id)
 
 # Delete
-zendesk.delete_ticket(ticket_id=ticket_id)
-
-# More examples in `examples` folder!
+zendesk.ticket_delete(id=ticket_id)
 ```
+
+See the [full example
+file](https://github.com/fprimex/zdesk/blob/master/examples/__init__.py) on
+github, however this is not anywhere close to covering all of the over 400 REST
+API methods.
+
