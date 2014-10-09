@@ -3,13 +3,13 @@ import re
 import base64
 import pkg_resources
 
-if sys.version > '3':
-    from http.client import responses
-    from urllib.parse import urlencode, urlsplit
-else:
+if sys.version < '3':
     from httplib import responses
     from urllib import urlencode
-    from urllib2 import urlsplit
+    from urlparse import urlsplit
+else:
+    from http.client import responses
+    from urllib.parse import urlencode, urlsplit
 
 
 import httplib2
