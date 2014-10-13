@@ -62,10 +62,20 @@ new_ticket = {
         ]
     }
 }
-result = zendesk.ticket_create(data=new_ticket, complete_response=True)
 
-# URL to the created ticket
-ticket_url = result['response']['location']
+# If a response results in returning a [location] header, then that
+# will be what is returned.
+# Create a ticket and get its URL.
+result = zendesk.ticket_create(data=new_ticket)
+
+# Alternatively, you can get the complete response and get the location
+# yourself. This can be useful for getting other response items that are
+# not normally returned, such as result['content']['upload']['token']
+# when using zendesk.upload_create()
+#
+#result = zendesk.ticket_create(data=new_ticket, complete_response=True)
+#ticket_url = result['response']['location']
+#ticket_id = get_id_from_url(ticket_url)
 
 # Need ticket ID?
 from zendesk import get_id_from_url
@@ -91,9 +101,8 @@ new_org = {
         'name': 'Starbucks Corp'
     }
 }
-result = zendesk.organization_create(data=new_org, complete_response=True)
-org_url = result['response']['location']
-org_id = get_id_from_url(org_url)
+result = zendesk.organization_create(data=new_org)
+org_id = get_id_from_url(result)
 
 # Show
 zendesk.organization_show(id=org_id)
@@ -118,8 +127,7 @@ new_user = {
     }
 }
 result = zendesk.user_create(data=new_user, complete_response=True)
-user_url = result['response']['location']
-user_id = get_id_from_url(user_url)
+user_id = get_id_from_url(result)
 
 # Show
 zendesk.user_show(id=user_id)
@@ -146,9 +154,8 @@ new_group = {
         ]
     }
 }
-result = zendesk.group_create(data=new_group, complete_response=True)
-group_url = result['response']['location']
-group_id = get_id_from_url(group_url)
+result = zendesk.group_create(data=new_group)
+group_id = get_id_from_url(result)
 
 # Show
 zendesk.group_show(id=group_id)
