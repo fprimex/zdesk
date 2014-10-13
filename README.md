@@ -79,14 +79,12 @@ new_ticket = {
         ]
     }
 }
-result = zendesk.ticket_create(data=new_ticket, complete_response=True)
-
-# URL to the created ticket
-ticket_url = result['response']['location']
+# Create the ticket and get its URL
+result = zendesk.ticket_create(data=new_ticket)
 
 # Need ticket ID?
 from zendesk import get_id_from_url
-ticket_id = get_id_from_url(ticket_url)
+ticket_id = get_id_from_url(result)
 
 # Show
 zendesk.ticket_show(id=ticket_id)
