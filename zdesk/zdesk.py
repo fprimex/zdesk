@@ -21,8 +21,6 @@ common_params = [
         'page',
         'per_page',
         'sort_order',
-        'mime_type',
-        'complete_response',
     ]
 
 
@@ -115,6 +113,10 @@ class Zendesk(ZendeskAPI):
         # If requested, return all response information
         complete_response = kwargs.pop('complete_response', False)
 
+        # If requested, exhaustively obtain and consolidate requests that
+        # contain a next_page attribute
+        get_all_pages = kwargs.pop('get_all_pages', False)
+
         # Support specifying a mime-type other than application/json
         mime_type = kwargs.pop('mime_type', 'application/json')
 
@@ -156,57 +158,140 @@ class Zendesk(ZendeskAPI):
         else:
             self.headers["Content-Type"] = mime_type
 
-        # Make an http request (data replacements are finalized)
-        response, content = self.client.request(
-                                url,
-                                method,
-                                body=body,
-                                headers=self.headers
-                            )
+        results = []
+        all_requests_complete = False
 
-        # Use a response handler to determine success/fail
-        return self._response_handler(response, content, status,
-            complete_response)
+        while not all_requests_complete:
+            # Make an http request
+            response, content = self.client.request(
+                                    url,
+                                    method,
+                                    body=body,
+                                    headers=self.headers
+                                )
 
-    @staticmethod
-    def _response_handler(response, content, status, complete_response=False):
-        """
-        Handle response as callback
+            # If the response status is different from status given, then we
+            # assume an error and raise proper exception
 
-        If the response status is different from status defined in the
-        mapping table, then we assume an error and raise proper exception
+            response_status = int(response.get('status', 0))
 
-        Zendesk's response is sometimes the url of a newly created user/
-        ticket/group/etc and they pass this through 'location'.  Otherwise,
-        the body of 'content' has our response.
-        """
-        response_status = int(response.get('status', 0))
+            if response_status != status:
+                if response_status == 401:
+                    raise AuthenticationError(content, response_status, response)
+                elif response_status == 429:
+                    # FYI: Check the Retry-After header for how many seconds to sleep
+                    raise RateLimitError(content, response_status, response)
+                else:
+                    raise ZendeskError(content, response_status, response)
 
-        if response_status != status:
-            if response_status == 401:
-                raise AuthenticationError(content, response_status, response)
-            elif response_status == 429:
-                # FYI: Check the Retry-After header for how many seconds to sleep
-                raise RateLimitError(content, response_status, response)
-            else:
-                raise ZendeskError(content, response_status, response)
-
-        if complete_response:
             if content.strip():
                 content = json.loads(content)
 
-            return {
-                'response': response,
-                'content': content,
-                'status': status
-            }
+                # set url to the next page if that was returned in the response
+                url = content.get('next_page', None)
+            else:
+                url = None
 
-        # Deserialize json content if content exist. In some cases Zendesk
-        # returns ' ' strings. Also return false non strings (0, [], (), {})
-        if response.get('location'):
-            return response.get('location')
-        elif content.strip():
-            return json.loads(content)
-        else:
-            return responses[response_status]
+            if complete_response:
+                results.append({
+                    'response': response,
+                    'content': content,
+                    'status': status
+                })
+
+            else:
+                # Deserialize json content if content exists. In some cases Zendesk
+                # returns ' ' strings. Also return false non strings (0, [], (), {})
+                if response.get('location'):
+                    # Zendesk's response is sometimes the url of a newly created user/
+                    # ticket/group/etc and they pass this through 'location'.  Otherwise,
+                    # the body of 'content' has our response.
+                    results.append(response.get('location'))
+                elif content:
+                    results.append(content)
+                else:
+                    results.append(responses[response_status])
+
+            # if there is a next_page, and we are getting pages, then continue
+            # making requests
+            all_requests_complete = not (get_all_pages and url)
+
+        if get_all_pages and complete_response:
+            # Return the list of results from all calls made.
+            # This way even if only one page was present the caller will
+            # always receive back an iterable value, since multiple pages
+            # were requested/expected. This also provides the information for
+            # every call, and saves us from having to try to combine all of
+            # that ourselves in a sensible way.
+            return results
+
+        if len(results) == 1:
+            # regardless as to whether all pages were requested, there was
+            # only one call and set of results, so just send it back.
+            return results[0]
+
+        # Now we need to try to combine or reduce the results:
+
+        hashable = True
+        try:
+            if len(set(results)) == 1:
+                # all responses were the same, so return just the first one.
+                # may have a list of locations or response statuses
+                return results[0]
+        except TypeError:
+            # probably we have a list of content dictionaries.
+            hashable = False
+
+        if hashable:
+            # we have a list of simple objects like strings, but they are not
+            # all the same so send them all back.
+            return results
+
+        # may have a sequence of response contents
+        # (dicts, possibly lists in the future as that is valid json also)
+        combined_dict_results = {}
+        combined_list_results = []
+        for result in results:
+            if isinstance(result, list):
+                # the result of this call returned a list.
+                # extend the combined list with these results.
+                combined_list_results.extend(result)
+            elif isinstance(result, dict):
+                # the result of this call returned a dict. the dict probably
+                # has both simple attributes (strings) and complex attributes
+                # (lists). if the attribute is a list, we will extend the
+                # combined attribute, otherwise we will just take the last
+                # attribute value from the last call.
+                # the end result is a response that looks like one giant call, to
+                # e.g. list tickets, but was actually made by multiple API calls.
+                for k in result.keys():
+                    v = result[k]
+                    if isinstance(v, list):
+                        try:
+                            combined_dict_results[k].extend(v)
+                        except KeyError:
+                            combined_dict_results[k] = v
+                    else:
+                        combined_dict_results[k] = v
+            else:
+                # returned result is not a dict or a list. don't know how to
+                # deal with this, so just send everything back.
+                return results
+
+        if combined_list_results and combined_dict_results:
+            # there was a mix of list and dict results from the sequence
+            # of calls. this case seems very odd to me if it ever happens.
+            # at any rate, send everything back uncombined
+            return results
+
+        if combined_dict_results:
+            return combined_dict_results
+
+        if combined_list_results:
+            return combined_list_results
+
+        # I don't expect to make it here, but I suppose it could happen if,
+        # perhaps, a sequence of empty dicts were returned or some such.
+        # Send everything back.
+        return results
 
