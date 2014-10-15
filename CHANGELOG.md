@@ -1,6 +1,14 @@
+## 1.2.0
+
+- Fork zendesk from eventbrite
+- Merge PRs and apply fixes
+- Python 3 compatibility
+
 ## 2.0.0
 
-- Initial release
+- Drop APIv1 support code completely
+- Drop endpoints dicts for new API generator approach
+- Support Python 2 and Python 3 in codebase without 2to3 translation
 
 ## 2.0.1
 
