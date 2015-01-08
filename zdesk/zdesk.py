@@ -156,6 +156,7 @@ class Zendesk(ZendeskAPI):
             body = json.dumps(data)
             self.headers["Content-Type"] = "application/json"
         else:
+            body = data
             self.headers["Content-Type"] = mime_type
 
         results = []
