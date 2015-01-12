@@ -20,6 +20,7 @@ from .zdesk_api import ZendeskAPI
 common_params = [
         'page',
         'per_page',
+        'sort_by',
         'sort_order',
     ]
 
