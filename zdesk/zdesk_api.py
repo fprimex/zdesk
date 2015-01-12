@@ -2130,10 +2130,12 @@ class ZendeskAPI:
         api_path = "/api/v2/triggers/reorder.json"
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
-    def upload_create(self, data, **kwargs):
+    def upload_create(self, filename, data, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/attachments"
         api_path = "/api/v2/uploads.json"
-        return self.call(api_path, method="POST", status=201, data=data, **kwargs)
+        api_query = {}
+        api_query.update({"filename": filename})
+        return self.call(api_path, query=api_query, method="POST", status=201, data=data, **kwargs)
 
     def upload_delete(self, token, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/attachments"
