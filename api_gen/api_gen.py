@@ -17,12 +17,16 @@ from bs4 import BeautifulSoup
 # scraping, downloading, and disk caching to avoid this wget.
 
 # That said, here is my usual process:
-# $ wget -mk https://developer.zendesk.com/
+# $ wget -mk https://developer.zendesk.com/rest_api/docs/core/introduction
 # $ cp -R developer.zendesk.com developer.zendesk.com.orig
 # $ ./clean.py
 # $ cp -R developer.zendesk.com developer.zendesk.com.cleaned
+#
 # For each patch.* file
-# $ patch -p0 < patch.file
+# cd developer.zendesk.com
+# $ patch -p1 < ../patch.file
+#
+# $ cd ..
 # $ ./api_gen.py
 
 # If I find that more patching is needed to get what I want, then:
