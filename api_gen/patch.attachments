@@ -1,0 +1,15 @@
+diff -r -u developer.zendesk.com.cleaned/rest_api/docs/core/attachments developer.zendesk.com.upload_patch/rest_api/docs/core/attachments
+--- developer.zendesk.com.cleaned/rest_api/docs/core/attachments	2015-01-22 15:33:13.000000000 -0500
++++ developer.zendesk.com.upload_patch/rest_api/docs/core/attachments	2015-01-31 23:11:59.000000000 -0500
+@@ -713,7 +713,10 @@
+       </a>
+       <p>
+        <code>
+-        POST /api/v2/uploads.json
++        POST /api/v2/uploads.json?filename={filename}
++       </code>
++       <code>
++        POST /api/v2/uploads.json?token={token}
+        </code>
+       </p>
+       <p>
