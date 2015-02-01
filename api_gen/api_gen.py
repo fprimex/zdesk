@@ -181,6 +181,10 @@ for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', 
                     len(api_item['path_params']) == 0
                    ):
                     name = name + '_list'
+            else:
+                # one hard corner case with 'me' and 'sessions delete'
+                if 'me' in expanded_parts and api_item['method'] == 'DELETE':
+                    name = name + '_delete'
 
             api_item['path_params'].reverse()
             api_item['query_params'].reverse()
