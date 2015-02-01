@@ -239,7 +239,7 @@ for name in names:
             required = set(dupe['path_params']) & set(item['path_params'])
 
             # Optional parameters are only in one endpoint
-            optional = (set(dupe['path_params']) | set(item['path_params'])) - required
+            optional = list((set(dupe['path_params']) | set(item['path_params'])) - required)
 
             if len(set(item['path_params']) - required) == 0:
                 # The item is the base function and the dupe has the optional arguments
@@ -309,6 +309,12 @@ def sanitize(q):
 
 for name in names:
     item = api_items[name]
+
+    # Sorting the parameters alphabetically should prevent needless differences
+    # when small changes are made in different locations, so the order will be
+    # the same regardless as to which parameter is found first.
+    item['opt_path_params'].sort()
+    item['opt_query_params'].sort()
 
     path_fmt_args = ', '.join([p + '=' + p for p in item['path_params']])
 
