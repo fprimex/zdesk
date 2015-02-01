@@ -80,7 +80,7 @@ with open('api_template.py', 'r') as template_file:
 api_items = {}
 duplicate_api_items = {}
 for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', '*', '*')):
-    if '.html' in doc_file or os.path.split(doc_file)[1] in skip_files:
+    if '.html' in doc_file or '.orig' in doc_file or os.path.split(doc_file)[1] in skip_files:
         continue
 
     with open(doc_file, 'r') as doc:
