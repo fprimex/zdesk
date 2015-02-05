@@ -1,0 +1,111 @@
+diff -r -u developer.zendesk.com.cleaned/rest_api/docs/core/dynamic_content developer.zendesk.com.dynamic_3_6/rest_api/docs/core/dynamic_content
+--- developer.zendesk.com.cleaned/rest_api/docs/core/dynamic_content	2015-01-22 15:33:13.000000000 -0500
++++ developer.zendesk.com.dynamic_3_6/rest_api/docs/core/dynamic_content	2015-01-31 23:47:12.000000000 -0500
+@@ -1428,7 +1428,7 @@
+       </a>
+       <p>
+        <code>
+-        GET /api/v2/dynamic_content/items/3/variants.json
++        GET /api/v2/dynamic_content/items/{id}/variants.json
+        </code>
+       </p>
+       <p>
+@@ -1479,7 +1479,7 @@
+      <span class="s2">"default"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="s2">"created_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+      <span class="s2">"updated_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+-     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/3/variants/23.json"</span>
++     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/{id}/variants/23.json"</span>
+     <span class="p">},</span> <span class="p">{</span>
+      <span class="s2">"id"</span><span class="o">:</span> <span class="mi">24</span><span class="p">,</span>
+      <span class="s2">"content"</span><span class="o">:</span> <span class="s2">"Este es mi contenido dinámico en español"</span><span class="p">,</span>
+@@ -1489,7 +1489,7 @@
+      <span class="s2">"default"</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="s2">"created_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+      <span class="s2">"updated_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+-     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/3/variants/24.json"</span>
++     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/{id}/variants/24.json"</span>
+     <span class="p">},</span> <span class="p">{</span>
+   <span class="p">}]</span>
+ <span class="p">}</span>
+@@ -1556,7 +1556,7 @@
+       </a>
+       <p>
+        <code>
+-        POST /api/v2/dynamic_content/items/6/variants.json
++        POST /api/v2/dynamic_content/items/{id}/variants.json
+        </code>
+       </p>
+       <span class="anchor" id="allowed-for">
+@@ -1605,7 +1605,7 @@
+      <span class="s2">"default"</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="s2">"created_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+      <span class="s2">"updated_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+-     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/3/variants/23.json"</span>
++     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/{id}/variants/23.json"</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+ </pre>
+@@ -1622,7 +1622,7 @@
+       </a>
+       <p>
+        <code>
+-        POST /api/v2/dynamic_content/items/6/variants.json
++        POST /api/v2/dynamic_content/items/{id}/variants.json
+        </code>
+       </p>
+       <span class="anchor" id="allowed-for">
+@@ -1671,7 +1671,7 @@
+      <span class="s2">"default"</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="s2">"created_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+      <span class="s2">"updated_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+-     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/3/variants/23.json"</span>
++     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/{id}/variants/23.json"</span>
+     <span class="p">},</span> <span class="p">{</span>
+      <span class="s2">"id"</span><span class="o">:</span> <span class="mi">24</span><span class="p">,</span>
+      <span class="s2">"content"</span><span class="o">:</span> <span class="s2">"Este es mi contenido dinámico en español"</span><span class="p">,</span>
+@@ -1681,7 +1681,7 @@
+      <span class="s2">"default"</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="s2">"created_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+      <span class="s2">"updated_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+-     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/3/variants/24.json"</span>
++     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/{id}/variants/24.json"</span>
+     <span class="p">},</span> <span class="p">{</span>
+   <span class="p">}]</span>
+ <span class="p">}</span>
+@@ -1744,7 +1744,7 @@
+      <span class="s2">"default"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="s2">"created_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+      <span class="s2">"updated_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+-     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/3/variants/23.json"</span>
++     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/{id}/variants/23.json"</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+ </pre>
+@@ -1807,7 +1807,7 @@
+      <span class="s2">"default"</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="s2">"created_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+      <span class="s2">"updated_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+-     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/3/variants/23.json"</span>
++     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/{id}/variants/23.json"</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+ </pre>
+@@ -1874,7 +1874,7 @@
+      <span class="s2">"default"</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="s2">"created_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+      <span class="s2">"updated_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+-     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/3/variants/23.json"</span>
++     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/{id}/variants/23.json"</span>
+     <span class="p">},</span> <span class="p">{</span>
+      <span class="s2">"id"</span><span class="o">:</span> <span class="mi">24</span><span class="p">,</span>
+      <span class="s2">"content"</span><span class="o">:</span> <span class="s2">"Este es mi contenido dinámico en español"</span><span class="p">,</span>
+@@ -1884,7 +1884,7 @@
+      <span class="s2">"default"</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="s2">"created_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+      <span class="s2">"updated_at"</span><span class="o">:</span> <span class="s2">"2014-04-09T19:53:23Z"</span><span class="p">,</span>
+-     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/3/variants/24.json"</span>
++     <span class="s2">"url"</span><span class="o">:</span> <span class="s2">"https://subdomain.zendesk.com/api/v2/dynamic_content/items/{id}/variants/24.json"</span>
+     <span class="p">},</span> <span class="p">{</span>
+   <span class="p">}]</span>
+ <span class="p">}</span>

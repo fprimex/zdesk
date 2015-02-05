@@ -17,12 +17,16 @@ from bs4 import BeautifulSoup
 # scraping, downloading, and disk caching to avoid this wget.
 
 # That said, here is my usual process:
-# $ wget -mk https://developer.zendesk.com/
+# $ wget -mk https://developer.zendesk.com/rest_api/docs/core/introduction
 # $ cp -R developer.zendesk.com developer.zendesk.com.orig
 # $ ./clean.py
 # $ cp -R developer.zendesk.com developer.zendesk.com.cleaned
+#
 # For each patch.* file
-# $ patch -p0 < patch.file
+# cd developer.zendesk.com
+# $ patch -p1 < ../patch.file
+#
+# $ cd ..
 # $ ./api_gen.py
 
 # If I find that more patching is needed to get what I want, then:
@@ -76,7 +80,7 @@ with open('api_template.py', 'r') as template_file:
 api_items = {}
 duplicate_api_items = {}
 for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', '*', '*')):
-    if '.html' in doc_file or os.path.split(doc_file)[1] in skip_files:
+    if '.html' in doc_file or '.orig' in doc_file or os.path.split(doc_file)[1] in skip_files:
         continue
 
     with open(doc_file, 'r') as doc:
@@ -177,6 +181,10 @@ for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', 
                     len(api_item['path_params']) == 0
                    ):
                     name = name + '_list'
+            else:
+                # one hard corner case with 'me' and 'sessions delete'
+                if 'me' in expanded_parts and api_item['method'] == 'DELETE':
+                    name = name + '_delete'
 
             api_item['path_params'].reverse()
             api_item['query_params'].reverse()
@@ -235,7 +243,7 @@ for name in names:
             required = set(dupe['path_params']) & set(item['path_params'])
 
             # Optional parameters are only in one endpoint
-            optional = (set(dupe['path_params']) | set(item['path_params'])) - required
+            optional = list((set(dupe['path_params']) | set(item['path_params'])) - required)
 
             if len(set(item['path_params']) - required) == 0:
                 # The item is the base function and the dupe has the optional arguments
@@ -305,6 +313,12 @@ def sanitize(q):
 
 for name in names:
     item = api_items[name]
+
+    # Sorting the parameters alphabetically should prevent needless differences
+    # when small changes are made in different locations, so the order will be
+    # the same regardless as to which parameter is found first.
+    item['opt_path_params'].sort()
+    item['opt_query_params'].sort()
 
     path_fmt_args = ', '.join([p + '=' + p for p in item['path_params']])
 

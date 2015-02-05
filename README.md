@@ -5,7 +5,7 @@ easy and flexible way for developers to communicate with their Zendesk
 account in their application.
 
 See the [Zendesk developer site](https://developer.zendesk.com/) for API
-documentation. The underlying `zdesk\_api` module has been automatically
+documentation. The underlying `zdesk_api` module has been automatically
 generated from this documentation.
 
 ## Requirements

@@ -20,6 +20,7 @@ from .zdesk_api import ZendeskAPI
 common_params = [
         'page',
         'per_page',
+        'sort_by',
         'sort_order',
     ]
 
@@ -156,6 +157,7 @@ class Zendesk(ZendeskAPI):
             body = json.dumps(data)
             self.headers["Content-Type"] = "application/json"
         else:
+            body = data
             self.headers["Content-Type"] = mime_type
 
         results = []

@@ -1,0 +1,47 @@
+diff -r -u developer.zendesk.com.cleaned/rest_api/docs/core/tickets developer.zendesk.com.ticket_external_id_patch/rest_api/docs/core/tickets
+--- developer.zendesk.com.cleaned/rest_api/docs/core/tickets	2015-01-22 15:33:13.000000000 -0500
++++ developer.zendesk.com.ticket_external_id_patch/rest_api/docs/core/tickets	2015-01-31 23:37:17.000000000 -0500
+@@ -1382,6 +1382,9 @@
+        <code>
+         GET /api/v2/tickets.json
+        </code>
++       <code>
++        GET /api/v2/tickets.json?external_id={external_id}
++       </code>
+       </p>
+       <p>
+        Tickets are ordered chronologically by created date, from oldest to newest. Note: The first ticket listed may not be the absolute oldest ticket in your account due to
+@@ -1419,21 +1422,33 @@
+        <code>
+         GET /api/v2/organizations/{organization_id}/tickets.json
+        </code>
++       <code>
++        GET /api/v2/organizations/{organization_id}/tickets.json?external_id={external_id}
++       </code>
+       </p>
+       <p>
+        <code>
+         GET /api/v2/users/{user_id}/tickets/requested.json
+        </code>
++       <code>
++        GET /api/v2/users/{user_id}/tickets/requested.json?external_id={external_id}
++       </code>
+       </p>
+       <p>
+        <code>
+         GET /api/v2/users/{user_id}/tickets/ccd.json
+        </code>
++       <code>
++        GET /api/v2/users/{user_id}/tickets/ccd.json?external_id={external_id}
++       </code>
+       </p>
+       <p>
+        <code>
+         GET /api/v2/tickets/recent.json
+        </code>
++       <code>
++        GET /api/v2/tickets/recent.json?external_id={external_id}
++       </code>
+       </p>
+       <span class="anchor" id="using-curl">
+       </span>
