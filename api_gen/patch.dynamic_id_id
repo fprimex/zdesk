@@ -1,0 +1,30 @@
+diff -r -u developer.zendesk.com/rest_api/docs/core/dynamic_content developer.zendesk.com.dynamic_id_id/rest_api/docs/core/dynamic_content
+--- developer.zendesk.com/rest_api/docs/core/dynamic_content	2015-01-31 23:48:55.000000000 -0500
++++ developer.zendesk.com.dynamic_id_id/rest_api/docs/core/dynamic_content	2015-02-05 22:59:11.000000000 -0500
+@@ -1696,7 +1696,7 @@
+       </a>
+       <p>
+        <code>
+-        GET /api/v2/dynamic_content/items/{id}/variants/{id}.json
++        GET /api/v2/dynamic_content/items/{item_id}/variants/{id}.json
+        </code>
+       </p>
+       <span class="anchor" id="allowed-for">
+@@ -1758,7 +1758,7 @@
+       </a>
+       <p>
+        <code>
+-        PUT /api/v2/dynamic_content/items/{id}/variants/{id}.json
++        PUT /api/v2/dynamic_content/items/{item_id}/variants/{id}.json
+        </code>
+       </p>
+       <span class="anchor" id="allowed-for">
+@@ -1899,7 +1899,7 @@
+       </a>
+       <p>
+        <code>
+-        DELETE /api/v2/dynamic_content/items/{id}/variants/{id}.json
++        DELETE /api/v2/dynamic_content/items/{item_id}/variants/{id}.json
+        </code>
+       </p>
+       <span class="anchor" id="allowed-for">

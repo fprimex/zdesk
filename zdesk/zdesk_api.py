@@ -434,22 +434,22 @@ class ZendeskAPI:
         api_path = api_path.format(id=id)
         return self.call(api_path, method="POST", status=201, data=data, **kwargs)
 
-    def dynamic_content_item_variant_delete(self, id, id, **kwargs):
+    def dynamic_content_item_variant_delete(self, item_id, id, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/dynamic_content"
-        api_path = "/api/v2/dynamic_content/items/{id}/variants/{id}.json"
-        api_path = api_path.format(id=id, id=id)
+        api_path = "/api/v2/dynamic_content/items/{item_id}/variants/{id}.json"
+        api_path = api_path.format(item_id=item_id, id=id)
         return self.call(api_path, method="DELETE", **kwargs)
 
-    def dynamic_content_item_variant_show(self, id, id, **kwargs):
+    def dynamic_content_item_variant_show(self, item_id, id, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/dynamic_content"
-        api_path = "/api/v2/dynamic_content/items/{id}/variants/{id}.json"
-        api_path = api_path.format(id=id, id=id)
+        api_path = "/api/v2/dynamic_content/items/{item_id}/variants/{id}.json"
+        api_path = api_path.format(item_id=item_id, id=id)
         return self.call(api_path, **kwargs)
 
-    def dynamic_content_item_variant_update(self, id, id, data, **kwargs):
+    def dynamic_content_item_variant_update(self, item_id, id, data, **kwargs):
         "http://developer.zendesk.com/rest_api/docs/core/dynamic_content"
-        api_path = "/api/v2/dynamic_content/items/{id}/variants/{id}.json"
-        api_path = api_path.format(id=id, id=id)
+        api_path = "/api/v2/dynamic_content/items/{item_id}/variants/{id}.json"
+        api_path = api_path.format(item_id=item_id, id=id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def dynamic_content_item_variants(self, id, **kwargs):
