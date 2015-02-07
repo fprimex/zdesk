@@ -84,6 +84,48 @@ ticket_id = get_id_from_url(result)
 # Show
 zendesk.ticket_show(id=ticket_id)
 
+# Ticket comments and uploads / attachments
+commentbody = "Attaching example Python file"
+
+# must be in the examples directory when executing so this file can be found
+fname = '__init__.py'
+
+with open(fname, 'rb') as fp:
+    fdata = fp.read()
+
+# MIME types can be detected with the magic module:
+#import magic
+#mime_type = magic.from_file(fname, mime=True)
+#if type(mime_type) is bytes:
+#    mime_type = mime_type.decode()
+
+# But this file is known
+mime_type = 'text/plain'
+
+upload_result = zendesk.upload_create(fdata, filename=fname,
+    mime_type=mime_type, complete_response=True)
+
+# for making additional uploads
+upload_token = upload_result['content']['upload']['token']
+
+data = {
+    "ticket": {
+        "id": ticket_id,
+        "comment": {
+            "public": False,
+            "body": commentbody
+        }
+    }
+}
+
+# I like to add this separately, because it's not an uncommon use case
+# to have an automated ticket update that may or may not have uploads.
+if upload_token != "":
+    data['ticket']['comment']['uploads'] = [upload_token]
+
+# Post the comment to the ticket, which should reference the upload
+response = zendesk.ticket_update(ticket_id, data)
+
 # Delete
 zendesk.ticket_delete(id=ticket_id)
 
