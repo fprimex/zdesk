@@ -78,8 +78,8 @@ result = zendesk.ticket_create(data=new_ticket)
 #ticket_id = get_id_from_url(ticket_url)
 
 # Need ticket ID?
-from zendesk import get_id_from_url
-ticket_id = get_id_from_url(ticket_url)
+from zdesk import get_id_from_url
+ticket_id = get_id_from_url(result)
 
 # Show
 zendesk.ticket_show(id=ticket_id)
@@ -126,7 +126,7 @@ new_user = {
         'roles': 4,
     }
 }
-result = zendesk.user_create(data=new_user, complete_response=True)
+result = zendesk.user_create(data=new_user)
 user_id = get_id_from_url(result)
 
 # Show
