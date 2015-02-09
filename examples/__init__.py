@@ -2,6 +2,8 @@ from __future__ import print_function
 
 import sys
 
+from zdesk import Zendesk
+
 ################################################################
 ## NEW CONNECTION CLIENT
 ################################################################
@@ -56,9 +58,6 @@ except ImportError:
 
     else:
         zendesk = Zendesk(**testconfig)
-
-from zdesk import Zendesk
-
 
 # Are you getting an error such as...
 # "SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed"?
