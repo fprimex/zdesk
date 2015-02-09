@@ -2,29 +2,63 @@ from __future__ import print_function
 
 import sys
 
-try:
-    import zdeskcfg
-except ImportError:
-    print('Could not import zdeskcfg, which is used to set up examples.')
-    print('Please `pip install zdeskcfg`, or see the PyPI page:')
-    print('https://pypi.python.org/pypi/zdeskcfg')
-    sys.exit()
-
-from zdesk import Zendesk
-
 ################################################################
 ## NEW CONNECTION CLIENT
 ################################################################
-# Create an object using the [zdesk] section of
-# ~/.zdeskcfg and the zdeskcfg module
-#zendesk = Zendesk(**zdeskcfg.get_ini_config())
 
-# Create an object using the [zdesk] and [sandbox] sections of
-# ~/.zdeskcfg and the zdeskcfg module
-zendesk = Zendesk(**zdeskcfg.get_ini_config(section='sandbox'))
+# README: To configure this example so that it will actually execute, you need
+# to provide a valid Zendesk URL and login information. You have two options:
+#
+# 1. Install the zdeskcfg module and use it to configure your Zendesk object.
+#
+# To do this, first `pip install zdeskcfg`, then create a file `~/.zdeskcfg`
+# with contents similar to the following:
+#
+# [zdesk]
+# email = you@example.com
+# password = t2EVLKMUtt2EVLKMUtt2EVLKMUtt2EVLKMUt
+# url = https://example.zendesk.com
+# token = 1
+#
+# [sandbox]
+# url = https://example-sandbox22012201.zendesk.com
+#
+# 2. Provide a manual configuration below by editing the testconfig variable.
+#
+# In either case, you can use your actual password and set `token = 0` or
+# `zdesk_token = False`, but it is a very good idea to configure an API token
+# by visiting this URL at your own Zendesk instance:
+# https://example.zendesk.com/settings/api/
 
-# Manually creating a new connection object
-#zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd')
+try:
+    import zdeskcfg
+
+    # Create an object using the [zdesk] section of
+    # ~/.zdeskcfg and the zdeskcfg module
+    #zendesk = Zendesk(**zdeskcfg.get_ini_config())
+
+    # Create an object using the [zdesk] and [sandbox] sections of
+    # ~/.zdeskcfg and the zdeskcfg module
+    zendesk = Zendesk(**zdeskcfg.get_ini_config(section='sandbox'))
+
+except ImportError:
+    testconfig = {
+            'zdesk_email' : 'you@example.com',
+            'zdesk_password' : 't2EVLKMUtt2EVLKMUtt2EVLKMUtt2EVLKMUt',
+            'zdesk_url' : 'https://example-sandbox22012201.zendesk.com',
+            'zdesk_token' : True
+            }
+
+    if testconfig['zdesk_url'] == 'https://example-sandbox22012201.zendesk.com':
+        print('Could not import zdeskcfg and no manual configuration provided.')
+        print('Please `pip install zdeskcfg` or edit example with manual configuration.')
+        sys.exit()
+
+    else:
+        zendesk = Zendesk(**testconfig)
+
+from zdesk import Zendesk
+
 
 # Are you getting an error such as...
 # "SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed"?
