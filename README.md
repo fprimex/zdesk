@@ -124,7 +124,7 @@ new_ticket = {
 result = zendesk.ticket_create(data=new_ticket)
 
 # Need ticket ID?
-from zendesk import get_id_from_url
+from zdesk import get_id_from_url
 ticket_id = get_id_from_url(result)
 
 # Show
