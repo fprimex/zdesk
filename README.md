@@ -48,11 +48,12 @@ kept in `zdesk.common_params`. The current list at the time of this writing is:
 ## Results returned and getting all HTTP response info
 
 Under normal circumstances, when a call is made and the response indicates
-success, the value returned will be formatted to simply usage. So if a JSON
+success, the value returned will be formatted to simplify usage. So if a JSON
 response is returned with the expected return code, then instead of getting
-back all of the HTTP response information, headers and all, all that is
-returned is the JSON. In some cases, only a single string in a particular
-heading is returned, and so that will be the return value.
+back all of the HTTP response information, headers and all, the only thing that
+is returned is the JSON, which will already be deserialized. In some cases,
+only a single string in a particular heading (location) is returned, and so
+that will be the return value.
 
 Passing `complete_response=True` will cause all response information to be
 returned, which is the result of an `httplib2.client.request`.
