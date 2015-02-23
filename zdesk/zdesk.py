@@ -177,7 +177,7 @@ class Zendesk(ZendeskAPI):
 
             response_status = int(response.get('status', 0))
 
-            if response_status != status:
+            if 200 <= response_status <= 299:
                 if response_status == 401:
                     raise AuthenticationError(content, response_status, response)
                 elif response_status == 429:
