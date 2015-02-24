@@ -69,8 +69,6 @@ api_actions = [
     'verify',
     ]
 
-default_status = '200'
-
 with open('api_template.py', 'r') as template_file:
     template = template_file.read()
 
@@ -85,9 +83,6 @@ for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', 
 
     with open(doc_file, 'r') as doc:
         soup = BeautifulSoup(doc)
-
-    status_group = []
-    duplicate_status_group = []
 
     for code in soup.find_all(['code', 'pre']):
         text = code.get_text()
@@ -106,7 +101,6 @@ for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', 
             api_item['opt_path'] = ''
             api_item['query_params'] = []
             api_item['opt_query_params'] = []
-            api_item['status'] = default_status
 
             api_item['method'] = match.group(1)
             path = match.group(2)
@@ -193,24 +187,11 @@ for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', 
                 if name not in duplicate_api_items:
                     duplicate_api_items[name] = []
                 duplicate_api_items[name].append(api_item)
-                duplicate_status_group.append(name)
                 continue
 
             api_items[name] = api_item
-            status_group.append(name)
 
             continue
-
-        match = re.match(r'\s*Status: ([0-9]{3})', text)
-        if match:
-           status = match.group(1)
-           for name in status_group:
-               api_items[name]['status'] = status
-           for name in duplicate_status_group:
-               for item in duplicate_api_items[name]:
-                   item['status'] = status
-           del status_group[:]
-           del duplicate_status_group[:]
 
 content = ''
 should_keep = ''
@@ -223,7 +204,6 @@ for name in names:
         if (
             dupe['path'] == item['path'] and
             dupe['method'] == item['method'] and
-            dupe['status'] == item['status'] and
             False not in [i == j for i, j in itertools.zip_longest(
                 dupe['path_params'], item['path_params'])] and
             False not in [i == j for i, j in itertools.zip_longest(
@@ -233,7 +213,6 @@ for name in names:
             content += "    # Duplicate API endpoint discarded: {} from {}\n".format(name, dupe['docpage'])
         elif (
             dupe['method'] == item['method'] and
-            dupe['status'] == item['status'] and
             False not in [i == j for i, j in itertools.zip_longest(
                 sorted(dupe['query_params']), sorted(item['query_params']))]
             ):
@@ -263,7 +242,6 @@ for name in names:
         elif (
             dupe['path'] == item['path'] and
             dupe['method'] == item['method'] and
-            dupe['status'] == item['status'] and
             False not in [i == j for i, j in itertools.zip_longest(
                 dupe['path_params'], item['path_params'])]
             ):
@@ -279,7 +257,6 @@ for name in names:
             should_keep += '    # {}\n'.format(name)
             should_keep += '    #    Path: {}\n'.format(dupe['path'])
             should_keep += '    #    Method: {}\n'.format(dupe['method'])
-            should_keep += '    #    Status: {}\n'.format(dupe['status'])
             should_keep += '    #    Parameters:\n'
             for param in dupe['path_params']:
                 should_keep += '    #        {}\n'.format(param)
@@ -289,7 +266,6 @@ for name in names:
             should_keep += '    # Original definition:\n'
             should_keep += '    #    Path: {}\n'.format(item['path'])
             should_keep += '    #    Method: {}\n'.format(item['method'])
-            should_keep += '    #    Status: {}\n'.format(item['status'])
             should_keep += '    #    Parameters:\n'
             for param in item['path_params']:
                 should_keep += '    #        {}\n'.format(param)
@@ -391,9 +367,6 @@ for name in names:
 
     if item['method'] != 'GET':
         content += ', method="{}"'.format(item['method'])
-
-    if item['status'] != '200':
-        content += ', status={}'.format(item['status'])
 
     if item['method'] in ['POST', 'PUT']:
         content += ', data=data'
