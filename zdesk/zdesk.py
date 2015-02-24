@@ -106,7 +106,7 @@ class Zendesk(ZendeskAPI):
             raise ValueError("Unsupported Zendesk API Version: %d" %
                              api_version)
 
-    def call(self, path, query=None, method='GET', status=200, data=None, **kwargs):
+    def call(self, path, query=None, method='GET', data=None, **kwargs):
         """
         Should probably url-encode GET query parameters on replacement
         """
@@ -172,8 +172,8 @@ class Zendesk(ZendeskAPI):
                                     headers=self.headers
                                 )
 
-            # If the response status is different from status given, then we
-            # assume an error and raise proper exception
+            # If the response status is not in the 200 range then assume an
+            # error and raise proper exception
 
             response_status = int(response.get('status', 0))
 
@@ -198,7 +198,7 @@ class Zendesk(ZendeskAPI):
                 results.append({
                     'response': response,
                     'content': content,
-                    'status': status
+                    'status': response_status
                 })
 
             else:
