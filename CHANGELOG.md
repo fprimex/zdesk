@@ -1,3 +1,9 @@
+## 2.1.1
+
+- Remove explicit HTTP status code checking. Success is always in the 200
+  range, with some specific exceptions raised for only a few specific 400 range
+  codes.
+
 ## 2.1.0
 
 - Support non-JSON data for, e.g., creating uploads
