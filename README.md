@@ -86,8 +86,12 @@ from zdesk import Zendesk
 zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd')
 
 # If using an API token, you can create connection object using
-# zendesk = Zendesk(''https://yourcompany.zendesk.com', 'you@yourcompany.com', 'token', True)
+# zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'token', True)
 # True specifies that the token is being used instead of the password
+
+# See the zdeskcfg module for more sophisticated configuration at
+# the command line and via a configuration file.
+# https://github.com/fprimex/zdeskcfg
 
 # Are you getting an error such as...
 # "SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed"?
