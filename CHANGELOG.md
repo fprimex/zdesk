@@ -1,3 +1,10 @@
+## 2.2.0
+
+- Add exception classes to top level. e.g. `from zdesk import ZendeskError` works now
+- Modify `api_gen.py` so that `update_many_update` becomes just `update_many`
+- Regenerate API from updated mirror. See [full
+  commit](https://github.com/fprimex/zdesk/commit/8a6bac52a912ce45c3a47911331b381cf963abc1)
+
 ## 2.1.1
 
 - Remove explicit HTTP status code checking. Success is always in the 200
