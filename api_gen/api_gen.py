@@ -66,6 +66,7 @@ api_actions = [
     'reorder',
     'search',
     'show',
+    'update',
     'verify',
     ]
 
