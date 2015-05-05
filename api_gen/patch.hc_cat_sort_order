@@ -1,0 +1,12 @@
+diff -r -u developer.zendesk.com.cleaned/rest_api/docs/help_center/categories developer.zendesk.com.hc_cat_sort_order/rest_api/docs/help_center/categories
+--- developer.zendesk.com.cleaned/rest_api/docs/help_center/categories	2015-05-04 16:28:55.000000000 -0400
++++ developer.zendesk.com.hc_cat_sort_order/rest_api/docs/help_center/categories	2015-05-04 17:15:48.000000000 -0400
+@@ -643,7 +643,7 @@
+        </code>
+        query string parameters.
+       </p>
+-      <pre>GET /api/v2/help_center/categories.json?sort_by=updated_at&amp;sort;_order=asc
++      <pre>GET /api/v2/help_center/categories.json?sort_by=updated_at&amp;sort_order=asc
+ </pre>
+       <p>
+        The

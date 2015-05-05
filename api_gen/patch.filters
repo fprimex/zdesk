@@ -32,35 +32,6 @@ diff -r -u developer.zendesk.com.patched/rest_api/docs/core/satisfaction_ratings
        </p>
        <p>
         Lists all received satisfaction rating requests ever issued for your account. To only list
-diff -r -u developer.zendesk.com.patched/rest_api/docs/core/tickets developer.zendesk.com/rest_api/docs/core/tickets
---- developer.zendesk.com.patched/rest_api/docs/core/tickets	2014-10-06 21:53:20.000000000 -0400
-+++ developer.zendesk.com/rest_api/docs/core/tickets	2014-10-06 22:02:19.000000000 -0400
-@@ -1329,6 +1329,25 @@
-         GET /api/v2/tickets/recent.json
-        </code>
-       </p>
-+       <code>
-+        GET /api/v2/organizations/{organization_id}/tickets.json?external_id={external_id}
-+       </code>
-+      </p>
-+      <p>
-+       <code>
-+        GET /api/v2/users/{user_id}/tickets/requested.json?external_id={external_id}
-+       </code>
-+      </p>
-+      <p>
-+       <code>
-+        GET /api/v2/users/{user_id}/tickets/ccd.json?external_id={external_id}
-+       </code>
-+      </p>
-+      <p>
-+       <code>
-+        GET /api/v2/tickets/recent.json?external_id={external_id}
-+       </code>
-+      </p>
-       <span class="anchor" id="using-curl">
-       </span>
-       <h5>
 diff -r -u developer.zendesk.com.patched/rest_api/docs/core/users developer.zendesk.com/rest_api/docs/core/users
 --- developer.zendesk.com.patched/rest_api/docs/core/users	2014-10-06 21:53:20.000000000 -0400
 +++ developer.zendesk.com/rest_api/docs/core/users	2014-10-06 22:09:06.000000000 -0400
