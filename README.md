@@ -5,8 +5,9 @@ easy and flexible way for developers to communicate with their Zendesk
 account in their application.
 
 See the [Zendesk developer site](https://developer.zendesk.com/) for API
-documentation. The underlying `zdesk_api` module has been automatically
-generated from this documentation.
+documentation. The underlying `zdesk_api` module has been [automatically
+generated](https://github.com/fprimex/zdesk/blob/master/api_gen/api_gen.py)
+from this documentation.
 
 ## Requirements
 
@@ -16,7 +17,7 @@ httplib2 is used for authentication and requests
 
     (pip install | easy_install) httplib2
 
-simplejson is used to serialze and deserialze requests and responses
+simplejson is used to serialize and deserialize requests and responses
 
     (pip install | easy_install) simplejson
 
@@ -36,9 +37,15 @@ Zdesk is available on pypi, so installation should be fairly simple:
 
 ## API Keyword args
 
-Zdesk passes all API method kwargs on to the Zendesk API as query string
-parameters, except those that it has reserved for its own use. The current
-reserved kwargs are:
+Zdesk attempts to identify query string parameters from the online
+documentation. All query string parameters are optional (default to `None`),
+and are provided for convenience and reference.
+
+However, it is very difficult, if not impossible,  to accurately capture all
+valid query parameters for a particular endpoint from the documentation. So,
+zdesk passes all provided kwargs on to the Zendesk API as query string
+parameters without validation, except those that it has reserved for its own
+use. The current reserved kwargs (described in more detail below) are:
 
 * `complete_response`
 * `get_all_pages`
@@ -60,7 +67,7 @@ success, the value returned will be formatted to simplify usage. So if a JSON
 response is returned with the expected return code, then instead of getting
 back all of the HTTP response information, headers and all, the only thing that
 is returned is the JSON, which will already be deserialized. In some cases,
-only a single string in a particular heading (location) is returned, and so
+only a single string in a particular header (location) is returned, and so
 that will be the return value.
 
 Passing `complete_response=True` will cause all response information to be
@@ -78,9 +85,40 @@ As a convenience, passing `get_all_pages` to any API method will do this for
 you, and will also merge all responses. The result is a single, large object
 that appears to be the result of one single call. The logic for this
 combination and reduction is well documented in the
-[source](https://github.com/fprimex/zdesk/blob/master/zdesk/zdesk.py#L235)
+[source](https://github.com/fprimex/zdesk/blob/master/zdesk/zdesk.py#L220)
 (look for the line reading `Now we need to try to combine or reduce the
 results`, if the line number has shifted since this writing).
+
+## MIME types for data
+
+By default, all `data` passed to requests is assumed to be of MIME type
+`application/json`. The value of `data` in this default case should be a JSON
+object, and it will automatically be converted using `json.dumps` for the
+request.
+
+Some endpoints such as those that allow file uploads expect `data` to be of a
+different MIME type, and so this can be specified using the `mime_type` keyword
+argument.
+
+If working with files of an unknown MIME type, a module such as
+[python-magic](https://pypi.python.org/pypi/python-magic/) can be useful. The
+following code has worked well with zdesk scripts:
+
+    import magic
+
+    fname = 'my_file'
+
+    mime_type = magic.from_file(fname, mime=True)
+    if type(mime_type) is bytes:
+        mime_type = mime_type.decode()
+
+    with open(fname, 'rb') as fp:
+        fdata = fp.read()
+
+    response = zd.upload_attachment(filename=fname,
+            data=fdata, mime_type=mime_type, complete_response=True)
+
+    upload_token = response['content']['upload']['token']
 
 # Example Use
 
