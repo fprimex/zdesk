@@ -17,14 +17,6 @@ import simplejson as json
 
 from .zdesk_api import ZendeskAPI
 
-common_params = [
-        'page',
-        'per_page',
-        'sort_by',
-        'sort_order',
-    ]
-
-
 def get_id_from_url(url):
     url_id = urlsplit(url).path.split('/')[-1].split('.')[0]
     if url_id.isdigit():
@@ -120,13 +112,6 @@ class Zendesk(ZendeskAPI):
 
         # Support specifying a mime-type other than application/json
         mime_type = kwargs.pop('mime_type', 'application/json')
-
-        # Validate remaining kwargs against valid_params and add
-        # params url encoded to url variable.
-        for kw in kwargs:
-            if kw not in common_params:
-                raise TypeError("call to %s got an unexpected keyword argument "
-                                "'%s'" % (path, kw))
 
         for key in kwargs.keys():
             value = kwargs[key]

@@ -36,10 +36,18 @@ Zdesk is available on pypi, so installation should be fairly simple:
 
 ## API Keyword args
 
-There are a few keyword arguments that every API method accepts that
-corresponds with Zendesk API query string options for most calls. These are
-kept in `zdesk.common_params`. The current list at the time of this writing is:
+Zdesk passes all API method kwargs on to the Zendesk API as query string
+parameters, except those that it has reserved for its own use. The current
+reserved kwargs are:
 
+* `complete_response`
+* `get_all_pages`
+* `mime_type`
+
+There are a few common query string parameters that the Zendesk API accepts for
+many calls. The current list at the time of this writing is:
+
+* `include`
 * `page`
 * `per_page`
 * `sort_by`
