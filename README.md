@@ -104,6 +104,9 @@ If working with files of an unknown MIME type, a module such as
 [python-magic](https://pypi.python.org/pypi/python-magic/) can be useful. The
 following code has worked well with zdesk scripts:
 
+    # import, configure, and connect to Zendesk as shown in the example code.
+    # zd = Zendesk(...
+
     import magic
 
     fname = 'my_file'
