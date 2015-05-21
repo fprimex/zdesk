@@ -1,3 +1,6 @@
+## 2.2.1
+- Remove `common_params`, allowing all kwargs to be passed as queries
+
 ## 2.2.0
 
 - Add exception classes to top level. e.g. `from zdesk import ZendeskError` works now
