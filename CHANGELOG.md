@@ -1,3 +1,6 @@
+## 2.3.0
+- Switch from `httplib2` to `requests`
+
 ## 2.2.1
 - Remove `common_params`, allowing all kwargs to be passed as queries
 
