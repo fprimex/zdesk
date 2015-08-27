@@ -1,4 +1,5 @@
 import sys
+import copy
 import re
 import base64
 import pkg_resources
@@ -12,7 +13,7 @@ else:
     from urllib.parse import urlencode, urlsplit
 
 
-import httplib2
+import requests
 import simplejson as json
 
 from .zdesk_api import ZendeskAPI
@@ -67,8 +68,6 @@ class Zendesk(ZendeskAPI):
             or a common one is to disable SSL certficate validation
             {"disable_ssl_certificate_validation": True}
         """
-        if not client_args: client_args = {}
-
         # Set attributes necessary for API
         self.zdesk_url = zdesk_url.rstrip('/')
         self.zdesk_email = zdesk_email
@@ -77,22 +76,16 @@ class Zendesk(ZendeskAPI):
         self.zdesk_password = zdesk_password
 
         # Set headers
-        self.headers = headers
-        if self.headers is None:
-            version = pkg_resources.require("zdesk")[0].version
-            self.headers = {
-                'User-agent': 'Zdesk Python Library v%s' % version,
-                'Content-Type': 'application/json'
-            }
+        if not client_args: client_args = {}
+        if not headers: headers = {}
+        self.headers = copy.deepcopy(headers)
+        self.client_args = copy.deepcopoy(client_args)
 
         # Set http client and authentication
-        self.client = httplib2.Http(**client_args)
+        self.client = requests.Session()
         if (self.zdesk_email is not None and
                 self.zdesk_password is not None):
-            self.client.add_credentials(
-                self.zdesk_email,
-                self.zdesk_password
-            )
+            self.client.auth = (self.zdesk_email, self.zdesk_password)
 
         if api_version != 2:
             raise ValueError("Unsupported Zendesk API Version: %d" %
@@ -150,29 +143,28 @@ class Zendesk(ZendeskAPI):
 
         while not all_requests_complete:
             # Make an http request
-            response, content = self.client.request(
-                                    url,
+            response = self.client.request(
                                     method,
-                                    body=body,
-                                    headers=self.headers
+                                    url,
+                                    data=body,
+                                    headers=self.headers,
+                                    **self.client_args
                                 )
 
             # If the response status is not in the 200 range then assume an
             # error and raise proper exception
 
-            response_status = int(response.get('status', 0))
-
-            if response_status < 200 or response_status > 299:
-                if response_status == 401:
-                    raise AuthenticationError(content, response_status, response)
-                elif response_status == 429:
+            if response.status_code < 200 or response.status_code > 299:
+                if response.status_code == 401:
+                    raise AuthenticationError(response.content, response.status_code, response)
+                elif response.status_code == 429:
                     # FYI: Check the Retry-After header for how many seconds to sleep
-                    raise RateLimitError(content, response_status, response)
+                    raise RateLimitError(response.content, response.status_code, response)
                 else:
-                    raise ZendeskError(content, response_status, response)
+                    raise ZendeskError(response.content, response.status_code, response)
 
-            if content.strip():
-                content = json.loads(content)
+            if response.content.strip():
+                content = json.loads(repsonse.content)
 
                 # set url to the next page if that was returned in the response
                 url = content.get('next_page', None)
@@ -183,21 +175,21 @@ class Zendesk(ZendeskAPI):
                 results.append({
                     'response': response,
                     'content': content,
-                    'status': response_status
+                    'status': response.status_code
                 })
 
             else:
                 # Deserialize json content if content exists. In some cases Zendesk
                 # returns ' ' strings. Also return false non strings (0, [], (), {})
-                if response.get('location'):
+                if response.headers.get('location'):
                     # Zendesk's response is sometimes the url of a newly created user/
                     # ticket/group/etc and they pass this through 'location'.  Otherwise,
                     # the body of 'content' has our response.
-                    results.append(response.get('location'))
+                    results.append(response.headers.get('location'))
                 elif content:
                     results.append(content)
                 else:
-                    results.append(responses[response_status])
+                    results.append(responses[response.status_code])
 
             # if there is a next_page, and we are getting pages, then continue
             # making requests
