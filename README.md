@@ -13,9 +13,9 @@ from this documentation.
 
 Zdesk works with both Python 2 and Python 3. Tested on Python 2.7.5 and 3.4.1.
 
-httplib2 is used for authentication and requests
+The requests package is used for authentication and requests
 
-    (pip install | easy_install) httplib2
+    (pip install | easy_install) requests
 
 simplejson is used to serialize and deserialize requests and responses
 
@@ -71,7 +71,7 @@ only a single string in a particular header (location) is returned, and so
 that will be the return value.
 
 Passing `complete_response=True` will cause all response information to be
-returned, which is the result of an `httplib2.client.request`.
+returned, which is the result of a `requests.request`.
 
 ## Getting all pages
 
