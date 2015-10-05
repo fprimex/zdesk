@@ -1,15 +1,13 @@
 import sys
 import copy
-import base64
 import pkg_resources
 
 if sys.version < '3':
     from httplib import responses
-    from urllib import urlencode
     from urlparse import urlsplit
 else:
     from http.client import responses
-    from urllib.parse import urlencode, urlsplit
+    from urllib.parse import urlsplit
 
 
 import requests
@@ -68,27 +66,87 @@ class Zendesk(ZendeskAPI):
             {"disable_ssl_certificate_validation": True}
         """
         # Set attributes necessary for API
+        self._zdesk_url = None
+        self._zdesk_email = None
+        self._zdesk_password = None
+        self._zdesk_token = False
+
+        self.client = requests.Session()
+
         self.zdesk_url = zdesk_url.rstrip('/')
         self.zdesk_email = zdesk_email
-        if zdesk_token:
-            self.zdesk_email += "/token"
         self.zdesk_password = zdesk_password
+        self.zdesk_token = zdesk_token
 
         # Set headers
-        if not client_args: client_args = {}
-        if not headers: headers = {}
-        self.headers = copy.deepcopy(headers)
-        self.client_args = copy.deepcopoy(client_args)
-
-        # Set http client and authentication
-        self.client = requests.Session()
-        if (self.zdesk_email is not None and
-                self.zdesk_password is not None):
-            self.client.auth = (self.zdesk_email, self.zdesk_password)
+        self.client_args = copy.deepcopy(client_args) or {}
+        self.headers = copy.deepcopy(headers) or {}
 
         if api_version != 2:
             raise ValueError("Unsupported Zendesk API Version: %d" %
                              api_version)
+    def _update_auth(self):
+        if self.zdesk_email and self.zdesk_password:
+            self.client.auth = (self.zdesk_email, self.zdesk_password)
+        else:
+            self.client.auth = None
+
+    @property
+    def zdesk_url(self):
+        return self._zdesk_url
+
+    @zdesk_url.setter
+    def zdesk_url(self, value):
+        self._zdesk_url = value
+
+    @zdesk_url.deleter
+    def zdesk_url(self):
+        self._zdesk_url = None
+
+    @property
+    def zdesk_email(self):
+        if self.zdesk_token:
+            return self._zdesk_email + '/token'
+        else:
+            return self._zdesk_email
+
+    @zdesk_email.setter
+    def zdesk_email(self, value):
+        self._zdesk_email = value
+        self._update_auth()
+
+    @zdesk_email.deleter
+    def zdesk_email(self):
+        self._zdesk_email = None
+        self._update_auth()
+
+    @property
+    def zdesk_password(self):
+        return self._zdesk_password
+
+    @zdesk_password.setter
+    def zdesk_pasword(self, value):
+        self._zdesk_password = value
+        self._update_auth()
+
+    @zdesk_password.deleter
+    def zdesk_password(self):
+        self._zdesk_password = None
+        self._update_auth()
+
+    @property
+    def zdesk_token(self):
+        return self._zdesk_token
+
+    @zdesk_token.setter
+    def zdesk_token(self, value):
+        self._zdesk_token = bool(value)
+        self._update_auth()
+
+    @zdesk_token.deleter
+    def zdesk_token(self):
+        self._zdesk_token = False
+        self._update_auth()
 
     def call(self, path, query=None, method='GET', data=None, **kwargs):
         """
@@ -120,15 +178,6 @@ class Zendesk(ZendeskAPI):
 
         if kwargs:
             url += '?' + urlencode(kwargs)
-
-        # If credentials are supplied, then always put them in the headers
-        if self.zdesk_email and self.zdesk_password:
-            auth = base64.b64encode(self.zdesk_email.encode('ascii') + b':' +
-                             self.zdesk_password.encode('ascii'))
-            self.headers["Authorization"] = "Basic {}".format(
-                                                        auth.decode('ascii'))
-        elif "Authorization" in self.headers:
-            del(self.headers["Authorization"])
 
         if mime_type == "application/json":
             body = json.dumps(data)
