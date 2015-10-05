@@ -1,6 +1,5 @@
 import sys
 import copy
-import re
 import base64
 import pkg_resources
 
