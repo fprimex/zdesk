@@ -1,4 +1,4 @@
-class ZendeskAPI:
+class ZendeskAPI(object):
     "Class generated from Zendesk REST API documentation. See api_gen.py."
 
     def __init__(self):
