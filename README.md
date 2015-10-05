@@ -17,10 +17,6 @@ The requests package is used for authentication and requests
 
     (pip install | easy_install) requests
 
-simplejson is used to serialize and deserialize requests and responses
-
-    (pip install | easy_install) simplejson
-
 ## Installation
 
 Zdesk is available on pypi, so installation should be fairly simple:
