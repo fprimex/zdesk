@@ -176,9 +176,6 @@ class Zendesk(ZendeskAPI):
 
         url = self.zdesk_url + path
 
-        if kwargs:
-            url += '?' + urlencode(kwargs)
-
         if mime_type == "application/json":
             body = json.dumps(data)
             self.headers["Content-Type"] = "application/json"
@@ -194,6 +191,7 @@ class Zendesk(ZendeskAPI):
             response = self.client.request(
                                     method,
                                     url,
+                                    params=kwargs,
                                     data=body,
                                     headers=self.headers,
                                     **self.client_args
