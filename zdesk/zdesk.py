@@ -11,7 +11,6 @@ else:
 
 
 import requests
-import simplejson as json
 
 from .zdesk_api import ZendeskAPI
 
@@ -177,11 +176,10 @@ class Zendesk(ZendeskAPI):
         url = self.zdesk_url + path
 
         if mime_type == "application/json":
-            body = json.dumps(data)
-            self.headers["Content-Type"] = "application/json"
+            json = data
+            data = {}
         else:
-            body = data
-            self.headers["Content-Type"] = mime_type
+            json = None
 
         results = []
         all_requests_complete = False
@@ -192,7 +190,8 @@ class Zendesk(ZendeskAPI):
                                     method,
                                     url,
                                     params=kwargs,
-                                    data=body,
+                                    json=json,
+                                    data=data,
                                     headers=self.headers,
                                     **self.client_args
                                 )
@@ -210,12 +209,12 @@ class Zendesk(ZendeskAPI):
                     raise ZendeskError(response.content, response.status_code, response)
 
             if response.content.strip():
-                content = json.loads(repsonse.content)
-
-                # set url to the next page if that was returned in the response
-                url = content.get('next_page', None)
+                content = response.json()
             else:
-                url = None
+                content = response.content
+
+            # set url to the next page if that was returned in the response
+            url = content.get('next_page', None)
 
             if complete_response:
                 results.append({
