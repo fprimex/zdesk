@@ -124,7 +124,7 @@ class Zendesk(ZendeskAPI):
         return self._zdesk_password
 
     @zdesk_password.setter
-    def zdesk_pasword(self, value):
+    def zdesk_password(self, value):
         self._zdesk_password = value
         self._update_auth()
 
