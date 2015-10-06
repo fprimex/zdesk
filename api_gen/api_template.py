@@ -5,7 +5,8 @@ class ZendeskAPI(object):
         pass
 
     def call(self, path, query=None, method='GET', data=None,
-             get_all_pages=False, complete_response=False, **kwargs):
+             files=None, get_all_pages=False, complete_response=False,
+             **kwargs):
         pass
 
 {}

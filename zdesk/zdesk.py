@@ -148,7 +148,8 @@ class Zendesk(ZendeskAPI):
         self._update_auth()
 
     def call(self, path, query=None, method='GET', data=None,
-             get_all_pages=False, complete_response=False, **kwargs):
+             files=None, get_all_pages=False, complete_response=False,
+             **kwargs):
         """Make a REST call to the Zendesk web service.
 
         Parameters:
@@ -156,6 +157,7 @@ class Zendesk(ZendeskAPI):
         query - Query parameters in dict form.
         method - HTTP method to use in making the request.
         data - POST data or multi-part form data to include.
+        files - Requests style dict of files for multi-part file uploads.
         get_all_pages - Make multiple requests and follow next_page.
         complete_response - Return raw request results.
         """
@@ -176,10 +178,16 @@ class Zendesk(ZendeskAPI):
 
         url = self.zdesk_url + path
 
-        if mime_type == "application/json":
+        if files:
+            # Sending multipart file. data contains parameters.
+            json = None
+        elif (mime_type == 'application/json' and
+                (method == 'POST' or method == 'PUT')):
+            # Sending JSON data.
             json = data
             data = {}
         else:
+            # Probably a GET or DELETE. Not sending JSON or files.
             json = None
 
         results = []
@@ -194,6 +202,7 @@ class Zendesk(ZendeskAPI):
                                     json=json,
                                     data=data,
                                     headers=self.headers,
+                                    files=files,
                                     **self.client_args
                                 )
 
