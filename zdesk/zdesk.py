@@ -220,11 +220,13 @@ class Zendesk(ZendeskAPI):
 
             if response.content.strip():
                 content = response.json()
+
+                # set url to the next page if that was returned in the response
+                url = content.get('next_page', None)
             else:
                 content = response.content
+                url = None
 
-            # set url to the next page if that was returned in the response
-            url = content.get('next_page', None)
 
             if complete_response:
                 results.append({
