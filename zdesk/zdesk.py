@@ -147,17 +147,18 @@ class Zendesk(ZendeskAPI):
         self._zdesk_token = False
         self._update_auth()
 
-    def call(self, path, query=None, method='GET', data=None, **kwargs):
-        """
-        Should probably url-encode GET query parameters on replacement
-        """
+    def call(self, path, query=None, method='GET', data=None,
+             get_all_pages=False, complete_response=False, **kwargs):
+        """Make a REST call to the Zendesk web service.
 
-        # If requested, return all response information
-        complete_response = kwargs.pop('complete_response', False)
-
-        # If requested, exhaustively obtain and consolidate requests that
-        # contain a next_page attribute
-        get_all_pages = kwargs.pop('get_all_pages', False)
+        Parameters:
+        path - Path portion of the Zendesk REST endpoint URL.
+        query - Query parameters in dict form.
+        method - HTTP method to use in making the request.
+        data - POST data or multi-part form data to include.
+        get_all_pages - Make multiple requests and follow next_page.
+        complete_response - Return raw request results.
+        """
 
         # Support specifying a mime-type other than application/json
         mime_type = kwargs.pop('mime_type', 'application/json')
