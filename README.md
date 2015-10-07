@@ -119,6 +119,29 @@ following code has worked well with zdesk scripts:
 
     upload_token = response['content']['upload']['token']
 
+## Multipart file uploads (Help Center attachments)
+
+In addition to the `data` argument, zdesk methods can also take a `files`
+argument. This is a tuple which is passed directly to the `requests` module, so
+you may wish to reference [their
+documentation](http://requests.readthedocs.org/en/latest/user/quickstart/#post-a-multipart-encoded-file).
+
+Here is an example of using the `help_center_article_attachment_create` method.
+
+    zd.help_center_article_attachment_create(id='205654433', data={},
+            files={'file':('attach.zip', open('attach.zip', 'rb'))})
+
+The `data` parameter should always be supplied, containing any desired optional
+parameters such as `data={'inline':'true'}`, or `{}` otherwise. The file data
+can be provided directly in the tuple, and the MIME type can be explicitly
+specified.
+
+    with open('attach.zip', 'rb') as f:
+        fdata = f.read()
+
+    zd.help_center_article_attachment_create(id='205654433', data={},
+            files={'file':('attach.zip', fdata, 'application/zip')})
+
 # Example Use
 
 ```python
