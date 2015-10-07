@@ -15,7 +15,7 @@ Zdesk works with both Python 2 and Python 3. Tested on Python 2.7.5 and 3.4.1.
 
 The requests package is used for authentication and requests
 
-    (pip install | easy_install) requests
+    pip install requests
 
 Note that if you are on an earlier version of Python on particular platforms,
 you can receive [an
@@ -33,7 +33,7 @@ be a `zdesk` bug, so please [report it](https://github.com/fprimex/zdesk/issues)
 
 Zdesk is available on pypi, so installation should be fairly simple:
 
-    (pip install | easy_install) zdesk
+    pip install zdesk
 
 ## Related projects
 
