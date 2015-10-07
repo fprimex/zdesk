@@ -17,6 +17,18 @@ The requests package is used for authentication and requests
 
     (pip install | easy_install) requests
 
+Note that if you are on an earlier version of Python on particular platforms,
+you can receive [an
+error](https://urllib3.readthedocs.org/en/latest/security.html#insecureplatformwarning)
+from `urllib3`, which is packaged in with `requests`. The simplest solution is
+to install or update the packages specified in the
+[solution](https://urllib3.readthedocs.org/en/latest/security.html#pyopenssl).
+
+    pip install pyopenssl ndg-httpsclient pyasn1
+
+This should be all that is required. If additional steps are required this may
+be a `zdesk` bug, so please [report it](https://github.com/fprimex/zdesk/issues).
+
 ## Installation
 
 Zdesk is available on pypi, so installation should be fairly simple:
