@@ -181,14 +181,23 @@ class Zendesk(ZendeskAPI):
         if files:
             # Sending multipart file. data contains parameters.
             json = None
+            self.headers.pop('Content-Type', None)
         elif (mime_type == 'application/json' and
                 (method == 'POST' or method == 'PUT')):
             # Sending JSON data.
             json = data
             data = {}
+            self.headers.pop('Content-Type', None)
+        elif (mime_type != 'application/json' and
+                (method == 'POST' or method == 'PUT')):
+            # Uploading an attachment, probably.
+            # Specifying the MIME type is required.
+            json = None
+            self.headers['Content-Type'] = mime_type
         else:
             # Probably a GET or DELETE. Not sending JSON or files.
             json = None
+            self.headers.pop('Content-Type', None)
 
         results = []
         all_requests_complete = False
