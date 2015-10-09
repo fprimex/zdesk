@@ -1,6 +1,6 @@
-diff -r -u developer.zendesk.com.cleaned/rest_api/docs/core/tickets developer.zendesk.com.ticket_external_id/rest_api/docs/core/tickets
---- developer.zendesk.com.cleaned/rest_api/docs/core/tickets	2015-05-04 16:28:55.000000000 -0400
-+++ developer.zendesk.com.ticket_external_id/rest_api/docs/core/tickets	2015-05-04 16:50:43.000000000 -0400
+diff -r -u apidocs_orig/core_tickets apidocs/core_tickets
+--- apidocs_orig/core_tickets	2015-05-04 16:28:55.000000000 -0400
++++ apidocs/core_tickets	2015-05-04 16:50:43.000000000 -0400
 @@ -1378,6 +1378,9 @@
         <code>
          GET /api/v2/tickets.json

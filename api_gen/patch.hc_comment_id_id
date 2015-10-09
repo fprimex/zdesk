@@ -1,6 +1,6 @@
-diff -r -u developer.zendesk.com.cleaned/rest_api/docs/help_center/comments developer.zendesk.com/rest_api/docs/help_center/comments
---- developer.zendesk.com.cleaned/rest_api/docs/help_center/comments	2015-01-22 15:33:14.000000000 -0500
-+++ developer.zendesk.com/rest_api/docs/help_center/comments	2015-01-22 15:35:18.000000000 -0500
+diff -r -u apidocs_orig/hc_comments apidocs/hc_comments
+--- apidocs_orig/hc_comments	2015-01-22 15:33:14.000000000 -0500
++++ apidocs/hc_comments	2015-01-22 15:35:18.000000000 -0500
 @@ -919,7 +919,7 @@
        </a>
        <p>
