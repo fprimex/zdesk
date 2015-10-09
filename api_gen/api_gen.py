@@ -14,8 +14,11 @@ from bs4 import BeautifulSoup
 
 # Unless you're really going to hack on the API generator, don't hammer
 # the developer site needlessly. Currently, mirroring the whole site
-# results in about 26MB on disk. I may eventually do some more intelligent
-# scraping, downloading, and disk caching to avoid this wget.
+# results in about 9MB on disk.
+
+# The initial scraping checks to see if a page has already been downloaded,
+# and, if so, skips it. To redownload all API documentation, delete the
+# 'apidocs' directory.
 
 # That said, here is my usual process:
 # $ wget -mk https://developer.zendesk.com/rest_api/docs/core/introduction
