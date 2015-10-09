@@ -8,6 +8,7 @@ import urllib.parse
 import html.parser
 import itertools
 
+import requests
 import inflection
 from bs4 import BeautifulSoup
 
@@ -38,12 +39,6 @@ from bs4 import BeautifulSoup
 # cp zdesk_api.py ../zdesk/
 
 html_parser = html.parser.HTMLParser()
-
-skip_files=[
-    'introduction',
-    'changes_roadmap',
-    'side_loading',
-    ]
 
 api_actions = [
     'autocomplete',
@@ -76,13 +71,90 @@ with open('api_template.py', 'r') as template_file:
 #os.chdir('old.developer.zendesk.com/documentation/rest_api')
 #os.chdir('developer.zendesk.com/rest_api/docs/core')
 
+zen_url = 'https://developer.zendesk.com'
+
+docpages = {
+    'core':'/rest_api/docs/core/introduction',
+    'webportal':'/rest_api/docs/web-portal/webportal_introduction',
+    'hc':'/rest_api/docs/help_center/introduction',
+    'zopim':'/rest_api/docs/zopim/introduction',
+    'voice':'/rest_api/docs/voice-api/voice',
+    'nps':'/rest_api/docs/nps-api/introduction',
+}
+
+skippages = [
+    '/rest_api/docs/core/introduction',
+    '/rest_api/docs/core/getting_started',
+    '/rest_api/docs/core/api_changes',
+    '/rest_api/docs/core/restrictions',
+    '/rest_api/docs/help_center/introduction',
+    '/rest_api/docs/zopim/introduction',
+    '/rest_api/docs/zopim/restrictions',
+    '/rest_api/docs/zopim/changes_roadmap',
+    '/rest_api/docs/web-portal/webportal_introduction',
+    '/rest_api/docs/nps-api/introduction',
+]
+
+skipfiles = [
+    'core_introduction',
+    'webportal_webportal_introduction',
+    'hc_introduction',
+    'zopim_introduction',
+    'nps_introduction',
+]
+
+if not os.path.isdir('apidocs'):
+    os.makedirs('apidocs')
+
+os.chdir('apidocs')
+
+for category in docpages:
+    filename = category + '_' + os.path.basename(docpages[category])
+
+    if os.path.isfile(filename):
+        with open(filename, 'rb') as fin:
+            content = fin.read()
+    else:
+        req = requests.get(zen_url + docpages[category])
+        content = req.content
+
+        with open(filename, 'wb') as fout:
+            fout.write(content)
+
+    soup = BeautifulSoup(content)
+    sidenav = soup(attrs={'class':'docs-sidenav'})[0]
+
+    for a in sidenav.find_all('a'):
+        link = a.attrs['href']
+        filename = category + '_' + os.path.basename(link)
+
+        if link[0] == '#': continue
+        if link in skippages: continue
+        if os.path.isfile(filename): continue
+
+        req = requests.get(zen_url + link)
+        text = BeautifulSoup(req.content)
+
+        pretty_text = text.prettify()
+        if not pretty_text:
+            # In the case of prettify killing the whole page
+            pretty_text = text
+        pretty = (pretty_text)
+
+        with open(category + '_' + os.path.basename(link), 'w') as fout:
+            fout.write(pretty)
+
+doc_files = os.listdir()
+
+os.chdir('..')
+
 api_items = {}
 duplicate_api_items = {}
-for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', '*', '*')):
-    if '.html' in doc_file or '.orig' in doc_file or os.path.split(doc_file)[1] in skip_files:
+for doc_file in doc_files:
+    if '.orig' in doc_file or doc_file in skipfiles:
         continue
 
-    with open(doc_file, 'r') as doc:
+    with open(os.path.join('apidocs', doc_file), 'r') as doc:
         soup = BeautifulSoup(doc)
 
     for code in soup.find_all(['code', 'pre']):
@@ -94,9 +166,13 @@ for doc_file in iglob(os.path.join('developer.zendesk.com', 'rest_api', 'docs', 
         #    print(line, end='')
         match = re.match(r'\s*(OPTIONS|GET|HEAD|POST|PUT|DELETE|TRACE|CONNECT) (.*)', text)
         if match:
+            cat = os.path.basename(doc_file.split('_')[0])
+            page = doc_file.strip(cat + '_')
+            docpage = zen_url + os.path.dirname(docpages[cat]) + '/' + page
+
             is_singular = False
             api_item = {}
-            api_item['docpage'] = doc_file
+            api_item['docpage'] = docpage
             api_item['path_params'] = []
             api_item['opt_path_params'] = []
             api_item['opt_path'] = ''
@@ -325,7 +401,7 @@ for name in names:
     argspec += '**kwargs'
 
     content += '    def {}(self, {}):\n'.format(name, argspec)
-    content += '        "http://{}"\n'.format( item['docpage'])
+    content += '        "{}"\n'.format( item['docpage'])
     content += '        api_path = "{}"\n'.format(item['path'])
 
     if item['path_params']:
