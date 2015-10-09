@@ -1,6 +1,6 @@
 diff -r -u apidocs_orig/core_dynamic_content apidocs/core_dynamic_content
---- apidocs_orig/core/dynamic_content	2015-01-31 23:48:55.000000000 -0500
-+++ apidocs/core/dynamic_content	2015-02-05 22:59:11.000000000 -0500
+--- apidocs_orig/core_dynamic_content	2015-01-31 23:48:55.000000000 -0500
++++ apidocs/core_dynamic_content	2015-02-05 22:59:11.000000000 -0500
 @@ -1696,7 +1696,7 @@
        </a>
        <p>
