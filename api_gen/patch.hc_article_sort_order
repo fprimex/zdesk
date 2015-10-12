@@ -10,3 +10,12 @@ diff -r -u apidocs_orig/hc_articles apidocs/hc_articles
  </pre>
        <p>
         The
+@@ -879,7 +879,7 @@
+       </p>
+       <p>
+        <code>
+-        GET /api/v2/help_center/en-us/articles.json?sort_by=title
++        GET /api/v2/help_center/{locale}/articles.json?sort_by=title
+        </code>
+       </p>
+       <p>
