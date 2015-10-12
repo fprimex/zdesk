@@ -10,16 +10,7 @@ diff -r -u apidocs_orig/core_dynamic_content apidocs/core_dynamic_content
         </code>
        </p>
        <p>
-@@ -1556,7 +1556,7 @@
-       </a>
-       <p>
-        <code>
--        POST /api/v2/dynamic_content/items/6/variants.json
-+        POST /api/v2/dynamic_content/items/{id}/variants.json
-        </code>
-       </p>
-       <span class="anchor" id="allowed-for">
-@@ -1696,7 +1696,7 @@
+@@ -1662,7 +1662,7 @@
        </a>
        <p>
         <code>
@@ -28,12 +19,12 @@ diff -r -u apidocs_orig/core_dynamic_content apidocs/core_dynamic_content
         </code>
        </p>
        <span class="anchor" id="allowed-for">
-@@ -1758,7 +1758,7 @@
+@@ -1724,7 +1724,7 @@
        </a>
        <p>
         <code>
--        PUT /api/v2/dynamic_content/items/{id}/variants/{id}.json
-+        PUT /api/v2/dynamic_content/items/{item_id}/variants/{id}.json
+-        POST /api/v2/dynamic_content/items/6/variants.json
++        POST /api/v2/dynamic_content/items/{id}/variants.json
         </code>
        </p>
        <span class="anchor" id="allowed-for">
@@ -43,6 +34,15 @@ diff -r -u apidocs_orig/core_dynamic_content apidocs/core_dynamic_content
         <code>
 -        POST /api/v2/dynamic_content/items/6/variants/create_many.json
 +        POST /api/v2/dynamic_content/items/{id}/variants/create_many.json
+        </code>
+       </p>
+       <span class="anchor" id="allowed-for">
+@@ -1758,7 +1758,7 @@
+       </a>
+       <p>
+        <code>
+-        PUT /api/v2/dynamic_content/items/{id}/variants/{id}.json
++        PUT /api/v2/dynamic_content/items/{item_id}/variants/{id}.json
         </code>
        </p>
        <span class="anchor" id="allowed-for">
