@@ -6,7 +6,6 @@ import shutil
 import sys
 import subprocess
 from subprocess import CalledProcessError
-from glob import iglob
 import urllib.parse
 import html.parser
 import itertools
