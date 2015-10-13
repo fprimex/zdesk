@@ -2,7 +2,10 @@
 
 import re
 import os
+import shutil
 import sys
+import subprocess
+from subprocess import CalledProcessError
 from glob import iglob
 import urllib.parse
 import html.parser
@@ -106,10 +109,15 @@ skipfiles = [
     'nps_introduction',
 ]
 
-if not os.path.isdir('apidocs'):
-    os.makedirs('apidocs')
+apidocs = 'apidocs'
 
-os.chdir('apidocs')
+if os.path.isdir(apidocs):
+    shutil.rmtree(apidocs)
+
+if not os.path.isdir(apidocs + '_orig'):
+    os.makedirs(apidocs + '_orig')
+
+os.chdir(apidocs + '_orig')
 
 for category in docpages:
     filename = category + '_' + os.path.basename(docpages[category])
@@ -148,8 +156,19 @@ for category in docpages:
             fout.write(pretty)
 
 doc_files = os.listdir()
-
 os.chdir('..')
+patchfiles = os.listdir('patches')
+shutil.copytree(apidocs + '_orig', apidocs)
+os.chdir(apidocs)
+
+for patchfile in patchfiles:
+    try:
+        sp = subprocess.check_output(['patch', '-p1', patchfile,
+                os.path.join('..', 'patches', patchfile)])
+    except CalledProcessError as e:
+        print('Failed to patch {}. Exit {}\n'.format(patchfile, e.returncode))
+        print('Output was:\n')
+        print(e.output.decode())
 
 api_items = {}
 duplicate_api_items = {}
@@ -157,7 +176,7 @@ for doc_file in doc_files:
     if '.orig' in doc_file or doc_file in skipfiles:
         continue
 
-    with open(os.path.join('apidocs', doc_file), 'r') as doc:
+    with open(doc_file) as doc:
         soup = BeautifulSoup(doc)
 
     for code in soup.find_all(['code', 'pre']):
@@ -452,6 +471,8 @@ for name in names:
         content += ', data=data'
 
     content += ', **kwargs)\n\n'
+
+os.chdir('..')
 
 with open('zdesk_api.py', 'w') as f:
     f.write(template.format(content))
