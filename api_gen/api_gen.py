@@ -14,34 +14,7 @@ import requests
 import inflection
 from bs4 import BeautifulSoup
 
-# Unless you're really going to hack on the API generator, don't hammer
-# the developer site needlessly. Currently, mirroring the whole site
-# results in about 9MB on disk.
-
-# The initial scraping checks to see if a page has already been downloaded,
-# and, if so, skips it. To redownload all API documentation, delete the
-# 'apidocs' directory.
-
-# That said, here is my usual process:
-# $ wget -mk https://developer.zendesk.com/rest_api/docs/core/introduction
-# $ cp -R developer.zendesk.com developer.zendesk.com.orig
-# $ ./clean.py
-# $ cp -R developer.zendesk.com developer.zendesk.com.cleaned
-#
-# For each patch.* file
-# cd developer.zendesk.com
-# $ patch -p1 < ../patch.file
-#
-# $ cd ..
-# $ ./api_gen.py
-
-# If I find that more patching is needed to get what I want, then:
-# $ vim edit whatever
-# $ diff -r -u developer.zendesk.com developer.zendesk.com.cleaned > api_gen.patch.new
-# If that all checks out, then api_gen.patch.new becomes the new api_gen.patch
-
-# Then, once all is well:
-# cp zdesk_api.py ../zdesk/
+# See README.md for documentation.
 
 html_parser = html.parser.HTMLParser()
 
