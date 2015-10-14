@@ -320,63 +320,78 @@ for name in names:
             # Optional parameters are only in one endpoint
             optional = list((set(dupe['path_params']) | set(item['path_params'])) - required)
 
-            if len(set(item['path_params']) - required) == 0:
+            if (len(set(item['path_params']) - required) == 0 and
+                    len(optional) > 0):
                 # The item is the base function and the dupe has the optional arguments
                 # Just need to add the optional arguments
                 item['opt_path_params'] = optional
                 item['opt_path'] = dupe['path']
-            elif len(set(dupe['path_params']) - required) == 0:
+            elif (len(set(dupe['path_params']) - required) == 0 and
+                    len(optional) > 0):
                 # The dupe is the base function and the item has the optional arguments
                 # Need to swap the dupe with the item and then add the optional arguments
                 dupe_path = dupe['path']
                 item = dupe
                 item['opt_path_params'] = optional
                 item['opt_path'] = dupe_path
-            elif (len(set(item['path_params']).union(set(dupe['path_params']))
-                     - set(optional)) == 0):
-                # All of the parameters are optional parameters, so this is
-                # ambiguous. If the parameters are in the same place, then
-                # they're actually interchangeable, and we just need a better
-                # name for them.
-                same_param_pos = True
-                is_new_item = False
+            else:
+                # this is ambiguous. If the parameters are in the same place,
+                # then they're actually interchangeable, and we just need a
+                # better name for them.
+                handled = True
                 new_path = ''
                 new_path_params = []
+
+                # compare each of the path parts to see specifically what is
+                # different.
                 for i, j in itertools.zip_longest(item['path'].split('/'),
                         dupe['path'].split('/')):
                     if i == j:
+                        # everything is the same up to here. keep building a
+                        # new, common path.
                         if i:
                             new_path += '/' + i
                     else:
-                        if i.startswith('{') and j.startswith('{'):
-                            ipart, iext = os.path.splitext(i)
-                            jpart, jext = os.path.splitext(j)
-                            if iext != jext:
-                                # the parameters are in the same place but have
-                                # a different extension. So this actually needs
-                                # a new method.
-                                new_name = name + '_by_' + jpart.strip('{}')
-                                if new_name not in api_items:
-                                    api_items[new_name] = dupe
-                                    is_new_item = True
-                                same_param_pos = False
+                        # the paths are different. look at how they are
+                        # different.
+                        ipart, iext = os.path.splitext(i)
+                        jpart, jext = os.path.splitext(j)
+                        if ipart == jpart and iext != jext:
+                            # These are legit dupes that only differ by
+                            # the extension at the end.
+                            content += "    # Duplicate API endpoint differs only by extension: {} from {}\n".format(name, dupe['docpage'])
+                            handled = True
+                            break
+
+                        if (ipart.startswith('{') and jpart.startswith('{')
+                                and iext != jext):
+                            # The parameters are different, but in the same
+                            # place and have a different extension. So this
+                            # actually needs a new method.
+                            # e.g. /thing/{id} vs /thing/{name}.json
+                            new_name = name + '_by_' + jpart.strip('{}')
+                            if new_name not in api_items:
+                                api_items[new_name] = dupe
+                                handled = True
+                                break
+
+                        if (ipart.startswith('{') and jpart.startswith('{')
+                                and iext == jext):
+                            # The parameters are in the same place and have the
+                            # same extension. Combine these parameters as they
+                            # are basically interchangeable.
+                            # e.g. /thing/{id} vs /thing/{name} becomes
+                            #      /thing/{id_or_name}
                             new_param = i.strip('{}' + iext) + '_or_' + j.strip('{}' + jext)
                             new_path_params.append(new_param)
                             new_path += '/{' + new_param + '}' + iext
-                        else:
-                            same_param_pos = False
+                            item['path'] = new_path
+                            item['path_params'] = new_path_params
+                            handled = True
+                            break
 
-                if is_new_item:
-                    continue
-                if same_param_pos:
-                    item['path'] = new_path
-                    item['path_params'] = new_path_params
-                else:
+                if not handled:
                     content += "    # Duplicate ambiguous API endpoint: {} from {}\n".format(name, dupe['docpage'])
-                    continue
-            else:
-                content += "    # Duplicate ambiguous API endpoint: {} from {}\n".format(name, dupe['docpage'])
-                continue
         elif (
             dupe['path'] == item['path'] and
             dupe['method'] == item['method'] and
