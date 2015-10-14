@@ -314,7 +314,8 @@ for name in names:
             False not in [i == j for i, j in itertools.zip_longest(
                 sorted(dupe['query_params']), sorted(item['query_params']))]
             ):
-            # Only the path parameters differ, so we have optional arguments
+            # Only the path parameters differ, so we have optional or ambiguous
+            # arguments
 
             # Common parameters are all required
             required = set(dupe['path_params']) & set(item['path_params'])
@@ -334,6 +335,48 @@ for name in names:
                 item = dupe
                 item['opt_path_params'] = optional
                 item['opt_path'] = dupe_path
+            elif (len(set(item['path_params']).union(set(dupe['path_params']))
+                     - set(optional)) == 0):
+                # All of the parameters are optional parameters, so this is
+                # ambiguous. If the parameters are in the same place, then
+                # they're actually interchangeable, and we just need a better
+                # name for them.
+                same_param_pos = True
+                is_new_item = False
+                new_path = ''
+                new_path_params = []
+                for i, j in itertools.zip_longest(item['path'].split('/'),
+                        dupe['path'].split('/')):
+                    if i == j:
+                        if i:
+                            new_path += '/' + i
+                    else:
+                        if i.startswith('{') and j.startswith('{'):
+                            ipart, iext = os.path.splitext(i)
+                            jpart, jext = os.path.splitext(j)
+                            if iext != jext:
+                                # the parameters are in the same place but have
+                                # a different extension. So this actually needs
+                                # a new method.
+                                new_name = name + '_by_' + jpart.strip('{}')
+                                if new_name not in api_items:
+                                    api_items[new_name] = dupe
+                                    is_new_item = True
+                                same_param_pos = False
+                            new_param = i.strip('{}' + iext) + '_or_' + j.strip('{}' + jext)
+                            new_path_params.append(new_param)
+                            new_path += '/{' + new_param + '}' + iext
+                        else:
+                            same_param_pos = False
+
+                if is_new_item:
+                    continue
+                if same_param_pos:
+                    item['path'] = new_path
+                    item['path_params'] = new_path_params
+                else:
+                    content += "    # Duplicate ambiguous API endpoint: {} from {}\n".format(name, dupe['docpage'])
+                    continue
             else:
                 content += "    # Duplicate ambiguous API endpoint: {} from {}\n".format(name, dupe['docpage'])
                 continue
