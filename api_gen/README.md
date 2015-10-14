@@ -2,6 +2,18 @@ Unless you're really going to hack on the API generator, don't hammer the
 developer site needlessly. Currently, mirroring the whole site results in about
 9MB on disk.
 
+The API generator needs Python 3, `requests`, `BeautifulSoup4`, and
+`inflection` installed. See the `requirements.txt` file. There also needs to be
+a POSIX compliant `patch` executable in your path for applying the patches.
+Linux and OSX have this, but on Windows it will need to be installed manually
+with something like Cygwin.
+
+No arguments are required.
+
+```
+(api_gen) $ ./api_gen.py
+```
+
 When `api_gen.py` is executed for the first time, the following happens:
 * `apidocs` dir is deleted if it is present
 * `apidocs_orig` dir is made if it is not present
