@@ -403,6 +403,15 @@ for name in names:
                                                item['opt_query_params'] +
                                                dupe['query_params']))
                 item['query_params'] = []
+        elif (
+            dupe['path'] == item['path'] and
+            False not in [i == j for i, j in itertools.zip_longest(
+                dupe['path_params'], item['path_params'])] and
+            False not in [i == j for i, j in itertools.zip_longest(
+                sorted(dupe['query_params']), sorted(item['query_params']))]
+            ):
+                # Only the method differs, so indicate that method is ambiguous
+                item['method'] = None
         else:
             should_keep += "\n"
             should_keep += "    # Duplicate API endpoint that differs: {} from {}\n".format(name, dupe['docpage'])
@@ -457,10 +466,16 @@ for name in names:
         paramspec += ', '
     argspec = paramspec + queryspec
 
-    if item['method'] in ['POST', 'PUT']:
+    if item['method']:
+        if item['method'] in ['POST', 'PUT']:
+            if argspec:
+                argspec += ', '
+            argspec += 'data'
+    else:
         if argspec:
-            argspec += ', '
-        argspec += 'data'
+            argspec = 'method, ' + argspec + ', data=None'
+        else:
+            argspec = 'method, data=None'
 
     if item['opt_path_params']:
         if argspec:
@@ -518,11 +533,15 @@ for name in names:
     if item['query_params'] or item['opt_query_params']:
         content += ', query=api_query'
 
-    if item['method'] != 'GET':
-        content += ', method="{}"'.format(item['method'])
+    if item['method']:
+        if item['method'] != 'GET':
+            content += ', method="{}"'.format(item['method'])
 
-    if item['method'] in ['POST', 'PUT']:
-        content += ', data=data'
+        if item['method'] in ['POST', 'PUT']:
+            content += ', data=data'
+    else:
+        content += ', method=method, data=data'
+
 
     content += ', **kwargs)\n\n'
 
