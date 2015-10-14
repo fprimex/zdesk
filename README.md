@@ -126,7 +126,7 @@ following code has worked well with zdesk scripts:
     with open(fname, 'rb') as fp:
         fdata = fp.read()
 
-    response = zd.upload_attachment(filename=fname,
+    response = zd.upload_create(filename=fname,
             data=fdata, mime_type=mime_type, complete_response=True)
 
     upload_token = response['content']['upload']['token']
@@ -140,7 +140,7 @@ documentation](http://requests.readthedocs.org/en/latest/user/quickstart/#post-a
 
 Here is an example of using the `help_center_article_attachment_create` method.
 
-    zd.help_center_article_attachment_create(id='205654433', data={},
+    zd.help_center_article_attachment_create(article_id='205654433', data={},
             files={'file':('attach.zip', open('attach.zip', 'rb'))})
 
 The `data` parameter should always be supplied, containing any desired optional
@@ -151,7 +151,7 @@ specified.
     with open('attach.zip', 'rb') as f:
         fdata = f.read()
 
-    zd.help_center_article_attachment_create(id='205654433', data={},
+    zd.help_center_article_attachment_create(article_id='205654433', data={},
             files={'file':('attach.zip', fdata, 'application/zip')})
 
 # Example Use
@@ -172,15 +172,6 @@ zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'pas
 # See the zdeskcfg module for more sophisticated configuration at
 # the command line and via a configuration file.
 # https://github.com/fprimex/zdeskcfg
-
-# Are you getting an error such as...
-# "SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed"?
-#zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd',
-#    client_args={
-#        "disable_ssl_certificate_validation": True
-#    }
-#)
-
 
 ################################################################
 ## TICKETS
