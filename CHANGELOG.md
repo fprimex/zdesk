@@ -2,6 +2,10 @@
 - Switch from `httplib2` to `requests`
 - Add `files` parameter to support multipart uploads for Help Center attachment
   style requests
+- Enhance `api_gen.py` to handle downloading and patching of developer.zendesk.com
+- Add Zopim and numerous other API endpoints
+- Regenerate API from updated mirror. See [full
+  commit](https://github.com/fprimex/zdesk/commit/d679a734292de5ade82cb4d4533e79368510769d)
 
 ## 2.2.1
 - Remove `common_params`, allowing all kwargs to be passed as queries
