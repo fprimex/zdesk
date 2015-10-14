@@ -1,6 +1,6 @@
 Unless you're really going to hack on the API generator, don't hammer the
-developer site needlessly. Currently, mirroring the whole site results in about
-9MB on disk.
+developer site needlessly. Currently, mirroring the required files results in
+about 9MB on disk.
 
 The API generator needs Python 3, `requests`, `BeautifulSoup4`, and
 `inflection` installed. See the `requirements.txt` file. There also needs to be
