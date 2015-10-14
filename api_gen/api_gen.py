@@ -189,7 +189,7 @@ for doc_file in doc_files:
         match = re.match(r'\s*(OPTIONS|GET|HEAD|POST|PUT|DELETE|TRACE|CONNECT) (.*)', text)
         if match:
             cat = os.path.basename(doc_file.split('_')[0])
-            page = doc_file.strip(cat + '_')
+            page = doc_file.replace(cat + '_', '')
             docpage = zen_url + os.path.dirname(docpages[cat]) + '/' + page
 
             is_singular = False
