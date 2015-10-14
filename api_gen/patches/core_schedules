@@ -1,0 +1,30 @@
+diff -r -u apidocs_orig/core_schedules apidocs/core_schedules
+--- apidocs_orig/core_schedules	2015-10-12 16:28:27.000000000 -0400
++++ apidocs/core_schedules	2015-10-13 23:24:49.000000000 -0400
+@@ -1302,7 +1302,7 @@
+       </a>
+       <p>
+        <code>
+-        GET /api/v2/business_hours/schedules/{id}/holidays/{id}.json
++        GET /api/v2/business_hours/schedules/{schedule_id}/holidays/{id}.json
+        </code>
+       </p>
+       <span class="anchor" id="allowed-for">
+@@ -1416,7 +1416,7 @@
+       </a>
+       <p>
+        <code>
+-        PUT /api/v2/business_hours/schedules/{id}/holidays/{id}.json
++        PUT /api/v2/business_hours/schedules/{schedule_id}/holidays/{id}.json
+        </code>
+       </p>
+       <span class="anchor" id="allowed-for">
+@@ -1474,7 +1474,7 @@
+       </a>
+       <p>
+        <code>
+-        DELETE /api/v2/business_hours/schedules/{id}/holidays/{id}.json
++        DELETE /api/v2/business_hours/schedules/{schedule_id}/holidays/{id}.json
+        </code>
+       </p>
+       <span class="anchor" id="allowed-for">
