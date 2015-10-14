@@ -13,9 +13,9 @@ setup(
     license='LICENSE.txt',
     url = 'https://github.com/fprimex/zdesk',
     keywords = 'zendesk api helpdesk',
-    description = 'Python API Wrapper for Zendesk',
+    description = 'Zendesk API generated directly from developer.zendesk.com',
     classifiers = [
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Topic :: Software Development :: Libraries :: Python Modules',
