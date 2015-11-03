@@ -3,7 +3,6 @@
 import re
 import os
 import shutil
-import sys
 import subprocess
 from subprocess import CalledProcessError
 import urllib.parse
@@ -47,18 +46,18 @@ api_actions = [
 with open('api_template.py', 'r') as template_file:
     template = template_file.read()
 
-#os.chdir('old.developer.zendesk.com/documentation/rest_api')
-#os.chdir('developer.zendesk.com/rest_api/docs/core')
+# os.chdir('old.developer.zendesk.com/documentation/rest_api')
+# os.chdir('developer.zendesk.com/rest_api/docs/core')
 
 zen_url = 'https://developer.zendesk.com'
 
 docpages = {
-    'core':'/rest_api/docs/core/introduction',
-    'webportal':'/rest_api/docs/web-portal/webportal_introduction',
-    'hc':'/rest_api/docs/help_center/introduction',
-    'zopim':'/rest_api/docs/zopim/introduction',
-    'voice':'/rest_api/docs/voice-api/voice',
-    'nps':'/rest_api/docs/nps-api/introduction',
+    'core': '/rest_api/docs/core/introduction',
+    'webportal': '/rest_api/docs/web-portal/webportal_introduction',
+    'hc': '/rest_api/docs/help_center/introduction',
+    'zopim': '/rest_api/docs/zopim/introduction',
+    'voice': '/rest_api/docs/voice-api/voice',
+    'nps': '/rest_api/docs/nps-api/introduction',
 }
 
 skippages = [
@@ -106,15 +105,18 @@ for category in docpages:
             fout.write(content)
 
     soup = BeautifulSoup(content)
-    sidenav = soup(attrs={'class':'docs-sidenav'})[0]
+    sidenav = soup(attrs={'class': 'docs-sidenav'})[0]
 
     for a in sidenav.find_all('a'):
         link = a.attrs['href']
         filename = category + '_' + os.path.basename(link)
 
-        if link[0] == '#': continue
-        if link in skippages: continue
-        if os.path.isfile(filename): continue
+        if link[0] == '#':
+            continue
+        if link in skippages:
+            continue
+        if os.path.isfile(filename):
+            continue
 
         req = requests.get(zen_url + link)
         text = BeautifulSoup(req.content)
@@ -136,8 +138,9 @@ os.chdir(apidocs)
 
 for patchfile in patchfiles:
     try:
-        sp = subprocess.check_output(['patch', '-p1', patchfile,
-                os.path.join('..', 'patches', patchfile)])
+        sp = subprocess.check_output([
+            'patch', '-p1', patchfile,
+            os.path.join('..', 'patches', patchfile)])
     except CalledProcessError as e:
         print('Failed to patch {}. Exit {}\n'.format(patchfile, e.returncode))
         print('Output was:\n')
@@ -154,12 +157,15 @@ for doc_file in doc_files:
 
     for code in soup.find_all(['code', 'pre']):
         text = code.get_text()
-        #if re.search(r'<code>(OPTIONS|GET|HEAD|POST|PUT|DELETE|TRACE|CONNECT) .*\.json', line):
+        # if re.search(
+        #    r'<code>(OPTIONS|GET|HEAD|POST|PUT|DELETE|TRACE|CONNECT) .*\.json'
+        # , line):
         #    line = re.sub(r'(<p>|<code>|</p>|</code>|/api/v2)', '', line)
         #    line = re.sub('&#123;', '{', line)
         #    line = re.sub('&#125;', '}', line)
         #    print(line, end='')
-        match = re.match(r'\s*(OPTIONS|GET|HEAD|POST|PUT|DELETE|TRACE|CONNECT) (.*)', text)
+        match = re.match(
+            r'\s*(OPTIONS|GET|HEAD|POST|PUT|DELETE|TRACE|CONNECT) (.*)', text)
         if match:
             cat = os.path.basename(doc_file.split('_')[0])
             page = doc_file.replace(cat + '_', '')
@@ -177,12 +183,13 @@ for doc_file in doc_files:
             api_item['method'] = match.group(1)
             path = match.group(2)
 
-            # parse into a url object for easily accessing the parts of the whole url
+            # parse into a url object for easily accessing the parts of the url
             url = urllib.parse.urlsplit(path)
 
             api_item['path'] = url.path
 
-            # Split the path and remove the first (always empty) item and /api/v2
+            # Split the path and remove the first (always empty) item and
+            # /api/v2
             param_indexes = []
             path_parts = url.path.split('/')
 
@@ -221,8 +228,8 @@ for doc_file in doc_files:
 
             expanded_parts = []
             [expanded_parts.extend(part.split('_')) for part in path_parts]
-            has_action = True in [action in expanded_parts
-                    for action in api_actions]
+            has_action = True in [
+                action in expanded_parts for action in api_actions]
 
             query_params = urllib.parse.parse_qsl(url.query)
             for query_items in query_params:
@@ -278,12 +285,13 @@ for name in names:
                 sorted(dupe['query_params']), sorted(item['query_params']))]
            ):
             # Everything is the same, so discard this duplicate
-            content += "    # Duplicate API endpoint discarded: {} from {}\n".format(name, dupe['docpage'])
+            content += \
+                "    # Duplicate API endpoint discarded: {} from {}\n".format(
+                    name, dupe['docpage'])
         elif (
             dupe['method'] == item['method'] and
             False not in [i == j for i, j in itertools.zip_longest(
-                sorted(dupe['query_params']), sorted(item['query_params']))]
-            ):
+                sorted(dupe['query_params']), sorted(item['query_params']))]):
             # Only the path parameters differ, so we have optional or ambiguous
             # arguments
 
@@ -291,18 +299,22 @@ for name in names:
             required = set(dupe['path_params']) & set(item['path_params'])
 
             # Optional parameters are only in one endpoint
-            optional = list((set(dupe['path_params']) | set(item['path_params'])) - required)
+            optional = list((
+                set(dupe['path_params']) | set(item['path_params']))
+                - required)
 
             if (len(set(item['path_params']) - required) == 0 and
                     len(optional) > 0):
-                # The item is the base function and the dupe has the optional arguments
-                # Just need to add the optional arguments
+                # The item is the base function and the dupe has the optional
+                # arguments. Just need to add the optional arguments
                 item['opt_path_params'] = optional
                 item['opt_path'] = dupe['path']
             elif (len(set(dupe['path_params']) - required) == 0 and
                     len(optional) > 0):
-                # The dupe is the base function and the item has the optional arguments
-                # Need to swap the dupe with the item and then add the optional arguments
+                # The dupe is the base function and the item has the
+                # optional arguments
+                # Need to swap the dupe with the item and then add the
+                # optional arguments
                 dupe_path = dupe['path']
                 item = dupe
                 item['opt_path_params'] = optional
@@ -317,8 +329,8 @@ for name in names:
 
                 # compare each of the path parts to see specifically what is
                 # different.
-                for i, j in itertools.zip_longest(item['path'].split('/'),
-                        dupe['path'].split('/')):
+                for i, j in itertools.zip_longest(
+                        item['path'].split('/'), dupe['path'].split('/')):
                     if i == j:
                         # everything is the same up to here. keep building a
                         # new, common path.
@@ -332,7 +344,9 @@ for name in names:
                         if ipart == jpart and iext != jext:
                             # These are legit dupes that only differ by
                             # the extension at the end.
-                            content += "    # Duplicate API endpoint differs only by extension: {} from {}\n".format(name, dupe['docpage'])
+                            content += "    # Duplicate API endpoint differs "\
+                                + "only by extension: {} from {}\n".format(
+                                    name, dupe['docpage'])
                             handled = True
                             break
 
@@ -355,7 +369,8 @@ for name in names:
                             # are basically interchangeable.
                             # e.g. /thing/{id} vs /thing/{name} becomes
                             #      /thing/{id_or_name}
-                            new_param = i.strip('{}' + iext) + '_or_' + j.strip('{}' + jext)
+                            new_param = i.strip('{}' + iext) \
+                                + '_or_' + j.strip('{}' + jext)
                             new_path_params.append(new_param)
                             new_path += '/{' + new_param + '}' + iext
                             item['path'] = new_path
@@ -364,31 +379,34 @@ for name in names:
                             break
 
                 if not handled:
-                    content += "    # Duplicate ambiguous API endpoint: {} from {}\n".format(name, dupe['docpage'])
+                    content += "    # Duplicate ambiguous API endpoint: " \
+                        + "{} from {}\n".format(name, dupe['docpage'])
         elif (
             dupe['path'] == item['path'] and
             dupe['method'] == item['method'] and
             False not in [i == j for i, j in itertools.zip_longest(
-                dupe['path_params'], item['path_params'])]
-            ):
-                # Only the query parameters differ, so we have optional named arguments
-                item['opt_query_params'] = list(set(item['query_params'].copy() +
-                                               item['opt_query_params'] +
-                                               dupe['query_params']))
+                dupe['path_params'], item['path_params'])]):
+                # Only the query parameters differ, so we have
+                # optional named arguments
+                item['opt_query_params'] = list(
+                    set(item['query_params'].copy() +
+                        item['opt_query_params'] +
+                        dupe['query_params']))
                 item['query_params'] = []
         elif (
             dupe['path'] == item['path'] and
             False not in [i == j for i, j in itertools.zip_longest(
                 dupe['path_params'], item['path_params'])] and
             False not in [i == j for i, j in itertools.zip_longest(
-                sorted(dupe['query_params']), sorted(item['query_params']))]
-            ):
+                sorted(dupe['query_params']), sorted(item['query_params']))]):
                 # Only the method differs, so indicate that method is ambiguous
                 item['method'] = None
         else:
             should_keep += "\n"
-            should_keep += "    # Duplicate API endpoint that differs: {} from {}\n".format(name, dupe['docpage'])
-            should_keep += "    # Original definition located here:    {} from {}\n".format(name, item['docpage'])
+            should_keep += "    # Duplicate API endpoint that differs: " \
+                + "{} from {}\n".format(name, dupe['docpage'])
+            should_keep += "    # Original definition located here:    " \
+                + "{} from {}\n".format(name, item['docpage'])
             should_keep += '    # {}\n'.format(name)
             should_keep += '    #    Path: {}\n'.format(dupe['path'])
             should_keep += '    #    Method: {}\n'.format(dupe['method'])
@@ -418,6 +436,7 @@ if content:
 
 names = list(api_items.keys())
 names.sort()
+
 
 def sanitize(q):
     return q.replace('[', '_').replace(']', '')
@@ -458,27 +477,31 @@ for name in names:
     if item['opt_query_params']:
         if argspec:
             argspec += ', '
-        argspec += '=None, '.join([sanitize(q) for q in item['opt_query_params']]) + '=None'
+        argspec += '=None, '.join(
+            [sanitize(q) for q in item['opt_query_params']]) + '=None'
 
     if argspec:
         argspec += ', '
     argspec += '**kwargs'
 
     content += '    def {}(self, {}):\n'.format(name, argspec)
-    content += '        "{}"\n'.format( item['docpage'])
+    content += '        "{}"\n'.format(item['docpage'])
     content += '        api_path = "{}"\n'.format(item['path'])
 
     if item['path_params']:
-        content += '        api_path = api_path.format({})\n'.format(path_fmt_args)
+        content += '        api_path = api_path.format({})\n'.format(
+            path_fmt_args)
 
     if item['opt_path']:
         opt_test = ' and '.join(item['opt_path_params'])
         if path_fmt_args:
             path_fmt_args += ', '
-        path_fmt_args = path_fmt_args + ', '.join([p + '=' + p for p in item['opt_path_params']])
+        path_fmt_args = path_fmt_args + \
+            ', '.join([p + '=' + p for p in item['opt_path_params']])
         content += '        if {}:\n'.format(opt_test)
         content += '            api_opt_path = "{}"\n'.format(item['opt_path'])
-        content += '            api_path = api_opt_path.format({})\n'.format(path_fmt_args)
+        content += '            api_path = api_opt_path.format({})\n'.format(
+            path_fmt_args)
 
     if item['query_params'] or item['opt_query_params']:
         content += '        api_query = {}\n'
@@ -496,8 +519,9 @@ for name in names:
         content += '            })\n'
 
     # todo: query may be required
-    #if item['opt_query_params']:
-    #    opt_test = ' or '.join([sanitize(q) for q in item['opt_query_params']])
+    # if item['opt_query_params']:
+    #    opt_test = ' or '.join(
+    #       [sanitize(q) for q in item['opt_query_params']])
     #    content += '        if not ({}):\n'.format(opt_test)
     #    content += '            pass\n'
 
@@ -515,11 +539,9 @@ for name in names:
     else:
         content += ', method=method, data=data'
 
-
     content += ', **kwargs)\n\n'
 
 os.chdir('..')
 
 with open('zdesk_api.py', 'w') as f:
     f.write(template.format(content))
-
