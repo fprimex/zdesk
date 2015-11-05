@@ -1,6 +1,14 @@
-## Contributors
+# Contributors
 
-* Brent Woodruff
+## zdesk 2
+
+* Brent Woodruff (Fork author and maintainer)
+* Matthew Jaskula (Generic parameter passing)
+* Tim Allard (HTTP return code checking)
+* Daniel Inniss (Porting work to `requests`)
+
+## zendesk and zdesk 1.x
+
 * Stefan Tjarks
 * Jay Chan
 * Max Gutman
@@ -9,7 +17,6 @@
 * KP
 * Fred Muya
 * Antoine Reversat
-* Tim Allard
 * Vikram Oberoi
 * Joe Heck
 * nathanharper
@@ -20,7 +27,6 @@
 * Jeroen F.J. Laros
 * Joaquin Casares
 * Alex Chan
-* Matthew Jaskula
 * Muya
 * Nick Day
 * Paul Pieralde
