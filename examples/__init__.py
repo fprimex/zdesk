@@ -5,7 +5,7 @@ import sys
 from zdesk import Zendesk
 
 ################################################################
-## NEW CONNECTION CLIENT
+# NEW CONNECTION CLIENT
 ################################################################
 
 # README: To configure this example so that it will actually execute, you need
@@ -37,7 +37,7 @@ try:
 
     # Create an object using the [zdesk] section of
     # ~/.zdeskcfg and the zdeskcfg module
-    #zendesk = Zendesk(**zdeskcfg.get_ini_config())
+    # zendesk = Zendesk(**zdeskcfg.get_ini_config())
 
     # Create an object using the [zdesk] and [sandbox] sections of
     # ~/.zdeskcfg and the zdeskcfg module
@@ -45,15 +45,19 @@ try:
 
 except ImportError:
     testconfig = {
-            'zdesk_email' : 'you@example.com',
-            'zdesk_password' : 't2EVLKMUtt2EVLKMUtt2EVLKMUtt2EVLKMUt',
-            'zdesk_url' : 'https://example-sandbox22012201.zendesk.com',
-            'zdesk_token' : True
+            'zdesk_email': 'you@example.com',
+            'zdesk_password': 't2EVLKMUtt2EVLKMUtt2EVLKMUtt2EVLKMUt',
+            'zdesk_url': 'https://example-sandbox22012201.zendesk.com',
+            'zdesk_token': True
             }
 
-    if testconfig['zdesk_url'] == 'https://example-sandbox22012201.zendesk.com':
-        print('Could not import zdeskcfg and no manual configuration provided.')
-        print('Please `pip install zdeskcfg` or edit example with manual configuration.')
+    if testconfig['zdesk_url'] == \
+            'https://example-sandbox22012201.zendesk.com':
+        print(
+            'Could not import zdeskcfg and no manual configuration provided.')
+        print(
+            'Please `pip install zdeskcfg` or edit example with '
+            'manual configuration.')
         sys.exit()
 
     else:
@@ -61,15 +65,16 @@ except ImportError:
 
 # Are you getting an error such as...
 # "SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed"?
-#zendesk = Zendesk('https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd',
+# zendesk = Zendesk(
+#    'https://yourcompany.zendesk.com', 'you@yourcompany.com', 'passwd',
 #    client_args={
 #        "disable_ssl_certificate_validation": True
 #    }
-#)
+# )
 
 
 ################################################################
-## TICKETS
+# TICKETS
 ################################################################
 
 # List
@@ -80,7 +85,7 @@ new_ticket = {
     'ticket': {
         'requester_name': 'Howard Schultz',
         'requester_email': 'howard@starbucks.com',
-        'subject':'My Starbucks coffee is cold!',
+        'subject': 'My Starbucks coffee is cold!',
         'description': 'please reheat my coffee',
         'set_tags': 'coffee drinks',
         'ticket_field_entries': [
@@ -106,9 +111,9 @@ result = zendesk.ticket_create(data=new_ticket)
 # not normally returned, such as result['content']['upload']['token']
 # when using zendesk.upload_create()
 #
-#result = zendesk.ticket_create(data=new_ticket, complete_response=True)
-#ticket_url = result['response']['location']
-#ticket_id = get_id_from_url(ticket_url)
+# result = zendesk.ticket_create(data=new_ticket, complete_response=True)
+# ticket_url = result['response']['location']
+# ticket_id = get_id_from_url(ticket_url)
 
 # Need ticket ID?
 from zdesk import get_id_from_url
@@ -127,16 +132,16 @@ with open(fname, 'rb') as fp:
     fdata = fp.read()
 
 # MIME types can be detected with the magic module:
-#import magic
-#mime_type = magic.from_file(fname, mime=True)
-#if type(mime_type) is bytes:
+# import magic
+# mime_type = magic.from_file(fname, mime=True)
+# if type(mime_type) is bytes:
 #    mime_type = mime_type.decode()
 
 # But this file is known
 mime_type = 'text/plain'
 
-upload_result = zendesk.upload_create(fdata, filename=fname,
-    mime_type=mime_type, complete_response=True)
+upload_result = zendesk.upload_create(
+    fdata, filename=fname, mime_type=mime_type, complete_response=True)
 
 # for making additional uploads
 upload_token = upload_result['content']['upload']['token']
@@ -164,7 +169,7 @@ zendesk.ticket_delete(id=ticket_id)
 
 
 ################################################################
-## ORGANIZATIONS
+# ORGANIZATIONS
 ################################################################
 
 # List
@@ -187,7 +192,7 @@ zendesk.organization_delete(id=org_id)
 
 
 ################################################################
-## USERS (AGENTS)
+# USERS (AGENTS)
 ################################################################
 
 # List
@@ -212,7 +217,7 @@ zendesk.user_delete(id=user_id)
 
 
 ################################################################
-## GROUPS
+# GROUPS
 ################################################################
 
 # List
@@ -240,7 +245,7 @@ zendesk.group_delete(id=group_id)
 
 
 ################################################################
-## TAGS
+# TAGS
 ################################################################
 
 # List
@@ -248,13 +253,12 @@ zendesk.tags_list()
 
 
 ################################################################
-## TICKET TYPES
+# TICKET TYPES
 ################################################################
 zendesk.ticket_fields_list()
 
 
 ################################################################
-## SEARCH
+# SEARCH
 ################################################################
 results = zendesk.search(query='type:ticket sort:desc', page=1)
-
