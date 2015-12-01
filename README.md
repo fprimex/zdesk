@@ -183,8 +183,10 @@ zendesk.tickets_list()
 # Create
 new_ticket = {
     'ticket': {
-        'requester_name': 'Howard Schultz',
-        'requester_email': 'howard@starbucks.com',
+        'requester': {
+            'name': 'Howard Schultz',
+            'email': 'howard@starbucks.com',
+        },
         'subject':'My Starbucks coffee is cold!',
         'description': 'please reheat my coffee',
         'set_tags': 'coffee drinks',
