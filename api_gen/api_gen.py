@@ -252,7 +252,7 @@ for doc_file in doc_files:
                 elif (
                     api_item['method'] == 'GET' and
                     len(api_item['path_params']) == 0
-                   ):
+                ):
                     name = name + '_list'
 
             api_item['path_params'].reverse()
@@ -283,7 +283,7 @@ for name in names:
                 dupe['path_params'], item['path_params'])] and
             False not in [i == j for i, j in itertools.zip_longest(
                 sorted(dupe['query_params']), sorted(item['query_params']))]
-           ):
+        ):
             # Everything is the same, so discard this duplicate
             content += \
                 "    # Duplicate API endpoint discarded: {} from {}\n".format(
@@ -300,8 +300,8 @@ for name in names:
 
             # Optional parameters are only in one endpoint
             optional = list((
-                set(dupe['path_params']) | set(item['path_params']))
-                - required)
+                set(dupe['path_params']) | set(item['path_params'])) -
+                required)
 
             if (len(set(item['path_params']) - required) == 0 and
                     len(optional) > 0):
@@ -350,8 +350,8 @@ for name in names:
                             handled = True
                             break
 
-                        if (ipart.startswith('{') and jpart.startswith('{')
-                                and iext != jext):
+                        if (ipart.startswith('{') and jpart.startswith('{') and
+                                iext != jext):
                             # The parameters are different, but in the same
                             # place and have a different extension. So this
                             # actually needs a new method.
@@ -362,8 +362,8 @@ for name in names:
                                 handled = True
                                 break
 
-                        if (ipart.startswith('{') and jpart.startswith('{')
-                                and iext == jext):
+                        if (ipart.startswith('{') and jpart.startswith('{') and
+                                iext == jext):
                             # The parameters are in the same place and have the
                             # same extension. Combine these parameters as they
                             # are basically interchangeable.

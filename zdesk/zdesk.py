@@ -202,16 +202,14 @@ class Zendesk(ZendeskAPI):
 
         while not all_requests_complete:
             # Make an http request
-            response = self.client.request(
-                                    method,
-                                    url,
-                                    params=kwargs,
-                                    json=json,
-                                    data=data,
-                                    headers=self.headers,
-                                    files=files,
-                                    **self.client_args
-                                )
+            response = self.client.request(method,
+                                           url,
+                                           params=kwargs,
+                                           json=json,
+                                           data=data,
+                                           headers=self.headers,
+                                           files=files,
+                                           **self.client_args)
 
             # If the response status is not in the 200 range then assume an
             # error and raise proper exception
