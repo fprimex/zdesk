@@ -6,6 +6,7 @@
 * Matthew Jaskula (Generic parameter passing)
 * Tim Allard (HTTP return code checking)
 * Daniel Inniss (Porting work to `requests`)
+* Dominik Miedziński (Booksy International Sp. z o. o.)
 
 ## zendesk and zdesk 1.x
 
