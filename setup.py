@@ -9,7 +9,7 @@ setup(
     author_email = 'brent@fprimex.com',
     packages = ['zdesk'],
     include_package_data = True,
-    install_requires = ['requests'],
+    install_requires = ['requests', 'six'],
     license='LICENSE.txt',
     url = 'https://github.com/fprimex/zdesk',
     keywords = 'zendesk api helpdesk',
