@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 
-import re
-import os
-import shutil
-import subprocess
-from subprocess import CalledProcessError
-import urllib.parse
 import html.parser
 import itertools
+import os
+import re
+import shutil
+import subprocess
+import urllib.parse
 
-import requests
-import inflection
 from bs4 import BeautifulSoup
+import inflection
+import requests
+
 
 # See README.md for documentation.
 
@@ -141,7 +141,7 @@ for patchfile in patchfiles:
         sp = subprocess.check_output([
             'patch', '-p1', patchfile,
             os.path.join('..', 'patches', patchfile)])
-    except CalledProcessError as e:
+    except subprocess.CalledProcessError as e:
         print('Failed to patch {}. Exit {}\n'.format(patchfile, e.returncode))
         print('Output was:\n')
         print(e.output.decode())

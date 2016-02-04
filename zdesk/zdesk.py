@@ -1,15 +1,16 @@
-import sys
 import copy
-import requests
+import sys
 
-from .zdesk_api import ZendeskAPI
-
-if sys.version < '3':
+if sys.version_info.major < 3:
     from httplib import responses
     from urlparse import urlsplit
 else:
     from http.client import responses
     from urllib.parse import urlsplit
+
+import requests
+
+from .zdesk_api import ZendeskAPI
 
 
 def get_id_from_url(url):
