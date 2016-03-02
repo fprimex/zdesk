@@ -468,7 +468,10 @@ class Zendesk(ZendeskAPI):
                 six.reraise(exc_t, exc_v, exc_tb)
 
         if resp is not None:
-            retry_after = resp.headers.get('Retry-After', 0)
-            time.sleep(retry_after)
+            try:
+                retry_after = float(resp.headers.get('Retry-After', 0))
+                time.sleep(retry_after)
+            except (TypeError, ValueError):
+                pass
 
         return True
