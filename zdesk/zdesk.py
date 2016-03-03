@@ -12,6 +12,46 @@ else:
     from urllib.parse import urlsplit
 
 
+def batch(sequence, callback, size=100, **kwargs):
+    """Helper to setup batch requests.
+
+    There are endpoints which support updating multiple resources at once,
+    but they are often limited to 100 updates per request.
+    This function helps with splitting bigger requests into sequence of
+    smaller ones.
+
+    Example:
+        def add_organization_tag(organizations, tag):
+            request = {'organizations': [
+                {
+                    'id': org['id'],
+                    'tags': org['tags'] + [tag],
+                } for org in organizations
+            ]}
+            job = z.organizations_update_many(request)['job_status']
+            return job['id']
+
+        # z = Zendesk(...)
+        orgs = z.organizations_list(get_all_pages=True)['organizations']
+        job_ids = [job for job in
+                   batch(orgs, add_organization_tag, tag='new_tag')]
+
+    Parameters:
+        sequence - any sequence you want to split
+        callback - function to call with slices of sequence,
+            its return value is yielded on each slice
+        size - size of chunks, combined with length of sequence determines
+            how many times callback is called (defaults to 100)
+        **kwargs - any additional keyword arguments are passed to callback
+    """
+    batch_len, rem = divmod(len(sequence), size)
+    if rem > 0:
+        batch_len += 1
+    for i in range(batch_len):
+        offset = i * size
+        yield callback(sequence[offset:offset + size], **kwargs)
+
+
 def get_id_from_url(url):
     url_id = urlsplit(url).path.split('/')[-1].split('.')[0]
     if url_id.isdigit():
