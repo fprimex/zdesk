@@ -104,7 +104,7 @@ for category in docpages:
         with open(filename, 'wb') as fout:
             fout.write(content)
 
-    soup = BeautifulSoup(content)
+    soup = BeautifulSoup(content, "html.parser")
     sidenav = soup(attrs={'class': 'docs-sidenav'})[0]
 
     for a in sidenav.find_all('a'):
@@ -119,7 +119,7 @@ for category in docpages:
             continue
 
         req = requests.get(zen_url + link)
-        text = BeautifulSoup(req.content)
+        text = BeautifulSoup(req.content, "html.parser")
 
         pretty_text = text.prettify()
         if not pretty_text:
@@ -153,7 +153,7 @@ for doc_file in doc_files:
         continue
 
     with open(doc_file) as doc:
-        soup = BeautifulSoup(doc)
+        soup = BeautifulSoup(doc, "html.parser")
 
     for code in soup.find_all(['code', 'pre']):
         text = code.get_text()
