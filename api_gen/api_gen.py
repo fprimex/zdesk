@@ -283,7 +283,9 @@ for name in names:
            ):
             # Everything is the same, so discard this duplicate
             content += \
-                "    # Duplicate API endpoint discarded: {} from {}\n".format(
+                "    # Duplicate API endpoint discarded:\n"\
+                "    # {} from\n"\
+                "    # {}\n\n".format(
                     name, dupe['docpage'])
         elif (
             dupe['method'] == item['method'] and
@@ -341,8 +343,11 @@ for name in names:
                         if ipart == jpart and iext != jext:
                             # These are legit dupes that only differ by
                             # the extension at the end.
-                            content += "    # Duplicate API endpoint differs "\
-                                + "only by extension: {} from {}\n".format(
+                            content += \
+                                "    # Duplicate API endpoint differs "\
+                                "only by extension:\n"\
+                                "    # {} from\n"\
+                                "    # {}\n\n".format(
                                     name, dupe['docpage'])
                             handled = True
                             break
@@ -376,8 +381,10 @@ for name in names:
                             break
 
                 if not handled:
-                    content += "    # Duplicate ambiguous API endpoint: " \
-                        + "{} from {}\n".format(name, dupe['docpage'])
+                    content += \
+                        "    # Duplicate ambiguous API endpoint:\n"\
+                        "    # {} from\n"\
+                        "    # {}\n\n".format(name, dupe['docpage'])
         elif (
             dupe['path'] == item['path'] and
             dupe['method'] == item['method'] and
@@ -400,10 +407,14 @@ for name in names:
                 item['method'] = None
         else:
             should_keep += "\n"
-            should_keep += "    # Duplicate API endpoint that differs: " \
-                + "{} from {}\n".format(name, dupe['docpage'])
-            should_keep += "    # Original definition located here:    " \
-                + "{} from {}\n".format(name, item['docpage'])
+            should_keep += \
+                "    # Duplicate API endpoint that differs:\n"\
+                "    #  {} from\n"\
+                "    #  {}\n".format(name, dupe['docpage'])
+            should_keep += \
+                "    # Original definition located here:\n"\
+                "    #  {} from\n"\
+                "    #  {}\n".format(name, item['docpage'])
             should_keep += '    # {}\n'.format(name)
             should_keep += '    #    Path: {}\n'.format(dupe['path'])
             should_keep += '    #    Method: {}\n'.format(dupe['method'])
@@ -425,15 +436,10 @@ for name in names:
             should_keep += "\n"
 
 if should_keep:
-    content += '\n'
     content += should_keep
-
-if content:
-    content += '\n'
 
 names = list(api_items.keys())
 names.sort()
-
 
 def sanitize(q):
     return q.replace('[', '_').replace(']', '')
