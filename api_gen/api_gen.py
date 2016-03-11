@@ -146,6 +146,11 @@ for patchfile in patchfiles:
         print('Output was:\n')
         print(e.output.decode())
 
+def code_pre_docanchor(tag):
+    class_ = tag.attrs.get('class', ())
+    return (tag.name == 'code' or tag.name == 'pre' or
+            (tag.name == 'a' and 'doc-anchor-link' in class_))
+
 api_items = {}
 duplicate_api_items = {}
 for doc_file in doc_files:
@@ -155,8 +160,12 @@ for doc_file in doc_files:
     with open(doc_file) as doc:
         soup = BeautifulSoup(doc, "html.parser")
 
-    for code in soup.find_all(['code', 'pre']):
-        text = code.get_text()
+    for tag in soup.find_all(code_pre_docanchor):
+        if tag.name == 'a':
+            last_doc_anchor = tag['href']
+            continue
+
+        text = tag.get_text()
         # if re.search(
         #    r'<code>(OPTIONS|GET|HEAD|POST|PUT|DELETE|TRACE|CONNECT) .*\.json'
         # , line):
@@ -173,7 +182,7 @@ for doc_file in doc_files:
 
             is_singular = False
             api_item = {}
-            api_item['docpage'] = docpage
+            api_item['docpage'] = docpage + last_doc_anchor
             api_item['path_params'] = []
             api_item['opt_path_params'] = []
             api_item['opt_path'] = ''
