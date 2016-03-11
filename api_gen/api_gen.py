@@ -206,10 +206,7 @@ for doc_file in doc_files:
             path_parts.reverse()
             for i, path_part in enumerate(path_parts):
                 part, ext = os.path.splitext(path_part)
-                if ext != '':
-                    if ext != '.json':
-                        print('Non-JSON endpoint encountered!!')
-                    path_parts[i] = part
+                path_parts[i] = part
 
                 if part.startswith('{'):
                     api_item['path_params'].append(part[1:-1])
