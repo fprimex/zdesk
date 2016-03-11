@@ -58,6 +58,6 @@ diff -r -u apidocs_orig/core_tickets apidocs/core_tickets
 +        GET /api/v2/tickets/recent.json?external_id={external_id}
 +       </code>
 +      </p>
-       <span class="anchor" id="using-curl">
+       <span class="anchor" id="available-parameters">
        </span>
-       <a class="doc-anchor-link" href="../../../documentation/rest_api/tickets.html#using-curl">
+       <a class="doc-anchor-link" href="#available-parameters">
