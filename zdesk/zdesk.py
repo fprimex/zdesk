@@ -1,15 +1,16 @@
-import sys
 import copy
-import requests
+import sys
 
-from .zdesk_api import ZendeskAPI
-
-if sys.version < '3':
+if sys.version_info.major < 3:
     from httplib import responses
     from urlparse import urlsplit
 else:
     from http.client import responses
     from urllib.parse import urlsplit
+
+import requests
+
+from .zdesk_api import ZendeskAPI
 
 
 def get_id_from_url(url):
@@ -202,16 +203,14 @@ class Zendesk(ZendeskAPI):
 
         while not all_requests_complete:
             # Make an http request
-            response = self.client.request(
-                                    method,
-                                    url,
-                                    params=kwargs,
-                                    json=json,
-                                    data=data,
-                                    headers=self.headers,
-                                    files=files,
-                                    **self.client_args
-                                )
+            response = self.client.request(method,
+                                           url,
+                                           params=kwargs,
+                                           json=json,
+                                           data=data,
+                                           headers=self.headers,
+                                           files=files,
+                                           **self.client_args)
 
             # If the response status is not in the 200 range then assume an
             # error and raise proper exception
