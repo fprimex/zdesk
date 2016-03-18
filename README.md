@@ -189,7 +189,7 @@ new_ticket = {
         },
         'subject':'My Starbucks coffee is cold!',
         'description': 'please reheat my coffee',
-        'tags': [coffee, drinks],
+        'tags': ['coffee', 'drinks'],
         'ticket_field_entries': [
             {
                 'ticket_field_id': 1,
