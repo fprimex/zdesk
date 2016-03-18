@@ -87,7 +87,7 @@ new_ticket = {
         'requester_email': 'howard@starbucks.com',
         'subject': 'My Starbucks coffee is cold!',
         'description': 'please reheat my coffee',
-        'set_tags': 'coffee drinks',
+        'tags': ['coffee', 'drinks'],
         'ticket_field_entries': [
             {
                 'ticket_field_id': 1,
