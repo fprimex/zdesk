@@ -1,0 +1,20 @@
+diff -r -u apidocs_orig/hc_votes apidocs/hc_votes
+--- apidocs_orig/hc_votes	2016-03-17 22:58:14.558195398 -0400
++++ apidocs/hc_votes	2016-03-18 10:11:56.496337613 -0400
+@@ -869,14 +869,14 @@
+        <li>
+         <p>
+          <code>
+-          POST /api/v2/help_center/articles/{id}/comments/{id}/up.json
++          POST /api/v2/help_center/articles/{article_id}/comments/{id}/up.json
+          </code>
+         </p>
+        </li>
+        <li>
+         <p>
+          <code>
+-          POST /api/v2/help_center/articles/{id}/comments/{id}/down.json
++          POST /api/v2/help_center/articles/{article_id}/comments/{id}/down.json
+          </code>
+         </p>
+        </li>
