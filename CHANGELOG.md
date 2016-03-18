@@ -1,3 +1,10 @@
+## 2.4.0
+- Support non-JSON endpoint (removed check for .json, for recordings.mp3)
+- Improve generator formatting of duplicates
+- Add doc-anchor-links, so docstrings link more closely to the method question
+- Regenerate API from updated mirror. See [full
+  commit](https://github.com/fprimex/zdesk/commit/7240295278fd596189643ae30fbcbb16a4b8c3d9)
+
 ## 2.3.0
 - Switch from `httplib2` to `requests`
 - Add `files` parameter to support multipart uploads for Help Center attachment
