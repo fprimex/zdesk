@@ -58,9 +58,9 @@ class Zendesk(ZendeskAPI):
             actual password
         headers - Pass headers in dict form. This will override default.
         client_args - Pass arguments to http client in dict form.
-            {'cache': False, 'timeout': 2}
+            {'allow_redirects': False, 'timeout': 2}
             or a common one is to disable SSL certficate validation
-            {"disable_ssl_certificate_validation": True}
+            {'verify': True}
         """
         # Set attributes necessary for API
         self._zdesk_url = None
