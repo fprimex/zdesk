@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 import pytest
 from zdesk import Zendesk
 
@@ -28,8 +25,6 @@ def zd(request):
             config = {}
 
     if config:
-        from pprint import pprint
-        pprint(config)
         return Zendesk(**config)
     else:
         assert 0, 'No Zendesk configuration found.\n' \
