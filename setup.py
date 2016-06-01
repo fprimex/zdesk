@@ -10,6 +10,8 @@ setup(
     packages = ['zdesk'],
     include_package_data = True,
     install_requires = ['requests'],
+    setup_requires = ['pytest-runner'],
+    tests_require = ['pytest'],
     license='LICENSE.txt',
     url = 'https://github.com/fprimex/zdesk',
     keywords = 'zendesk api helpdesk',
