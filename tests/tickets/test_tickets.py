@@ -2,48 +2,46 @@ from __future__ import print_function
 
 from zdesk import get_id_from_url
 
-class TestTickets(object):
-    def setup(self):
-        print("setup TestTickets")
+from zdesk_common import islocation, isstatuscode
 
-    def teardown(self):
-        print("teardown TestTickets")
-
-    def test_ticket_ops(self, zd):
-        new_ticket = {
-            'ticket': {
-                'requester_name': 'Howard Schultz',
-                'requester_email': 'howard@starbucks.com',
-                'subject':'My Starbucks coffee is cold!',
-                'description': 'please reheat my coffee',
-                'set_tags': 'coffee drinks',
-                'ticket_field_entries': [
-                    {
-                        'ticket_field_id': 1,
-                        'value': 'venti'
-                    },
-                    {
-                        'ticket_field_id': 2,
-                        'value': '$10'
-                    }
-                ]
-            }
+def test_ticket_ops(zd):
+    new_ticket = {
+        'ticket': {
+            'subject': 'zdesk test ticket',
+            'description': 'test ticket description',
         }
+    }
 
-        # If a response results in returning a [location] header, then that
-        # will be what is returned.
-        # Create a ticket and get its URL.
-        result = zd.ticket_create(data=new_ticket)
+    # create
+    result = zd.ticket_create(data=new_ticket)
 
-        ticket_id = get_id_from_url(result)
+    assert(islocation(result),
+        'Create ticket response is not a location string')
 
-        # Show
-        zd.ticket_show(id=ticket_id)
+    # get id from url
+    ticket_id = get_id_from_url(result)
 
-        tickets = zd.tickets_list(get_all_pages=True)
+    assert(ticket_id.isdecimal(),
+        'Returned created ticket ID is not a string of decimal digits')
 
-        # Delete
-        zd.ticket_delete(id=ticket_id)
+    # show
+    result = zd.ticket_show(id=ticket_id)
 
-        assert(True)
+    assert(isinstance(result, dict),
+        'Show ticket response is not a dict')
+
+    # list
+    result = zd.tickets_list(get_all_pages=True)
+
+    assert(isinstance(result, dict),
+        'List tickets response is not a dict')
+
+    assert(int(ticket_id) in [t['id'] for t in result['tickets']],
+        'Created ticket not present in ticket list')
+
+    # Delete
+    result = zd.ticket_delete(id=ticket_id)
+
+    assert(isstatuscode(result),
+        'Delete ticket response is not a status code string')
 

@@ -14,13 +14,16 @@ def zd(request):
         try:
             import zdeskcfg
 
-            # Create an object using the [zdesk] section of
-            # ~/.zdeskcfg and the zdeskcfg module
-            # config = zdeskcfg.get_ini_config()
-            
             # Create an object using the [zdesk] and [sandbox] sections of
             # ~/.zdeskcfg and the zdeskcfg module
             config = zdeskcfg.get_ini_config(section='sandbox')
+
+            # It's possible that zdeskcfg is installed, but if the config
+            # file does not exist or have a valid configuration, we should
+            # not try to use it.
+            if True not in map(bool, config.values()):
+                config = {}
+
         except ImportError:
             config = {}
 
