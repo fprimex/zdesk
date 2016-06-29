@@ -351,7 +351,7 @@ class Zendesk(ZendeskAPI):
                 else:
                     raise
 
-            if response.content.strip():
+            if response.content.strip() and 'json' in response.headers['content-type']:
                 content = response.json()
 
                 # set url to the next page if that was returned in the response
