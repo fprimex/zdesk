@@ -58,6 +58,8 @@ use. The current reserved kwargs (described in more detail below) are:
 * `complete_response`
 * `get_all_pages`
 * `mime_type`
+* `retry_on`
+* `max_retries`
 
 There are a few common query string parameters that the Zendesk API accepts for
 many calls. The current list at the time of this writing is:
@@ -158,6 +160,8 @@ specified.
 
 It is possible to retry all requests made by an instance of `Zendesk` by
 providing `retry_on` and `max_retries` to `__init__`.
+In addition, it is also possible to retry one `Zendesk.call` without modifying
+it's attributes - simply by supplying those kwargs to `Zendesk.call`.
 
 `retry_on` specifies on which exceptions raised you want to retry your request.
 There is also possibility to retry on specific non-200 HTTP codes, also by

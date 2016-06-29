@@ -222,7 +222,7 @@ class Zendesk(ZendeskAPI):
 
     def call(self, path, query=None, method='GET', data=None,
              files=None, get_all_pages=False, complete_response=False,
-             **kwargs):
+             retry_on=None, max_retries=0, **kwargs):
         """Make a REST call to the Zendesk web service.
 
         Parameters:
@@ -233,7 +233,35 @@ class Zendesk(ZendeskAPI):
         files - Requests style dict of files for multi-part file uploads.
         get_all_pages - Make multiple requests and follow next_page.
         complete_response - Return raw request results.
+        retry_on - Specify any exceptions from ACCEPT_RETRIES or non-2xx
+            HTTP codes on which you want to retry request.
+            Note that calling Zendesk.call with get_all_pages=True can make
+            up to (max_retries + 1) * pages.
+            Defaults to empty set, but can be any iterable, exception or int,
+            which will become set with same values you provided.
+        max_retries - How many additional connections to make when
+            first one fails. No effect when retry_on evaluates to False.
+            Defaults to 0.
         """
+
+        # Rather obscure way to support retry_on per single API call
+        if retry_on and max_retries:
+            try:
+                _retry_on = self._retry_on
+                _max_retries = self._max_retries
+
+                self.retry_on = retry_on
+                self.max_retries = max_retries
+                return self.call(path=path,
+                                 query=query,
+                                 method=method,
+                                 data=data,
+                                 files=files,
+                                 get_all_pages=get_all_pages,
+                                 complete_response=complete_response)
+            finally:
+                self._retry_on = _retry_on
+                self._max_retries = _max_retries
 
         # Support specifying a mime-type other than application/json
         mime_type = kwargs.pop('mime_type', 'application/json')
