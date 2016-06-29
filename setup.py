@@ -9,7 +9,7 @@ setup(
     author_email = 'brent@fprimex.com',
     packages = ['zdesk'],
     include_package_data = True,
-    install_requires = ['requests'],
+    install_requires = ['requests', 'six'],
     setup_requires = ['pytest-runner'],
     tests_require = ['pytest'],
     license='LICENSE.txt',
