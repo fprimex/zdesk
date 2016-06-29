@@ -58,6 +58,8 @@ use. The current reserved kwargs (described in more detail below) are:
 * `complete_response`
 * `get_all_pages`
 * `mime_type`
+* `retry_on`
+* `max_retries`
 
 There are a few common query string parameters that the Zendesk API accepts for
 many calls. The current list at the time of this writing is:
@@ -153,6 +155,22 @@ specified.
 
     zd.help_center_article_attachment_create(article_id='205654433', data={},
             files={'file':('attach.zip', fdata, 'application/zip')})
+
+## Rate limits and retrying
+
+It is possible to retry all requests made by an instance of `Zendesk` by
+providing `retry_on` and `max_retries` to `__init__`.
+In addition, it is also possible to retry one `Zendesk.call` without modifying
+it's attributes - simply by supplying those kwargs to `Zendesk.call`.
+
+`retry_on` specifies on which exceptions raised you want to retry your request.
+There is also possibility to retry on specific non-200 HTTP codes, also by
+specyfing them in `retry_on`. `ZendeskError` and `requests.RequestsError`
+combined are catch-alls.
+
+`max_retries` controls how many attempts are made if first request fails.
+Note that with `get_all_pages` this can make up to `(max_retries + 1) * pages`
+requests. Currently there is no support for exponential backoff.
 
 # Example Use
 

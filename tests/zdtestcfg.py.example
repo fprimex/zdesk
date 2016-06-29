@@ -1,0 +1,10 @@
+# Copy this file to zdtestcfg.py if you would rather not use zdeskcfg
+# to configure your zendesk access. Fill in valid information for the
+# dictionary values that correspond to your sandbox instance.
+
+testconfig = {
+        'zdesk_email' : 'you@example.com',
+        'zdesk_password' : '',
+        'zdesk_url' : 'https://example.zendesk.com',
+        'zdesk_token' : True
+        }

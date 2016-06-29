@@ -3,3 +3,4 @@ include README.md
 include CHANGELOG.md
 include CONTRIBUTORS.md
 recursive-include examples *
+recursive-include tests *
