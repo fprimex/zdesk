@@ -1,5 +1,8 @@
+import collections
 import copy
+import inspect
 import sys
+import time
 
 if sys.version_info.major < 3:
     from httplib import responses
@@ -9,6 +12,7 @@ else:
     from urllib.parse import urlsplit
 
 import requests
+import six
 
 from .zdesk_api import ZendeskAPI
 
@@ -38,13 +42,15 @@ class AuthenticationError(ZendeskError):
 class RateLimitError(ZendeskError):
     pass
 
+ACCEPT_RETRIES = ZendeskError, requests.RequestException
+
 
 class Zendesk(ZendeskAPI):
     """ Python API Wrapper for Zendesk"""
 
     def __init__(self, zdesk_url, zdesk_email=None, zdesk_password=None,
                  zdesk_token=False, headers=None, client_args=None,
-                 api_version=2):
+                 api_version=2, retry_on=None, max_retries=0):
         """
         Instantiates an instance of Zendesk. Takes optional parameters for
         HTTP Basic Authentication
@@ -61,6 +67,15 @@ class Zendesk(ZendeskAPI):
             {'cache': False, 'timeout': 2}
             or a common one is to disable SSL certficate validation
             {"disable_ssl_certificate_validation": True}
+        retry_on - Specify any exceptions from ACCEPT_RETRIES or non-2xx
+            HTTP codes on which you want to retry request.
+            Note that calling Zendesk.call with get_all_pages=True can make
+            up to (max_retries + 1) * pages.
+            Defaults to empty set, but can be any iterable, exception or int,
+            which will become set with same values you provided.
+        max_retries - How many additional connections to make when
+            first one fails. No effect when retry_on evaluates to False.
+            Defaults to 0.
         """
         # Set attributes necessary for API
         self._zdesk_url = None
@@ -82,6 +97,11 @@ class Zendesk(ZendeskAPI):
         if api_version != 2:
             raise ValueError("Unsupported Zendesk API Version: %d" %
                              api_version)
+
+        self._retry_on = {}
+        self._max_retries = 0
+        self.retry_on = retry_on
+        self.max_retries = max_retries
 
     def _update_auth(self):
         if self.zdesk_email and self.zdesk_password:
@@ -146,6 +166,60 @@ class Zendesk(ZendeskAPI):
         self._zdesk_token = False
         self._update_auth()
 
+    @property
+    def retry_on(self):
+        return self._retry_on
+
+    @retry_on.setter
+    def retry_on(self, value):
+        if value is None:
+            self._retry_on = set()
+            return
+
+        def _validate(v):
+            exc = ("retry_on must contain only non-2xx HTTP codes"
+                   "or members of %s" % (ACCEPT_RETRIES, ))
+
+            if inspect.isclass(v):
+                if not issubclass(v, ACCEPT_RETRIES):
+                    raise ValueError(exc)
+            elif isinstance(v, int):
+                if 200 <= v < 300:
+                    raise ValueError(exc)
+            else:
+                raise ValueError(exc)
+
+        if isinstance(value, collections.Iterable):
+            for v in value:
+                _validate(v)
+            self._retry_on = set(value)
+        else:
+            _validate(value)
+            self._retry_on = {value}
+
+    @retry_on.deleter
+    def retry_on(self):
+        self._retry_on = set()
+
+    @property
+    def max_retries(self):
+        return self._max_retries
+
+    @max_retries.setter
+    def max_retries(self, value):
+        try:
+            value = int(value)
+            if value < 0:
+                raise ValueError
+        except (TypeError, ValueError):
+            raise ValueError("max_retries must be non-negative integer")
+
+        self._max_retries = value
+
+    @max_retries.deleter
+    def max_retries(self):
+        self._max_retries = 0
+
     def call(self, path, query=None, method='GET', data=None,
              files=None, get_all_pages=False, complete_response=False,
              **kwargs):
@@ -200,33 +274,54 @@ class Zendesk(ZendeskAPI):
 
         results = []
         all_requests_complete = False
+        request_count = 0
 
         while not all_requests_complete:
             # Make an http request
-            response = self.client.request(method,
-                                           url,
-                                           params=kwargs,
-                                           json=json,
-                                           data=data,
-                                           headers=self.headers,
-                                           files=files,
-                                           **self.client_args)
+            # counts request attempts in order to fetch this specific one
+            request_count += 1
+            try:
+                response = self.client.request(method,
+                                               url,
+                                               params=kwargs,
+                                               json=json,
+                                               data=data,
+                                               headers=self.headers,
+                                               files=files,
+                                               **self.client_args)
+            except requests.RequestException:
+                if request_count <= self.max_retries:
+                    # we have to bind response to None in case
+                    # self.client.request raises an exception and
+                    # response holds old requests.Response
+                    # (and possibly its Retry-After header)
+                    response = None
+                    self._handle_retry(response)
+                    continue
+                else:
+                    raise
 
             # If the response status is not in the 200 range then assume an
             # error and raise proper exception
 
-            if response.status_code < 200 or response.status_code > 299:
-                if response.status_code == 401:
-                    raise AuthenticationError(
-                        response.content, response.status_code, response)
-                elif response.status_code == 429:
-                    # FYI: Check the Retry-After header for how
-                    # many seconds to sleep
-                    raise RateLimitError(
-                        response.content, response.status_code, response)
+            code = response.status_code
+            try:
+                if not 200 <= code < 300:
+                    if code == 401:
+                        raise AuthenticationError(
+                            response.content, code, response)
+                    elif code == 429:
+                        raise RateLimitError(
+                            response.content, code, response)
+                    else:
+                        raise ZendeskError(
+                            response.content, code, response)
+            except ZendeskError:
+                if request_count <= self.max_retries:
+                    self._handle_retry(response)
+                    continue
                 else:
-                    raise ZendeskError(
-                        response.content, response.status_code, response)
+                    raise
 
             if response.content.strip():
                 content = response.json()
@@ -262,6 +357,7 @@ class Zendesk(ZendeskAPI):
             # if there is a next_page, and we are getting pages, then continue
             # making requests
             all_requests_complete = not (get_all_pages and url)
+            request_count = 0
 
         if get_all_pages and complete_response:
             # Return the list of results from all calls made.
@@ -342,3 +438,40 @@ class Zendesk(ZendeskAPI):
         # perhaps, a sequence of empty dicts were returned or some such.
         # Send everything back.
         return results
+
+    def _handle_retry(self, resp):
+        """Handle any exceptions during API request or
+        parsing its response status code.
+
+        Parameters:
+        resp: requests.Response instance obtained during concerning request
+            or None, when request failed
+
+        Returns: True if should retry our request or raises original Exception
+        """
+        exc_t, exc_v, exc_tb = sys.exc_info()
+
+        if exc_t is None:
+            raise TypeError('Must be called in except block.')
+
+        retry_on_exc = tuple(
+            (x for x in self._retry_on if inspect.isclass(x)))
+        retry_on_codes = tuple(
+            (x for x in self._retry_on if isinstance(x, int)))
+
+        if issubclass(exc_t, ZendeskError):
+            code = exc_v.error_code
+            if exc_t not in retry_on_exc and code not in retry_on_codes:
+                six.reraise(exc_t, exc_v, exc_tb)
+        else:
+            if not issubclass(exc_t, retry_on_exc):
+                six.reraise(exc_t, exc_v, exc_tb)
+
+        if resp is not None:
+            try:
+                retry_after = float(resp.headers.get('Retry-After', 0))
+                time.sleep(retry_after)
+            except (TypeError, ValueError):
+                pass
+
+        return True
