@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 def test_import_module():
     try:
         import zdesk

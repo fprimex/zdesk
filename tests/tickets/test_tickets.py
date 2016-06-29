@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 from zdesk import get_id_from_url
 
 from zdesk_common import islocation, isstatuscode
