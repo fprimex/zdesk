@@ -1,3 +1,8 @@
+## HEAD
+- Use Pytest and implement some basic tests
+- Implement retry (major contribution by Dominik Miedziński)
+- Check for json in content-type before attempting to deserialize
+
 ## 2.4.0
 - Support non-JSON endpoint (removed check for .json, for recordings.mp3)
 - Improve generator formatting of duplicates
