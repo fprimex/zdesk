@@ -19,7 +19,7 @@ def test_ticket_ops(zd):
     # get id from url
     ticket_id = get_id_from_url(result)
 
-    assert(ticket_id.isdecimal(),
+    assert(ticket_id.isdigit(),
         'Returned created ticket ID is not a string of decimal digits')
 
     # show
