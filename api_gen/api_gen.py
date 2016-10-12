@@ -299,7 +299,9 @@ for name in names:
                 "    # {}\n\n".format(
                     name, dupe['docpage'])
         elif (
-            dupe['method'] == item['method']):
+            dupe['method'] == item['method'] and
+            False in [i == j for i, j in itertools.zip_longest(
+                dupe['path_params'], item['path_params'])]):
             # The path parameters differ, so we have optional or ambiguous
             # arguments. There may be query parameter differences, which
             # will all be consolidated as optional parameters.
@@ -341,10 +343,9 @@ for name in names:
 
                 # Now swap
                 item_path = item['path']
-                item = dupe
-                item['opt_path_params'] = optional
-                item['opt_path'] = item_path
-
+                api_items[name] = dupe
+                api_items[name]['opt_path_params'] = optional
+                api_items[name]['opt_path'] = item_path
             else:
                 # this is ambiguous. If the parameters are in the same place,
                 # then they're actually interchangeable, and we just need a
