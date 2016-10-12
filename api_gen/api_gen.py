@@ -257,7 +257,9 @@ for doc_file in doc_files:
                     name = name + '_show'
                 elif (
                     api_item['method'] == 'GET' and
-                    len(api_item['path_params']) == 0
+                    (len(api_item['path_params']) == 0 or
+                     len(api_item['path_params']) == 1 and
+                         api_item['path_params'][0] == 'locale')
                 ):
                     name = name + '_list'
 
@@ -297,11 +299,10 @@ for name in names:
                 "    # {}\n\n".format(
                     name, dupe['docpage'])
         elif (
-            dupe['method'] == item['method'] and
-            False not in [i == j for i, j in itertools.zip_longest(
-                sorted(dupe['query_params']), sorted(item['query_params']))]):
-            # Only the path parameters differ, so we have optional or ambiguous
-            # arguments
+            dupe['method'] == item['method']):
+            # The path parameters differ, so we have optional or ambiguous
+            # arguments. There may be query parameter differences, which
+            # will all be consolidated as optional parameters.
 
             # Common parameters are all required
             required = set(dupe['path_params']) & set(item['path_params'])
@@ -317,16 +318,33 @@ for name in names:
                 # arguments. Just need to add the optional arguments
                 item['opt_path_params'] = optional
                 item['opt_path'] = dupe['path']
+
+                # Consolidate query parameters between the two
+                item['opt_query_params'] = list(
+                    set(item['query_params'].copy() +
+                        item['opt_query_params'] +
+                        dupe['query_params']))
+                item['query_params'] = []
+
             elif (len(set(dupe['path_params']) - required) == 0 and
                     len(optional) > 0):
                 # The dupe is the base function and the item has the
-                # optional arguments
-                # Need to swap the dupe with the item and then add the
-                # optional arguments
-                dupe_path = dupe['path']
+                # optional arguments. Need to swap the dupe with the
+                # item and then add the optional arguments
+
+                # Consolidate query parameters between the two
+                dupe['opt_query_params'] = list(
+                    set(dupe['query_params'].copy() +
+                        dupe['opt_query_params'] +
+                        item['query_params']))
+                dupe['query_params'] = []
+
+                # Now swap
+                item_path = item['path']
                 item = dupe
                 item['opt_path_params'] = optional
-                item['opt_path'] = dupe_path
+                item['opt_path'] = item_path
+
             else:
                 # this is ambiguous. If the parameters are in the same place,
                 # then they're actually interchangeable, and we just need a
@@ -387,6 +405,14 @@ for name in names:
                             item['path'] = new_path
                             item['path_params'] = new_path_params
                             handled = True
+
+                            # Consolidate query parameters between the two
+                            item['opt_query_params'] = list(
+                                set(item['query_params'].copy() +
+                                    item['opt_query_params'] +
+                                    dupe['query_params']))
+                            item['query_params'] = []
+
                             break
 
                 if not handled:
