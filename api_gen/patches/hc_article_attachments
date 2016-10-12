@@ -1,0 +1,43 @@
+diff -r -u apidocs_orig/hc_article_attachments apidocs/hc_article_attachments
+--- apidocs_orig/hc_article_attachments	2016-10-11 22:51:43.000000000 -0400
++++ apidocs/hc_article_attachments	2016-10-12 12:05:04.000000000 -0400
+@@ -524,6 +524,9 @@
+        <code>
+         GET /api/v2/help_center/{locale}/articles/{article_id}/attachments.json
+        </code>
++       <code>
++        GET /api/v2/help_center/articles/{article_id}/attachments.json
++       </code>
+       </p>
+       <p>
+        Lists all the article's attachments.
+@@ -608,6 +611,9 @@
+        <code>
+         GET /api/v2/help_center/{locale}/articles/{article_id}/attachments/inline.json
+        </code>
++       <code>
++        GET /api/v2/help_center/articles/{article_id}/attachments/inline.json
++       </code>
+       </p>
+       <p>
+        Lists all the article's inline attachments.
+@@ -692,6 +698,9 @@
+        <code>
+         GET /api/v2/help_center/{locale}/articles/{article_id}/attachments/block.json
+        </code>
++       <code>
++        GET /api/v2/help_center/articles/{article_id}/attachments/block.json
++       </code>
+       </p>
+       <p>
+        Lists all the article's block attachments. Block attachments are those that are not inline.
+@@ -776,6 +785,9 @@
+        <code>
+         GET /api/v2/help_center/{locale}/articles/attachments/{id}.json
+        </code>
++       <code>
++        GET /api/v2/help_center/articles/attachments/{id}.json
++       </code>
+       </p>
+       <p>
+        Shows the properties of the specified attachment.
