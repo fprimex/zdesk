@@ -5,8 +5,8 @@ diff -r -u apidocs_orig/hc_categories apidocs/hc_categories
         </code>
         query string parameters.
        </p>
--      <pre>GET /api/v2/help_center/categories.json?sort_by=updated_at&amp;sort;_order=asc
-+      <pre>GET /api/v2/help_center/categories.json?sort_by=updated_at&amp;sort_order=asc
+-      <pre>GET /api/v2/help_center/en-us/categories.json?sort_by=updated_at&amp;sort;_order=asc
++      <pre>GET /api/v2/help_center/{locale}/categories.json?sort_by=updated_at&amp;sort_order=asc
  </pre>
        <p>
         The
