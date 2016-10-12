@@ -1,7 +1,7 @@
 diff -r -u apidocs_orig/core_tickets apidocs/core_tickets
---- apidocs_orig/core_tickets	2015-05-04 16:28:55.000000000 -0400
-+++ apidocs/core_tickets	2015-05-04 16:50:43.000000000 -0400
-@@ -1378,6 +1378,9 @@
+--- apidocs_orig/core_tickets	2016-10-11 22:52:13.000000000 -0400
++++ apidocs/core_tickets	2016-10-12 00:04:30.000000000 -0400
+@@ -1457,6 +1457,9 @@
         <code>
          GET /api/v2/tickets.json
         </code>
@@ -11,7 +11,7 @@ diff -r -u apidocs_orig/core_tickets apidocs/core_tickets
        </p>
        <p>
         Tickets are ordered chronologically by created date, from oldest to newest. The first ticket listed may not be the absolute oldest ticket in your account due to
-@@ -1419,24 +1422,49 @@
+@@ -1505,26 +1508,51 @@
        </p>
        <p>
         <code>
@@ -53,11 +53,22 @@ diff -r -u apidocs_orig/core_tickets apidocs/core_tickets
          GET /api/v2/tickets/recent.json
         </code>
        </p>
-+      <p>
-+       <code>
+       <p>
+        <code>
 +        GET /api/v2/tickets/recent.json?external_id={external_id}
 +       </code>
 +      </p>
++      <p>
++       <code>
+         recent.json
+        </code>
+        lists tickets that the requesting agent recently viewed
+@@ -2249,7 +2277,7 @@
+       </p>
        <p>
         <code>
-         recent.json
+-        POST api/v2/tickets.json?async=true
++        POST /api/v2/tickets.json?async=true
+        </code>
+       </p>
+       <p>
