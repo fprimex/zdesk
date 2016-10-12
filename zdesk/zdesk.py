@@ -4,15 +4,15 @@ import inspect
 import sys
 import time
 
-if sys.version_info.major < 3:
+import requests
+import six
+
+if six.PY2:
     from httplib import responses
     from urlparse import urlsplit
 else:
     from http.client import responses
     from urllib.parse import urlsplit
-
-import requests
-import six
 
 from .zdesk_api import ZendeskAPI
 
@@ -235,7 +235,7 @@ class Zendesk(ZendeskAPI):
             self._retry_on = set(value)
         else:
             _validate(value)
-            self._retry_on = {value}
+            self._retry_on = set([value])
 
     @retry_on.deleter
     def retry_on(self):
