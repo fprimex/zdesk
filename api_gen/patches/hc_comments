@@ -1,7 +1,29 @@
 diff -r -u apidocs_orig/hc_comments apidocs/hc_comments
---- apidocs_orig/hc_comments	2015-01-22 15:33:14.000000000 -0500
-+++ apidocs/hc_comments	2015-01-22 15:35:18.000000000 -0500
-@@ -919,7 +919,7 @@
+--- apidocs_orig/hc_comments	2016-10-11 22:51:42.000000000 -0400
++++ apidocs/hc_comments	2016-10-12 12:10:38.000000000 -0400
+@@ -620,6 +620,11 @@
+          GET /api/v2/help_center/{locale}/articles/{id}/comments.json
+         </code>
+        </li>
++       <li>
++        <code>
++         GET /api/v2/help_center/articles/{id}/comments.json
++        </code>
++       </li>
+       </ol>
+       <p>
+        Lists the comments created by a specific user, or all comments made by all users on
+@@ -754,6 +759,9 @@
+        <code>
+         GET /api/v2/help_center/{locale}/articles/{article_id}/comments/{id}.json
+        </code>
++       <code>
++        GET /api/v2/help_center/articles/{article_id}/comments/{id}.json
++       </code>
+       </p>
+       <p>
+        Shows the properties of the specified comment.
+@@ -1030,7 +1038,7 @@
        </a>
        <p>
         <code>
@@ -10,3 +32,4 @@ diff -r -u apidocs_orig/hc_comments apidocs/hc_comments
         </code>
        </p>
        <span class="anchor" id="allowed-for">
+Only in apidocs: hc_comments.orig
