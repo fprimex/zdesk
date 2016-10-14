@@ -1,7 +1,14 @@
-## HEAD
+## 2.5.0
 - Use Pytest and implement some basic tests
 - Implement retry (major contribution by Dominik Miedziński)
-- Check for json in content-type before attempting to deserialize
+- Merge the `batch` support method (by Dominik Miedziński)
+- Merge 2.6 support (by rshipp)
+- Check for json in content-type before attempting to deserialize (by
+  blade2005)
+- Improve API generator handling of duplicates and ambiguous parameters
+- Add support for optional `locale` help center argument on many methods
+- Regenerate API from updated mirror. See [full
+  commit](https://github.com/fprimex/zdesk/commit/UPDATE_ME)
 
 ## 2.4.0
 - Support non-JSON endpoint (removed check for .json, for recordings.mp3)
