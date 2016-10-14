@@ -284,27 +284,42 @@ names.sort()
 for name in names:
     for dupe in duplicate_api_items[name]:
         item = api_items[name]
-        if (
-            dupe['path'] == item['path'] and
-            dupe['method'] == item['method'] and
-            False not in [i == j for i, j in itertools.zip_longest(
-                dupe['path_params'], item['path_params'])] and
-            False not in [i == j for i, j in itertools.zip_longest(
+
+        same_path = dupe['path'] == item['path']
+        same_method = dupe['method'] == item['method']
+        same_path_params = False not in [i == j for i, j in
+                itertools.zip_longest(dupe['path_params'],
+                        item['path_params'])]
+        same_query_params = False not in [i == j for i, j in
+                itertools.zip_longest(
                 sorted(dupe['query_params']), sorted(item['query_params']))]
-        ):
+
+        if (same_path and same_method and
+            same_path_params and same_query_params):
             # Everything is the same, so discard this duplicate
             content += \
                 "    # Duplicate API endpoint discarded:\n"\
                 "    # {} from\n"\
                 "    # {}\n\n".format(
                     name, dupe['docpage'])
-        elif (
-            dupe['method'] == item['method'] and
-            False in [i == j for i, j in itertools.zip_longest(
-                dupe['path_params'], item['path_params'])]):
-            # The path parameters differ, so we have optional or ambiguous
-            # arguments. There may be query parameter differences, which
-            # will all be consolidated as optional parameters.
+
+        elif same_path and same_path_params and same_query_params:
+            # Only the method differs, so indicate that method is ambiguous
+            item['method'] = None
+
+        elif same_path and same_method and same_path_params:
+            # Only the query parameters differ, so we have
+            # optional named arguments
+            item['opt_query_params'] = list(
+                set(item['query_params'].copy() +
+                    item['opt_query_params'] +
+                    dupe['query_params']))
+            item['query_params'] = []
+
+        elif same_method and not (same_path_params and same_path):
+	    # The path or path parameters differ, so we have optional or
+	    # ambiguous arguments. There may be query parameter differences,
+	    # which will all be consolidated as optional parameters.
 
             # Common parameters are all required
             required = set(dupe['path_params']) & set(item['path_params'])
@@ -350,7 +365,7 @@ for name in names:
                 # this is ambiguous. If the parameters are in the same place,
                 # then they're actually interchangeable, and we just need a
                 # better name for them.
-                handled = True
+                handled = False
                 new_path = ''
                 new_path_params = []
 
@@ -378,21 +393,30 @@ for name in names:
                                 "    # {}\n\n".format(
                                     name, dupe['docpage'])
                             handled = True
-                            break
 
-                        if (ipart.startswith('{') and jpart.startswith('{') and
+                        elif (ipart.startswith('{') and jpart.startswith('{') and
                                 iext != jext):
                             # The parameters are different, but in the same
                             # place and have a different extension. So this
                             # actually needs a new method.
                             # e.g. /thing/{id} vs /thing/{name}.json
+                            ihandled = False
+                            jhandled = False
+
+                            new_name = name + '_by_' + ipart.strip('{}')
+                            if new_name not in api_items:
+                                api_items[new_name] = item
+                                del api_items[name]
+                                ihandled = True
+
                             new_name = name + '_by_' + jpart.strip('{}')
                             if new_name not in api_items:
                                 api_items[new_name] = dupe
-                                handled = True
-                                break
+                                jhandled = True
 
-                        if (ipart.startswith('{') and jpart.startswith('{') and
+                            handled = ihandled and jhandled
+
+                        elif (ipart.startswith('{') and jpart.startswith('{') and
                                 iext == jext):
                             # The parameters are in the same place and have the
                             # same extension. Combine these parameters as they
@@ -414,33 +438,12 @@ for name in names:
                                     dupe['query_params']))
                             item['query_params'] = []
 
-                            break
-
                 if not handled:
                     content += \
                         "    # Duplicate ambiguous API endpoint:\n"\
                         "    # {} from\n"\
                         "    # {}\n\n".format(name, dupe['docpage'])
-        elif (
-            dupe['path'] == item['path'] and
-            dupe['method'] == item['method'] and
-            False not in [i == j for i, j in itertools.zip_longest(
-                dupe['path_params'], item['path_params'])]):
-                # Only the query parameters differ, so we have
-                # optional named arguments
-                item['opt_query_params'] = list(
-                    set(item['query_params'].copy() +
-                        item['opt_query_params'] +
-                        dupe['query_params']))
-                item['query_params'] = []
-        elif (
-            dupe['path'] == item['path'] and
-            False not in [i == j for i, j in itertools.zip_longest(
-                dupe['path_params'], item['path_params'])] and
-            False not in [i == j for i, j in itertools.zip_longest(
-                sorted(dupe['query_params']), sorted(item['query_params']))]):
-                # Only the method differs, so indicate that method is ambiguous
-                item['method'] = None
+
         else:
             should_keep += "\n"
             should_keep += \
