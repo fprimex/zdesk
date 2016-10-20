@@ -1,3 +1,7 @@
+Please refer to the documentation for the specific release you are running.
+
+Releases are listed [here](https://github.com/fprimex/zdesk/tags).
+
 # Zendesk API Wrapper for Python
 
 Zdesk is a Python wrapper for the Zendesk API. This library provides an
