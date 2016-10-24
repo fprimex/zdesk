@@ -1,6 +1,6 @@
 Please refer to the documentation for the specific release you are running.
 
-Releases are listed [here](https://github.com/fprimex/zdesk/tags).
+Releases are listed [here](https://github.com/fprimex/zdesk/releases).
 
 # Zendesk API Wrapper for Python
 
