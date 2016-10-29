@@ -135,7 +135,8 @@ following code has worked well with zdesk scripts:
     response = zd.upload_create(filename=fname,
             data=fdata, mime_type=mime_type, complete_response=True)
 
-    upload_token = response['content']['upload']['token']
+    response_json = response['response'].json()
+    upload_token = response_json['upload']['token']
 
 ## Multipart file uploads (Help Center attachments)
 
