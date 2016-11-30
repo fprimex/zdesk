@@ -1,3 +1,21 @@
+# Zdesk is seeking a contributing team or maintainer
+
+Active development on zdesk has been pretty slow for some time now. The zdesk
+port is not official, and has been authored by just myself (Brent). While I
+have received contributions, I am just one person. Add in a very busy personal
+life and no direct professional obligation to maintain this library and you
+have a recipe for stagnation.
+
+I am seeking to connect with users who would be interested in contributing to
+this project directly (commit access), or otherwise a suitable maintainer to
+pass this library on to. I think there is a lot of promise in the generator
+approach to do some more interesting things, but I simply cannot find the time
+to code it up myself.
+
+If you are interested, please email me directly: brent@fprimex.com
+
+# Note about documentation on github
+
 Please refer to the documentation for the specific release you are running.
 
 Releases are listed [here](https://github.com/fprimex/zdesk/releases).
