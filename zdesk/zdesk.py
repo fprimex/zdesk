@@ -374,7 +374,7 @@ class Zendesk(ZendeskAPI):
 
             code = response.status_code
             try:
-                if not 200 <= code < 300:
+                if not 200 <= code < 300 and code != 422:
                     if code == 401:
                         raise AuthenticationError(
                             response.content, code, response)
@@ -396,6 +396,9 @@ class Zendesk(ZendeskAPI):
 
                 # set url to the next page if that was returned in the response
                 url = content.get('next_page', None)
+                # url we get above already has the start_time appended to it,
+                # specific to incremental exports
+                kwargs = {}
             else:
                 content = response.content
                 url = None
@@ -424,6 +427,17 @@ class Zendesk(ZendeskAPI):
 
             # if there is a next_page, and we are getting pages, then continue
             # making requests
+
+            # deal with how incremental export results are returned
+            # there could be two cases
+            # response code == 422 returned when end_time < five minutes recent
+            # or count < 1000
+            # this is an ugly check, and we have to check this just for incremental export end-points
+            # non-incremental load end-points have a 100 item/page limit and return next_page = null for last page
+            # also note that incremental/ticket_metric_events end-point has a 10,000 items per page limit
+            url = None if (url is not None and
+                           'incremental' in url and
+                           content.get('count') < 1000) else url
             all_requests_complete = not (get_all_pages and url)
             request_count = 0
 
