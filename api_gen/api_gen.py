@@ -53,10 +53,9 @@ zen_url = 'https://developer.zendesk.com'
 
 docpages = {
     'core': '/rest_api/docs/core/introduction',
-    'webportal': '/rest_api/docs/web-portal/webportal_introduction',
     'hc': '/rest_api/docs/help_center/introduction',
-    'zopim': '/rest_api/docs/zopim/introduction',
-    'voice': '/rest_api/docs/voice-api/voice',
+    'chat': '/rest_api/docs/chat/introduction', 
+    'talk': '/rest_api/docs/voice-api/talk',
     'nps': '/rest_api/docs/nps-api/introduction',
 }
 
@@ -77,7 +76,7 @@ skipfiles = [
     'core_introduction',
     'webportal_webportal_introduction',
     'hc_introduction',
-    'zopim_introduction',
+    'chat_introduction',
     'nps_introduction',
 ]
 
@@ -86,13 +85,15 @@ apidocs = 'apidocs'
 if os.path.isdir(apidocs):
     shutil.rmtree(apidocs)
 
-if not os.path.isdir(apidocs + '_orig'):
-    os.makedirs(apidocs + '_orig')
+apidocs_orig = '{0}_orig'.format(apidocs)
 
-os.chdir(apidocs + '_orig')
+if not os.path.isdir(apidocs_orig):
+    os.makedirs(apidocs_orig)
 
-for category in docpages:
-    filename = category + '_' + os.path.basename(docpages[category])
+os.chdir(apidocs_orig)
+
+for category in sorted(docpages.keys()):
+    filename = '_'.join([category, os.path.basename(docpages[category])])
 
     if os.path.isfile(filename):
         with open(filename, 'rb') as fin:
@@ -109,7 +110,7 @@ for category in docpages:
 
     for a in sidenav.find_all('a'):
         link = a.attrs['href']
-        filename = category + '_' + os.path.basename(link)
+        filename = '_'.join([category, os.path.basename(link)])
 
         if link[0] == '#':
             continue
@@ -127,13 +128,14 @@ for category in docpages:
             pretty_text = text
         pretty = (pretty_text)
 
-        with open(category + '_' + os.path.basename(link), 'w') as fout:
+        print(category + '_' + os.path.basename(link))
+        with open(category + '_' + os.path.basename(link), 'w', encoding="utf-8") as fout:
             fout.write(pretty)
 
 doc_files = os.listdir()
 os.chdir('..')
 patchfiles = os.listdir('patches')
-shutil.copytree(apidocs + '_orig', apidocs)
+shutil.copytree(apidocs_orig, apidocs)
 os.chdir(apidocs)
 
 for patchfile in patchfiles:
@@ -153,6 +155,7 @@ def code_pre_docanchor(tag):
 
 api_items = {}
 duplicate_api_items = {}
+
 for doc_file in doc_files:
     if '.orig' in doc_file or doc_file in skipfiles:
         continue
@@ -207,9 +210,7 @@ for doc_file in doc_files:
                 # e.g. GET /api/v2/tickets/{id}.json
                 is_singular = True
 
-            del path_parts[0]
-            del path_parts[0]
-            del path_parts[0]
+            path_parts = [p for p in path_parts if p not in ['', 'api', 'v2']]
 
             make_next_singular = False
             path_parts.reverse()
@@ -477,13 +478,10 @@ for name in names:
 if should_keep:
     content += should_keep
 
-names = list(api_items.keys())
-names.sort()
-
 def sanitize(q):
     return q.replace('[', '_').replace(']', '')
 
-for name in names:
+for name in sorted(list(api_items.keys())):
     item = api_items[name]
 
     # Sorting the parameters alphabetically should prevent needless differences
@@ -547,6 +545,9 @@ for name in names:
 
     if item['query_params'] or item['opt_query_params']:
         content += '        api_query = {}\n'
+        content += '        if \'query\' in kwargs.keys():\n'
+        content += '            api_query.update(kwargs[\'query\'])\n'
+        content += '            del kwargs[\'query\']\n'
 
     if item['query_params']:
         content += '        api_query.update({\n'
