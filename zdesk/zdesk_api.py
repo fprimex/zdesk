@@ -10,100 +10,8 @@ class ZendeskAPI(object):
         pass
 
     # Duplicate API endpoint discarded:
-    # channels_voice_agent_ticket_display_create from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/integration#open-a-ticket-in-an-agents-browser
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_agent_user_display_create from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/integration#open-a-users-profile-in-an-agents-browser
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_availability_show from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#getting-availability
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_availability_update from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#updating-availability
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_greeting_categories_list from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#listing-greeting-categories
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_greeting_category_show from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#getting-greeting-category
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_greeting_create from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#creating-greetings
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_greeting_delete from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#deleting-greetings
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_greeting_recording from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#getting-greetings
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_greeting_show from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#getting-greetings
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_greeting_update from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#updating-greetings
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_greetings_list from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#listing-greetings
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_phone_number_create from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#creating-phone-numbers
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_phone_number_show from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#getting-phone-numbers
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_phone_number_update from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#updating-phone-numbers
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_phone_numbers_delete from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#deleting-phone-numbers
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_phone_numbers_list from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#listing-phone-numbers
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_phone_numbers_search from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#searching-for-available-phone-numbers
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_stats_agents_activity_list from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#getting-statistics-for-agents-activity
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_stats_current_queue_activity_list from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#getting-statistics-for-current-queue-activity
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_stats_historical_queue_activity_list from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/voice#getting-statistics-for-historical-queue-activity
-
-    # Duplicate API endpoint discarded:
     # channels_voice_ticket_create from
-    # https://developer.zendesk.com/rest_api/docs/core/voice_integration#creating-voicemail-tickets
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_ticket_create from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/integration#creating-voice-tickets
-
-    # Duplicate API endpoint discarded:
-    # channels_voice_ticket_create from
-    # https://developer.zendesk.com/rest_api/docs/voice-api/integration#creating-voicemail-tickets
+    # https://developer.zendesk.com/rest_api/docs/voice-api/partner_edition#creating-voicemail-tickets
 
     # Duplicate API endpoint discarded:
     # help_center_incremental_articles_list from
@@ -127,46 +35,42 @@ class ZendeskAPI(object):
 
     # Duplicate API endpoint differs only by extension:
     # oauth_client_create from
-    # https://developer.zendesk.com/rest_api/docs/zopim/auth#create-client
+    # https://developer.zendesk.com/rest_api/docs/chat/auth#create-client
 
     # Duplicate API endpoint differs only by extension:
     # oauth_client_delete from
-    # https://developer.zendesk.com/rest_api/docs/zopim/auth#delete-client
+    # https://developer.zendesk.com/rest_api/docs/chat/auth#delete-client
 
     # Duplicate API endpoint differs only by extension:
     # oauth_client_show from
-    # https://developer.zendesk.com/rest_api/docs/zopim/auth#get-client
+    # https://developer.zendesk.com/rest_api/docs/chat/auth#get-client
 
     # Duplicate API endpoint differs only by extension:
     # oauth_client_update from
-    # https://developer.zendesk.com/rest_api/docs/zopim/auth#update-client
+    # https://developer.zendesk.com/rest_api/docs/chat/auth#update-client
 
     # Duplicate API endpoint differs only by extension:
     # oauth_clients_list from
-    # https://developer.zendesk.com/rest_api/docs/zopim/auth#list-clients
+    # https://developer.zendesk.com/rest_api/docs/chat/auth#list-clients
 
     # Duplicate API endpoint differs only by extension:
     # oauth_token_delete from
-    # https://developer.zendesk.com/rest_api/docs/zopim/auth#revoke-token
+    # https://developer.zendesk.com/rest_api/docs/chat/auth#revoke-token
 
     # Duplicate API endpoint differs only by extension:
     # oauth_tokens_list from
-    # https://developer.zendesk.com/rest_api/docs/zopim/auth#list-tokens
+    # https://developer.zendesk.com/rest_api/docs/chat/auth#list-tokens
 
     # Duplicate API endpoint differs only by extension:
     # trigger_create from
-    # https://developer.zendesk.com/rest_api/docs/zopim/triggers#create-trigger
+    # https://developer.zendesk.com/rest_api/docs/core/triggers#create-trigger
 
     # Duplicate API endpoint differs only by extension:
     # triggers_list from
-    # https://developer.zendesk.com/rest_api/docs/zopim/triggers#get-all-triggers
-
-    # Duplicate API endpoint discarded:
-    # users_me from
-    # https://developer.zendesk.com/rest_api/docs/core/side_loading#open-ticket-count
+    # https://developer.zendesk.com/rest_api/docs/core/triggers#list-triggers
 
     def account_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/accounts#get-account"
+        "https://developer.zendesk.com/rest_api/docs/chat/accounts#get-account"
         api_path = "/api/v2/account"
         return self.call(api_path, **kwargs)
 
@@ -181,7 +85,7 @@ class ZendeskAPI(object):
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def account_update(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/accounts#update-account"
+        "https://developer.zendesk.com/rest_api/docs/chat/accounts#update-account"
         api_path = "/api/v2/account"
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
@@ -202,46 +106,46 @@ class ZendeskAPI(object):
         return self.call(api_path, **kwargs)
 
     def agent_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/agents#create-agent"
+        "https://developer.zendesk.com/rest_api/docs/chat/agents#create-agent"
         api_path = "/api/v2/agents"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def agent_delete(self, agent_id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/agents#delete-agent"
+        "https://developer.zendesk.com/rest_api/docs/chat/agents#delete-agent"
         api_path = "/api/v2/agents/{agent_id}"
         api_path = api_path.format(agent_id=agent_id)
         return self.call(api_path, method="DELETE", **kwargs)
 
     def agent_show(self, agent_id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/agents#get-agent-by-id"
+        "https://developer.zendesk.com/rest_api/docs/chat/agents#get-agent-by-id"
         api_path = "/api/v2/agents/{agent_id}"
         api_path = api_path.format(agent_id=agent_id)
         return self.call(api_path, **kwargs)
 
     def agent_update(self, agent_id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/agents#update-agent"
+        "https://developer.zendesk.com/rest_api/docs/chat/agents#update-agent"
         api_path = "/api/v2/agents/{agent_id}"
         api_path = api_path.format(agent_id=agent_id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def agents_email_show(self, email_id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/agents#get-agent-by-email-id"
+        "https://developer.zendesk.com/rest_api/docs/chat/agents#get-agent-by-email-id"
         api_path = "/api/v2/agents/email/{email_id}"
         api_path = api_path.format(email_id=email_id)
         return self.call(api_path, **kwargs)
 
     def agents_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/agents#get-all-agents"
+        "https://developer.zendesk.com/rest_api/docs/chat/agents#get-all-agents"
         api_path = "/api/v2/agents"
         return self.call(api_path, **kwargs)
 
     def agents_me(self, method, data=None, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/agents#get-requesting-agent"
+        "https://developer.zendesk.com/rest_api/docs/chat/agents#get-requesting-agent"
         api_path = "/api/v2/agents/me"
         return self.call(api_path, method=method, data=data, **kwargs)
 
     def any_channel_push_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/channel_framework#push-channel-framework-content-to-zendesk"
+        "https://developer.zendesk.com/rest_api/docs/core/channel_framework#push-channel-framework-content-to-zendesk-support"
         api_path = "/api/v2/any_channel/push"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
@@ -256,11 +160,11 @@ class ZendeskAPI(object):
         api_path = api_path.format(id=id)
         return self.call(api_path, method="DELETE", **kwargs)
 
-    def app_public_key_update(self, id, data, **kwargs):
+    def app_public_key(self, id, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/apps#get-app-public-key"
         api_path = "/api/v2/apps/{id}/public_key.pem"
         api_path = api_path.format(id=id)
-        return self.call(api_path, method="PUT", data=data, **kwargs)
+        return self.call(api_path, **kwargs)
 
     def app_show(self, id, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/apps#get-information-about-app"
@@ -438,30 +342,35 @@ class ZendeskAPI(object):
         api_path = "/api/v2/automations.json"
         return self.call(api_path, **kwargs)
 
+    def automations_search(self, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/automations#search-automations"
+        api_path = "/api/v2/automations/search.json"
+        return self.call(api_path, **kwargs)
+
     def ban_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/bans#create-ban"
+        "https://developer.zendesk.com/rest_api/docs/chat/bans#create-ban"
         api_path = "/api/v2/bans"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def ban_delete(self, ban_id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/bans#delete-ban"
+        "https://developer.zendesk.com/rest_api/docs/chat/bans#delete-ban"
         api_path = "/api/v2/ban/{ban_id}"
         api_path = api_path.format(ban_id=ban_id)
         return self.call(api_path, method="DELETE", **kwargs)
 
     def ban_show(self, ban_id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/bans#get-ban"
+        "https://developer.zendesk.com/rest_api/docs/chat/bans#get-ban"
         api_path = "/api/v2/bans/{ban_id}"
         api_path = api_path.format(ban_id=ban_id)
         return self.call(api_path, **kwargs)
 
     def bans_ip_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/bans#get-banned-ip-addresses"
+        "https://developer.zendesk.com/rest_api/docs/chat/bans#get-banned-ip-addresses"
         api_path = "/api/v2/bans/ip"
         return self.call(api_path, **kwargs)
 
     def bans_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/bans#get-all-bans"
+        "https://developer.zendesk.com/rest_api/docs/chat/bans#get-all-bans"
         api_path = "/api/v2/bans"
         return self.call(api_path, **kwargs)
 
@@ -589,40 +498,6 @@ class ZendeskAPI(object):
         api_path = "/api/v2/business_hours/schedules.json"
         return self.call(api_path, **kwargs)
 
-    def categories_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/categories#list-categories"
-        api_path = "/api/v2/categories.json"
-        return self.call(api_path, **kwargs)
-
-    def category_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/categories#create-category"
-        api_path = "/api/v2/categories.json"
-        return self.call(api_path, method="POST", data=data, **kwargs)
-
-    def category_delete(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/categories#delete-category"
-        api_path = "/api/v2/categories/{id}.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, method="DELETE", **kwargs)
-
-    def category_forums(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/forums#list-forums"
-        api_path = "/api/v2/categories/{id}/forums.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, **kwargs)
-
-    def category_show(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/categories#show-category"
-        api_path = "/api/v2/categories/{id}.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, **kwargs)
-
-    def category_update(self, id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/categories#update-category"
-        api_path = "/api/v2/category/{id}.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, method="PUT", data=data, **kwargs)
-
     def channels_twitter_monitored_twitter_handle_show(self, id, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/twitter_channel#getting-monitored-twitter-handle"
         api_path = "/api/v2/channels/twitter/monitored_twitter_handles/{id}.json"
@@ -646,151 +521,151 @@ class ZendeskAPI(object):
         return self.call(api_path, **kwargs)
 
     def channels_voice_agent_ticket_display_create(self, agent_id, ticket_id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice_integration#open-a-ticket-in-an-agents-browser"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/partner_edition#open-a-ticket-in-an-agents-browser"
         api_path = "/api/v2/channels/voice/agents/{agent_id}/tickets/{ticket_id}/display.json"
         api_path = api_path.format(agent_id=agent_id, ticket_id=ticket_id)
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def channels_voice_agent_user_display_create(self, agent_id, user_id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice_integration#open-a-users-profile-in-an-agents-browser"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/partner_edition#open-a-users-profile-in-an-agents-browser"
         api_path = "/api/v2/channels/voice/agents/{agent_id}/users/{user_id}/display.json"
         api_path = api_path.format(agent_id=agent_id, user_id=user_id)
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def channels_voice_availability_show(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#getting-availability"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#getting-availability"
         api_path = "/api/v2/channels/voice/availabilities/{id}.json"
         api_path = api_path.format(id=id)
         return self.call(api_path, **kwargs)
 
     def channels_voice_availability_update(self, id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#updating-availability"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#updating-availability"
         api_path = "/api/v2/channels/voice/availabilities/{id}.json"
         api_path = api_path.format(id=id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def channels_voice_greeting_categories_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#listing-greeting-categories"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#listing-greeting-categories"
         api_path = "/api/v2/channels/voice/greeting_categories.json"
         return self.call(api_path, **kwargs)
 
     def channels_voice_greeting_category_show(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#getting-greeting-category"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#getting-greeting-category"
         api_path = "/api/v2/channels/voice/greeting_categories/{id}.json"
         api_path = api_path.format(id=id)
         return self.call(api_path, **kwargs)
 
     def channels_voice_greeting_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#creating-greetings"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#creating-greetings"
         api_path = "/api/v2/channels/voice/greetings.json"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def channels_voice_greeting_delete(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#deleting-greetings"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#deleting-greetings"
         api_path = "/api/v2/channels/voice/greetings/{id}.json"
         api_path = api_path.format(id=id)
         return self.call(api_path, method="DELETE", **kwargs)
 
     def channels_voice_greeting_recording(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#getting-greetings"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#getting-greetings"
         api_path = "/api/v2/channels/voice/greetings/{id}/recording.mp3"
         api_path = api_path.format(id=id)
         return self.call(api_path, **kwargs)
 
     def channels_voice_greeting_show(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#getting-greetings"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#getting-greetings"
         api_path = "/api/v2/channels/voice/greetings/{id}.json"
         api_path = api_path.format(id=id)
         return self.call(api_path, **kwargs)
 
     def channels_voice_greeting_update(self, id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#updating-greetings"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#updating-greetings"
         api_path = "/api/v2/channels/voice/greetings/{id}.json"
         api_path = api_path.format(id=id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def channels_voice_greetings_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#listing-greetings"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#listing-greetings"
         api_path = "/api/v2/channels/voice/greetings.json"
         return self.call(api_path, **kwargs)
 
     def channels_voice_phone_number_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#creating-phone-numbers"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#creating-phone-numbers"
         api_path = "/api/v2/channels/voice/phone_numbers.json"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def channels_voice_phone_number_show(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#getting-phone-numbers"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#getting-phone-numbers"
         api_path = "/api/v2/channels/voice/phone_numbers/{id}.json"
         api_path = api_path.format(id=id)
         return self.call(api_path, **kwargs)
 
     def channels_voice_phone_number_update(self, id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#updating-phone-numbers"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#updating-phone-numbers"
         api_path = "/api/v2/channels/voice/phone_numbers/{id}.json"
         api_path = api_path.format(id=id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def channels_voice_phone_numbers_delete(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#deleting-phone-numbers"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#deleting-phone-numbers"
         api_path = "/api/v2/channels/voice/phone_numbers.json"
         return self.call(api_path, method="DELETE", **kwargs)
 
     def channels_voice_phone_numbers_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#listing-phone-numbers"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#listing-phone-numbers"
         api_path = "/api/v2/channels/voice/phone_numbers.json"
         return self.call(api_path, **kwargs)
 
     def channels_voice_phone_numbers_search(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#searching-for-available-phone-numbers"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#searching-for-available-phone-numbers"
         api_path = "/api/v2/channels/voice/phone_numbers/search.json"
         return self.call(api_path, **kwargs)
 
     def channels_voice_stats_agents_activity_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#getting-statistics-for-agents-activity"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#getting-statistics-for-agents-activity"
         api_path = "/api/v2/channels/voice/stats/agents_activity.json"
         return self.call(api_path, **kwargs)
 
     def channels_voice_stats_current_queue_activity_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#getting-statistics-for-current-queue-activity"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#getting-statistics-for-current-queue-activity"
         api_path = "/api/v2/channels/voice/stats/current_queue_activity.json"
         return self.call(api_path, **kwargs)
 
     def channels_voice_stats_historical_queue_activity_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice#getting-statistics-for-historical-queue-activity"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/talk#getting-statistics-for-historical-queue-activity"
         api_path = "/api/v2/channels/voice/stats/historical_queue_activity.json"
         return self.call(api_path, **kwargs)
 
     def channels_voice_ticket_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/voice_integration#creating-voice-tickets"
+        "https://developer.zendesk.com/rest_api/docs/voice-api/partner_edition#creating-tickets"
         api_path = "/api/v2/channels/voice/tickets.json"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def chat_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/chats#create-chat"
+        "https://developer.zendesk.com/rest_api/docs/chat/chats#create-chat"
         api_path = "/api/v2/chats"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def chat_delete(self, chat_id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/chats#delete-chat"
+        "https://developer.zendesk.com/rest_api/docs/chat/chats#delete-chat"
         api_path = "/api/v2/chats/{chat_id}"
         api_path = api_path.format(chat_id=chat_id)
         return self.call(api_path, method="DELETE", **kwargs)
 
     def chat_show(self, chat_id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/chats#get-chat"
+        "https://developer.zendesk.com/rest_api/docs/chat/chats#get-chat"
         api_path = "/api/v2/chats/{chat_id}"
         api_path = api_path.format(chat_id=chat_id)
         return self.call(api_path, **kwargs)
 
     def chat_update(self, chat_id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/chats#update-chat"
+        "https://developer.zendesk.com/rest_api/docs/chat/chats#update-chat"
         api_path = "/api/v2/chats/{chat_id}"
         api_path = api_path.format(chat_id=chat_id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def chats_list(self, ids=None, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/chats#list-all-chats"
+        "https://developer.zendesk.com/rest_api/docs/chat/chats#list-all-chats"
         api_path = "/api/v2/chats"
         api_query = {}
         if ids:
@@ -800,7 +675,7 @@ class ZendeskAPI(object):
         return self.call(api_path, query=api_query, **kwargs)
 
     def chats_search(self, q, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/chats#search-chats"
+        "https://developer.zendesk.com/rest_api/docs/chat/chats#search-chats"
         api_path = "/api/v2/chats/search"
         api_query = {}
         api_query.update({
@@ -1029,41 +904,41 @@ class ZendeskAPI(object):
         return self.call(api_path, **kwargs)
 
     def department_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/departments#create-department"
+        "https://developer.zendesk.com/rest_api/docs/chat/departments#create-department"
         api_path = "/api/v2/departments"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def department_delete(self, department_id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/departments#delete-department-by-id"
+        "https://developer.zendesk.com/rest_api/docs/chat/departments#delete-department-by-id"
         api_path = "/api/v2/departments/{department_id}"
         api_path = api_path.format(department_id=department_id)
         return self.call(api_path, method="DELETE", **kwargs)
 
     def department_show(self, department_id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/departments#get-department-by-id"
+        "https://developer.zendesk.com/rest_api/docs/chat/departments#get-department-by-id"
         api_path = "/api/v2/departments/{department_id}"
         api_path = api_path.format(department_id=department_id)
         return self.call(api_path, **kwargs)
 
     def department_update(self, department_id_or_name, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/departments#update-department-by-id"
+        "https://developer.zendesk.com/rest_api/docs/chat/departments#update-department-by-id"
         api_path = "/api/v2/departments/{department_id_or_name}"
         api_path = api_path.format(department_id_or_name=department_id_or_name)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def departments_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/departments#get-all-departments"
+        "https://developer.zendesk.com/rest_api/docs/chat/departments#get-all-departments"
         api_path = "/api/v2/departments"
         return self.call(api_path, **kwargs)
 
     def departments_name_delete(self, name, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/departments#delete-department-by-name"
+        "https://developer.zendesk.com/rest_api/docs/chat/departments#delete-department-by-name"
         api_path = "/api/v2/departments/name/{name}"
         api_path = api_path.format(name=name)
         return self.call(api_path, method="DELETE", **kwargs)
 
     def departments_name_show(self, name, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/departments#get-department-by-name"
+        "https://developer.zendesk.com/rest_api/docs/chat/departments#get-department-by-name"
         api_path = "/api/v2/departments/name/{name}"
         api_path = api_path.format(name=name)
         return self.call(api_path, **kwargs)
@@ -1161,68 +1036,6 @@ class ZendeskAPI(object):
         api_path = "/api/v2/end_users/{id}.json"
         api_path = api_path.format(id=id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
-
-    def forum_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/forums#create-forum"
-        api_path = "/api/v2/forums.json"
-        return self.call(api_path, method="POST", data=data, **kwargs)
-
-    def forum_delete(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/forums#delete-forum"
-        api_path = "/api/v2/forums/{id}.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, method="DELETE", **kwargs)
-
-    def forum_show(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/forums#show-forum"
-        api_path = "/api/v2/forums/{id}.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, **kwargs)
-
-    def forum_subscription_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/forum_subscriptions#create-forum-subscription"
-        api_path = "/api/v2/forum_subscriptions.json"
-        return self.call(api_path, method="POST", data=data, **kwargs)
-
-    def forum_subscription_delete(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/forum_subscriptions#delete-forum-subscription"
-        api_path = "/api/v2/forum_subscriptions/{id}.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, method="DELETE", **kwargs)
-
-    def forum_subscription_show(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/forum_subscriptions#show-forum-subscription"
-        api_path = "/api/v2/forum_subscriptions/{id}.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, **kwargs)
-
-    def forum_subscriptions(self, forum_id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/forum_subscriptions#list-forum-subscriptions"
-        api_path = "/api/v2/forums/{forum_id}/subscriptions.json"
-        api_path = api_path.format(forum_id=forum_id)
-        return self.call(api_path, **kwargs)
-
-    def forum_subscriptions_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/forum_subscriptions#list-forum-subscriptions"
-        api_path = "/api/v2/forum_subscriptions.json"
-        return self.call(api_path, **kwargs)
-
-    def forum_topics(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topics#list-topics"
-        api_path = "/api/v2/forums/{id}/topics.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, **kwargs)
-
-    def forum_update(self, id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/forums#update-forum"
-        api_path = "/api/v2/forums/{id}.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, method="PUT", data=data, **kwargs)
-
-    def forums_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/forums#list-forums"
-        api_path = "/api/v2/forums.json"
-        return self.call(api_path, **kwargs)
 
     def group_create(self, data, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/groups#create-groups"
@@ -1936,17 +1749,6 @@ class ZendeskAPI(object):
         api_path = api_path.format(id=id)
         return self.call(api_path, **kwargs)
 
-    def import_topic(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topics#import-topic"
-        api_path = "/api/v2/import/topics.json"
-        return self.call(api_path, method="POST", data=data, **kwargs)
-
-    def import_topic_comment(self, id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_comments#import-topic-comment"
-        api_path = "/api/v2/import/topics/{id}/comments.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, method="POST", data=data, **kwargs)
-
     def imports_ticket(self, data, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/ticket_import#ticket-import"
         api_path = "/api/v2/imports/tickets.json"
@@ -2118,6 +1920,11 @@ class ZendeskAPI(object):
         api_path = "/api/v2/macros/new.json"
         return self.call(api_path, **kwargs)
 
+    def macros_search(self, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/macros#search-macros"
+        api_path = "/api/v2/macros/search.json"
+        return self.call(api_path, **kwargs)
+
     def nps_incremental_recipients_list(self, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/nps-api/incremental_export#export-incremental-recipients"
         api_path = "/api/v2/nps/incremental/recipients.json"
@@ -2268,6 +2075,11 @@ class ZendeskAPI(object):
     def oauth_clients_list(self, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/oauth_clients#list-clients"
         api_path = "/api/v2/oauth/clients.json"
+        return self.call(api_path, **kwargs)
+
+    def oauth_global_clients_list(self, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/global_clients#list-authorized-global-clients"
+        api_path = "/api/v2/oauth/global_clients.json"
         return self.call(api_path, **kwargs)
 
     def oauth_token_create(self, data, **kwargs):
@@ -2504,6 +2316,11 @@ class ZendeskAPI(object):
         api_path = "/api/v2/organizations/create_many.json"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
+    def organizations_create_or_update(self, data, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/organizations#create-or-update-organization"
+        api_path = "/api/v2/organizations/create_or_update.json"
+        return self.call(api_path, method="POST", data=data, **kwargs)
+
     def organizations_destroy_many(self, external_ids=None, ids=None, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/organizations#bulk-delete-organizations"
         api_path = "/api/v2/organizations/destroy_many.json"
@@ -2560,15 +2377,6 @@ class ZendeskAPI(object):
             })
         return self.call(api_path, query=api_query, method="PUT", data=data, **kwargs)
 
-    def portal_search(self, query, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/search#anonymous-search"
-        api_path = "/api/v2/portal/search.json"
-        api_query = {}
-        api_query.update({
-            "query": query,
-        })
-        return self.call(api_path, query=api_query, **kwargs)
-
     def problems_autocomplete(self, text, data, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/tickets#autocomplete-problems"
         api_path = "/api/v2/problems/autocomplete.json"
@@ -2589,7 +2397,7 @@ class ZendeskAPI(object):
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def recipient_address_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/support_addresses#create-recipient-addresses"
+        "https://developer.zendesk.com/rest_api/docs/core/support_addresses#create-support-address"
         api_path = "/api/v2/recipient_addresses.json"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
@@ -2600,25 +2408,25 @@ class ZendeskAPI(object):
         return self.call(api_path, method="DELETE", **kwargs)
 
     def recipient_address_show(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/support_addresses#show-recipient-address"
+        "https://developer.zendesk.com/rest_api/docs/core/support_addresses#show-support-address"
         api_path = "/api/v2/recipient_addresses/{id}.json"
         api_path = api_path.format(id=id)
         return self.call(api_path, **kwargs)
 
     def recipient_address_update(self, id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/support_addresses#update-recipient-address"
+        "https://developer.zendesk.com/rest_api/docs/core/support_addresses#update-support-address"
         api_path = "/api/v2/recipient_addresses/{id}.json"
         api_path = api_path.format(id=id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def recipient_address_verify(self, id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/support_addresses#verify-recipient-address"
+        "https://developer.zendesk.com/rest_api/docs/core/support_addresses#verify-support-address-forwarding"
         api_path = "/api/v2/recipient_addresses/{id}/verify.json"
         api_path = api_path.format(id=id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def recipient_addresses_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/support_addresses#list-recipient-addresses"
+        "https://developer.zendesk.com/rest_api/docs/core/support_addresses#list-support-addresses"
         api_path = "/api/v2/recipient_addresses.json"
         return self.call(api_path, **kwargs)
 
@@ -2741,6 +2549,17 @@ class ZendeskAPI(object):
             })
         return self.call(api_path, query=api_query, **kwargs)
 
+    def satisfaction_reason_show(self, id, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/satisfaction_reasons#show-reason-for-satisfaction-rating"
+        api_path = "/api/v2/satisfaction_reasons/{id}.json"
+        api_path = api_path.format(id=id)
+        return self.call(api_path, **kwargs)
+
+    def satisfaction_reasons_list(self, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/satisfaction_reasons#list-reasons-for-satisfaction-rating"
+        api_path = "/api/v2/satisfaction_reasons.json"
+        return self.call(api_path, **kwargs)
+
     def search(self, query, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/search#search"
         api_path = "/api/v2/search.json"
@@ -2784,30 +2603,30 @@ class ZendeskAPI(object):
         return self.call(api_path, **kwargs)
 
     def shortcut_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/shortcuts#create-shortcut"
+        "https://developer.zendesk.com/rest_api/docs/chat/shortcuts#create-shortcut"
         api_path = "/api/v2/shortcuts"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def shortcut_delete(self, shortcut_name, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/shortcuts#delete-shortcut"
+        "https://developer.zendesk.com/rest_api/docs/chat/shortcuts#delete-shortcut"
         api_path = "/api/v2/shortcuts/{shortcut_name}"
         api_path = api_path.format(shortcut_name=shortcut_name)
         return self.call(api_path, method="DELETE", **kwargs)
 
     def shortcut_show(self, shortcut_name, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/shortcuts#get-shortcut"
+        "https://developer.zendesk.com/rest_api/docs/chat/shortcuts#get-shortcut"
         api_path = "/api/v2/shortcuts/{shortcut_name}"
         api_path = api_path.format(shortcut_name=shortcut_name)
         return self.call(api_path, **kwargs)
 
     def shortcut_update(self, shortcut_name, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/shortcuts#update-shortcut"
+        "https://developer.zendesk.com/rest_api/docs/chat/shortcuts#update-shortcut"
         api_path = "/api/v2/shortcuts/{shortcut_name}"
         api_path = api_path.format(shortcut_name=shortcut_name)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def shortcuts_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/shortcuts#get-all-shortcuts"
+        "https://developer.zendesk.com/rest_api/docs/chat/shortcuts#get-all-shortcuts"
         api_path = "/api/v2/shortcuts"
         return self.call(api_path, **kwargs)
 
@@ -2858,6 +2677,71 @@ class ZendeskAPI(object):
         api_path = "/api/v2/slas/policies/{id}"
         api_path = api_path.format(id=id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
+
+    def stream_agent_show(self, metric_key, department_id=None, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/chat/apis#get-single-agent-status"
+        api_path = "/stream/agents/{metric_key}"
+        api_path = api_path.format(metric_key=metric_key)
+        api_query = {}
+        if department_id:
+            api_query.update({
+                "department_id": department_id,
+            })
+        return self.call(api_path, query=api_query, **kwargs)
+
+    def stream_agents_agents_online_list(self, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/chat/apis#example-response"
+        api_path = "/stream/agents/agents_online"
+        return self.call(api_path, **kwargs)
+
+    def stream_agents_list(self, department_id=None, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/chat/apis#get-all-agents-status"
+        api_path = "/stream/agents"
+        api_query = {}
+        if department_id:
+            api_query.update({
+                "department_id": department_id,
+            })
+        return self.call(api_path, query=api_query, **kwargs)
+
+    def stream_chat_show(self, metric_key, department_id=None, window=None, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/chat/apis#get-single-chat-metric"
+        api_path = "/stream/chats/{metric_key}"
+        api_path = api_path.format(metric_key=metric_key)
+        api_query = {}
+        if department_id:
+            api_query.update({
+                "department_id": department_id,
+            })
+        if window:
+            api_query.update({
+                "window": window,
+            })
+        return self.call(api_path, query=api_query, **kwargs)
+
+    def stream_chats_list(self, department_id=None, window=None, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/chat/apis#get-all-chat-metrics"
+        api_path = "/stream/chats"
+        api_query = {}
+        if department_id:
+            api_query.update({
+                "department_id": department_id,
+            })
+        if window:
+            api_query.update({
+                "window": window,
+            })
+        return self.call(api_path, query=api_query, **kwargs)
+
+    def stream_chats_missed_chats_list(self, window=None, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/chat/apis#example-response"
+        api_path = "/stream/chats/missed_chats"
+        api_query = {}
+        if window:
+            api_query.update({
+                "window": window,
+            })
+        return self.call(api_path, query=api_query, **kwargs)
 
     def suspended_ticket_delete(self, id, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/suspended_tickets#delete-suspended-ticket"
@@ -2957,10 +2841,10 @@ class ZendeskAPI(object):
         api_path = api_path.format(id=id)
         return self.call(api_path, **kwargs)
 
-    def ticket_comment_attachment_redact(self, ticket_id, comment_id, attachment_id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/attachments#redacting-comment-attachments"
-        api_path = "/api/v2/tickets/{ticket_id}/comments/{comment_id}/attachments/{attachment_id}/redact.json"
-        api_path = api_path.format(ticket_id=ticket_id, comment_id=comment_id, attachment_id=attachment_id)
+    def ticket_comment_attachment_redact(self, t_id, c_id, attachment_id, data, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/attachments#redact-comment-attachment"
+        api_path = "/api/v2/tickets/{t_id}/comments/{c_id}/attachments/{attachment_id}/redact.json"
+        api_path = api_path.format(t_id=t_id, c_id=c_id, attachment_id=attachment_id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def ticket_comment_make_private(self, ticket_id, id, data, **kwargs):
@@ -2998,7 +2882,7 @@ class ZendeskAPI(object):
         return self.call(api_path, method="DELETE", **kwargs)
 
     def ticket_field_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/ticket_fields#create-ticket-fields"
+        "https://developer.zendesk.com/rest_api/docs/core/ticket_fields#create-ticket-field"
         api_path = "/api/v2/ticket_fields.json"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
@@ -3008,6 +2892,30 @@ class ZendeskAPI(object):
         api_path = api_path.format(id=id)
         return self.call(api_path, method="DELETE", **kwargs)
 
+    def ticket_field_option_create(self, field_id, id, data, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/ticket_fields#create-or-update-a-ticket-field-option"
+        api_path = "/api/v2/ticket_fields/{field_id}/options/{id}.json"
+        api_path = api_path.format(field_id=field_id, id=id)
+        return self.call(api_path, method="POST", data=data, **kwargs)
+
+    def ticket_field_option_delete(self, field_id, id, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/ticket_fields#delete-ticket-field-option"
+        api_path = "/api/v2/ticket_fields/{field_id}/options/{id}.json"
+        api_path = api_path.format(field_id=field_id, id=id)
+        return self.call(api_path, method="DELETE", **kwargs)
+
+    def ticket_field_option_show(self, field_id, id, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/ticket_fields#show-a-ticket-field-option"
+        api_path = "/api/v2/ticket_fields/{field_id}/options/{id}.json"
+        api_path = api_path.format(field_id=field_id, id=id)
+        return self.call(api_path, **kwargs)
+
+    def ticket_field_options(self, field_id, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/ticket_fields#list-ticket-field-options"
+        api_path = "/api/v2/ticket_fields/{field_id}/options.json"
+        api_path = api_path.format(field_id=field_id)
+        return self.call(api_path, **kwargs)
+
     def ticket_field_show(self, id, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/ticket_fields#show-ticket-field"
         api_path = "/api/v2/ticket_fields/{id}.json"
@@ -3015,7 +2923,7 @@ class ZendeskAPI(object):
         return self.call(api_path, **kwargs)
 
     def ticket_field_update(self, id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/ticket_fields#update-ticket-fields"
+        "https://developer.zendesk.com/rest_api/docs/core/ticket_fields#update-ticket-field"
         api_path = "/api/v2/ticket_fields/{id}.json"
         api_path = api_path.format(id=id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
@@ -3063,6 +2971,15 @@ class ZendeskAPI(object):
         "https://developer.zendesk.com/rest_api/docs/core/ticket_forms#reorder-ticket-forms"
         api_path = "/api/v2/ticket_forms/reorder.json"
         return self.call(api_path, method="PUT", data=data, **kwargs)
+
+    def ticket_forms_show_many(self, ids, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/ticket_forms#show-many-ticket-forms"
+        api_path = "/api/v2/ticket_forms/show_many.json"
+        api_query = {}
+        api_query.update({
+            "ids": ids,
+        })
+        return self.call(api_path, query=api_query, **kwargs)
 
     def ticket_incidents(self, id, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/tickets#listing-ticket-incidents"
@@ -3219,81 +3136,6 @@ class ZendeskAPI(object):
             })
         return self.call(api_path, query=api_query, method="PUT", data=data, **kwargs)
 
-    def topic_comment_create(self, id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_comments#create-topic-comment"
-        api_path = "/api/v2/topics/{id}/comments.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, method="POST", data=data, **kwargs)
-
-    def topic_comment_delete(self, topic_id, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_comments#delete-topic-comment"
-        api_path = "/api/v2/topics/{topic_id}/comments/{id}.json"
-        api_path = api_path.format(topic_id=topic_id, id=id)
-        return self.call(api_path, method="DELETE", **kwargs)
-
-    def topic_comment_show(self, topic_id, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_comments#show-topic-comment"
-        api_path = "/api/v2/topics/{topic_id}/comments/{id}.json"
-        api_path = api_path.format(topic_id=topic_id, id=id)
-        return self.call(api_path, **kwargs)
-
-    def topic_comment_update(self, topic_id, id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_comments#update-topic-comment"
-        api_path = "/api/v2/topics/{topic_id}/comments/{id}.json"
-        api_path = api_path.format(topic_id=topic_id, id=id)
-        return self.call(api_path, method="PUT", data=data, **kwargs)
-
-    def topic_comments(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_comments#list-topic-comments"
-        api_path = "/api/v2/topics/{id}/comments.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, **kwargs)
-
-    def topic_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topics#create-topic"
-        api_path = "/api/v2/topics.json"
-        return self.call(api_path, method="POST", data=data, **kwargs)
-
-    def topic_delete(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topics#delete-topic"
-        api_path = "/api/v2/topics/{id}.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, method="DELETE", **kwargs)
-
-    def topic_show(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topics#show-topic"
-        api_path = "/api/v2/topics/{id}.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, **kwargs)
-
-    def topic_subscription_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_subscriptions#create-topic-subscription"
-        api_path = "/api/v2/topic_subscriptions.json"
-        return self.call(api_path, method="POST", data=data, **kwargs)
-
-    def topic_subscription_delete(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_subscriptions#delete-topic-subscription"
-        api_path = "/api/v2/topic_subscriptions/{id}.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, method="DELETE", **kwargs)
-
-    def topic_subscription_show(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_subscriptions#show-topic-subscription"
-        api_path = "/api/v2/topic_subscriptions/{id}.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, **kwargs)
-
-    def topic_subscriptions(self, topic_id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_subscriptions#list-topic-subscriptions"
-        api_path = "/api/v2/topics/{topic_id}/subscriptions.json"
-        api_path = api_path.format(topic_id=topic_id)
-        return self.call(api_path, **kwargs)
-
-    def topic_subscriptions_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_subscriptions#list-topic-subscriptions"
-        api_path = "/api/v2/topic_subscriptions.json"
-        return self.call(api_path, **kwargs)
-
     def topic_tag_create(self, id, data, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/tags#set-tags"
         api_path = "/api/v2/topics/{id}/tags.json"
@@ -3318,53 +3160,9 @@ class ZendeskAPI(object):
         api_path = api_path.format(id=id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
-    def topic_update(self, id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topics#update-topic"
-        api_path = "/api/v2/topics/{id}.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, method="PUT", data=data, **kwargs)
-
-    def topic_vote(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_votes#check-for-vote"
-        api_path = "/api/v2/topics/{id}/vote.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, **kwargs)
-
-    def topic_vote_create(self, id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_votes#create-vote"
-        api_path = "/api/v2/topics/{id}/vote.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, method="POST", data=data, **kwargs)
-
-    def topic_vote_delete(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_votes#delete-vote"
-        api_path = "/api/v2/topics/{id}/vote.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, method="DELETE", **kwargs)
-
-    def topic_votes(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_votes#list-topic-votes"
-        api_path = "/api/v2/topics/{id}/votes.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, **kwargs)
-
-    def topics_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topics#list-topics"
-        api_path = "/api/v2/topics.json"
-        return self.call(api_path, **kwargs)
-
-    def topics_show_many(self, ids, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topics#show-multiple-topics"
-        api_path = "/api/v2/topics/show_many.json"
-        api_query = {}
-        api_query.update({
-            "ids": ids,
-        })
-        return self.call(api_path, query=api_query, **kwargs)
-
     def trigger_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/triggers#create-trigger"
-        api_path = "/api/v2/triggers.json"
+        "https://developer.zendesk.com/rest_api/docs/chat/triggers#create-trigger"
+        api_path = "/api/v2/triggers"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def trigger_delete_by_id(self, id, **kwargs):
@@ -3374,7 +3172,7 @@ class ZendeskAPI(object):
         return self.call(api_path, method="DELETE", **kwargs)
 
     def trigger_delete_by_trigger_name(self, trigger_name, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/triggers#delete-trigger"
+        "https://developer.zendesk.com/rest_api/docs/chat/triggers#delete-trigger"
         api_path = "/api/v2/triggers/{trigger_name}"
         api_path = api_path.format(trigger_name=trigger_name)
         return self.call(api_path, method="DELETE", **kwargs)
@@ -3386,7 +3184,7 @@ class ZendeskAPI(object):
         return self.call(api_path, **kwargs)
 
     def trigger_show_by_trigger_name(self, trigger_name, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/triggers#get-a-trigger"
+        "https://developer.zendesk.com/rest_api/docs/chat/triggers#get-a-trigger"
         api_path = "/api/v2/triggers/{trigger_name}"
         api_path = api_path.format(trigger_name=trigger_name)
         return self.call(api_path, **kwargs)
@@ -3398,7 +3196,7 @@ class ZendeskAPI(object):
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def trigger_update_by_trigger_name(self, trigger_name, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/triggers#update-trigger"
+        "https://developer.zendesk.com/rest_api/docs/chat/triggers#update-trigger"
         api_path = "/api/v2/triggers/{trigger_name}"
         api_path = api_path.format(trigger_name=trigger_name)
         return self.call(api_path, method="PUT", data=data, **kwargs)
@@ -3409,14 +3207,19 @@ class ZendeskAPI(object):
         return self.call(api_path, **kwargs)
 
     def triggers_list(self, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/triggers#list-triggers"
-        api_path = "/api/v2/triggers.json"
+        "https://developer.zendesk.com/rest_api/docs/chat/triggers#get-all-triggers"
+        api_path = "/api/v2/triggers"
         return self.call(api_path, **kwargs)
 
     def triggers_reorder(self, data, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/triggers#reorder-triggers"
         api_path = "/api/v2/triggers/reorder.json"
         return self.call(api_path, method="PUT", data=data, **kwargs)
+
+    def triggers_search(self, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/triggers#search-triggers"
+        api_path = "/api/v2/triggers/search.json"
+        return self.call(api_path, **kwargs)
 
     def upload_create(self, data, filename=None, token=None, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/attachments#upload-files"
@@ -3460,10 +3263,10 @@ class ZendeskAPI(object):
         api_path = api_path.format(id=id)
         return self.call(api_path, method="DELETE", **kwargs)
 
-    def user_field_option_create(self, field_id, id, data, **kwargs):
+    def user_field_option_create(self, field_id, data, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/user_fields#create-or-update-a-user-field-option"
-        api_path = "/api/v2/user_fields/{field_id}/options/{id}.json"
-        api_path = api_path.format(field_id=field_id, id=id)
+        api_path = "/api/v2/user_fields/{field_id}/options.json"
+        api_path = api_path.format(field_id=field_id)
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def user_field_option_delete(self, field_id, id, **kwargs):
@@ -3505,12 +3308,6 @@ class ZendeskAPI(object):
         "https://developer.zendesk.com/rest_api/docs/core/user_fields#reorder-user-field"
         api_path = "/api/v2/user_fields/reorder.json"
         return self.call(api_path, method="PUT", data=data, **kwargs)
-
-    def user_forum_subscriptions(self, user_id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/forum_subscriptions#list-forum-subscriptions"
-        api_path = "/api/v2/users/{user_id}/forum_subscriptions.json"
-        api_path = api_path.format(user_id=user_id)
-        return self.call(api_path, **kwargs)
 
     def user_group_membership_create(self, user_id, data, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/group_memberships#create-membership"
@@ -3767,36 +3564,6 @@ class ZendeskAPI(object):
             })
         return self.call(api_path, query=api_query, **kwargs)
 
-    def user_topic_comment_show(self, user_id, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_comments#show-topic-comment"
-        api_path = "/api/v2/users/{user_id}/topic_comments/{id}.json"
-        api_path = api_path.format(user_id=user_id, id=id)
-        return self.call(api_path, **kwargs)
-
-    def user_topic_comments(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_comments#list-topic-comments"
-        api_path = "/api/v2/users/{id}/topic_comments.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, **kwargs)
-
-    def user_topic_subscriptions(self, user_id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_subscriptions#list-topic-subscriptions"
-        api_path = "/api/v2/users/{user_id}/topic_subscriptions.json"
-        api_path = api_path.format(user_id=user_id)
-        return self.call(api_path, **kwargs)
-
-    def user_topic_votes(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topic_votes#list-topic-votes"
-        api_path = "/api/v2/users/{id}/topic_votes.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, **kwargs)
-
-    def user_topics(self, id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/web-portal/topics#list-topics"
-        api_path = "/api/v2/users/{id}/topics.json"
-        api_path = api_path.format(id=id)
-        return self.call(api_path, **kwargs)
-
     def user_update(self, id, data, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/users#update-user"
         api_path = "/api/v2/users/{id}.json"
@@ -3856,7 +3623,7 @@ class ZendeskAPI(object):
         return self.call(api_path, query=api_query, **kwargs)
 
     def users_me(self, include=None, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/side_loading#abilities"
+        "https://developer.zendesk.com/rest_api/docs/core/users#show-the-currently-authenticated-user"
         api_path = "/api/v2/users/me.json"
         api_query = {}
         if include:
@@ -4013,19 +3780,24 @@ class ZendeskAPI(object):
         api_path = "/api/v2/views/preview/count.json"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
+    def views_search(self, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/views#search-views"
+        api_path = "/api/v2/views/search.json"
+        return self.call(api_path, **kwargs)
+
     def visitor_create(self, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/visitors#create-visitor"
+        "https://developer.zendesk.com/rest_api/docs/chat/visitors#create-visitor"
         api_path = "/api/v2/visitors"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def visitor_show(self, visitor_id, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/visitors#get-a-visitor"
+        "https://developer.zendesk.com/rest_api/docs/chat/visitors#get-a-visitor"
         api_path = "/api/v2/visitors/{visitor_id}"
         api_path = api_path.format(visitor_id=visitor_id)
         return self.call(api_path, **kwargs)
 
     def visitor_update(self, visitor_id, data, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/zopim/visitors#update-visitor"
+        "https://developer.zendesk.com/rest_api/docs/chat/visitors#update-visitor"
         api_path = "/api/v2/visitors/{visitor_id}"
         api_path = api_path.format(visitor_id=visitor_id)
         return self.call(api_path, method="PUT", data=data, **kwargs)

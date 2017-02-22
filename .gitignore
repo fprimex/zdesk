@@ -1,3 +1,7 @@
+# zdesk
+api_gen/apidocs
+api_gen/apidocs_orig
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
