@@ -210,7 +210,10 @@ for doc_file in doc_files:
                 # e.g. GET /api/v2/tickets/{id}.json
                 is_singular = True
 
-            path_parts = [p for p in path_parts if p not in ['', 'api', 'v2']]
+            if '/'.join(path_parts[:3]) == '/api/v2':
+                del path_parts[0]
+                del path_parts[0]
+                del path_parts[0]
 
             make_next_singular = False
             path_parts.reverse()
