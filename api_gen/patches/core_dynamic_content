@@ -19,24 +19,6 @@ diff -r -u apidocs_orig/core_dynamic_content apidocs/core_dynamic_content
         </code>
        </p>
        <span class="anchor" id="allowed-for">
-@@ -1724,7 +1724,7 @@
-       </a>
-       <p>
-        <code>
--        POST /api/v2/dynamic_content/items/6/variants.json
-+        POST /api/v2/dynamic_content/items/{id}/variants.json
-        </code>
-       </p>
-       <span class="anchor" id="allowed-for">
-@@ -1790,7 +1790,7 @@
-       </a>
-       <p>
-        <code>
--        POST /api/v2/dynamic_content/items/6/variants/create_many.json
-+        POST /api/v2/dynamic_content/items/{id}/variants/create_many.json
-        </code>
-       </p>
-       <span class="anchor" id="allowed-for">
 @@ -1758,7 +1758,7 @@
        </a>
        <p>
