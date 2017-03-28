@@ -548,9 +548,9 @@ for name in sorted(list(api_items.keys())):
 
     if item['query_params'] or item['opt_query_params']:
         content += '        api_query = {}\n'
-        content += '        if \'query\' in kwargs.keys():\n'
-        content += '            api_query.update(kwargs[\'query\'])\n'
-        content += '            del kwargs[\'query\']\n'
+        content += '        if "query" in kwargs.keys():\n'
+        content += '            api_query.update(kwargs["query"])\n'
+        content += '            del kwargs["query"]\n'
 
     if item['query_params']:
         content += '        api_query.update({\n'
