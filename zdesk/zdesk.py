@@ -262,7 +262,7 @@ class Zendesk(ZendeskAPI):
 
     def call(self, path, query=None, method='GET', data=None,
              files=None, get_all_pages=False, complete_response=False,
-             retry_on=None, max_retries=0, **kwargs):
+             retry_on=None, max_retries=0, raw_query=None, **kwargs):
         """Make a REST call to the Zendesk web service.
 
         Parameters:
@@ -282,6 +282,10 @@ class Zendesk(ZendeskAPI):
         max_retries - How many additional connections to make when
             first one fails. No effect when retry_on evaluates to False.
             Defaults to 0.
+        raw_query - Raw query string, starting with '?', that will be
+            appended to the URL path and will completely override / discard
+            any other query parameters. Enables use cases where query
+            parameters need to be repeated in the query string.
         """
 
         # Rather obscure way to support retry_on per single API call
@@ -316,6 +320,10 @@ class Zendesk(ZendeskAPI):
                 kwargs.update(query)
             else:
                 kwargs = query
+
+        if raw_query:
+            path = path + raw_query
+            kwargs = None
 
         url = self.zdesk_url + path
 
