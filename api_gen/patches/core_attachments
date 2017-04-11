@@ -1,7 +1,7 @@
 diff -r -u apidocs_orig/core_attachments apidocs/core_attachments
---- apidocs_orig/core_attachments	2015-01-22 15:33:13.000000000 -0500
-+++ apidocs/core_attachments	2015-01-31 23:11:59.000000000 -0500
-@@ -713,7 +713,10 @@
+--- apidocs_orig/core_attachments	2017-04-11 11:52:35.000000000 -0400
++++ apidocs/core_attachments	2017-04-11 13:07:21.000000000 -0400
+@@ -828,7 +828,10 @@
        </a>
        <p>
         <code>
@@ -10,6 +10,15 @@ diff -r -u apidocs_orig/core_attachments apidocs/core_attachments
 +       </code>
 +       <code>
 +        POST /api/v2/uploads.json?token={token}
+        </code>
+       </p>
+       <p>
+@@ -970,7 +973,7 @@
+       </a>
+       <p>
+        <code>
+-        PUT /api/v2/tickets/{t_id}/comments/{c_id}/attachments/{attachment_id}/redact.json
++        PUT /api/v2/tickets/{ticket_id}/comments/{comment_id}/attachments/{attachment_id}/redact.json
         </code>
        </p>
        <p>
