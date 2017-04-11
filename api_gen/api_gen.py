@@ -190,7 +190,6 @@ for doc_file in doc_files:
             api_item['opt_path_params'] = []
             api_item['opt_path'] = ''
             api_item['query_params'] = []
-            api_item['opt_query_params'] = []
 
             api_item['method'] = match.group(1)
             path = match.group(2)
@@ -312,13 +311,11 @@ for name in names:
             item['method'] = None
 
         elif same_path and same_method and same_path_params:
-            # Only the query parameters differ, so we have
-            # optional named arguments
-            item['opt_query_params'] = list(
+            # Only the query parameters differ, so we combine
+            # the query parameters.
+            item['query_params'] = list(
                 set(item['query_params'].copy() +
-                    item['opt_query_params'] +
                     dupe['query_params']))
-            item['query_params'] = []
 
         elif same_method and not (same_path_params and same_path):
 	    # The path or path parameters differ, so we have optional or
@@ -341,11 +338,9 @@ for name in names:
                 item['opt_path'] = dupe['path']
 
                 # Consolidate query parameters between the two
-                item['opt_query_params'] = list(
+                item['query_params'] = list(
                     set(item['query_params'].copy() +
-                        item['opt_query_params'] +
                         dupe['query_params']))
-                item['query_params'] = []
 
             elif (len(set(dupe['path_params']) - required) == 0 and
                     len(optional) > 0):
@@ -354,11 +349,9 @@ for name in names:
                 # item and then add the optional arguments
 
                 # Consolidate query parameters between the two
-                dupe['opt_query_params'] = list(
+                dupe['query_params'] = list(
                     set(dupe['query_params'].copy() +
-                        dupe['opt_query_params'] +
                         item['query_params']))
-                dupe['query_params'] = []
 
                 # Now swap
                 item_path = item['path']
@@ -436,11 +429,9 @@ for name in names:
                             handled = True
 
                             # Consolidate query parameters between the two
-                            item['opt_query_params'] = list(
+                            item['query_params'] = list(
                                 set(item['query_params'].copy() +
-                                    item['opt_query_params'] +
                                     dupe['query_params']))
-                            item['query_params'] = []
 
                 if not handled:
                     content += \
@@ -491,15 +482,11 @@ for name in sorted(list(api_items.keys())):
     # when small changes are made in different locations, so the order will be
     # the same regardless as to which parameter is found first.
     item['opt_path_params'].sort()
-    item['opt_query_params'].sort()
+    item['query_params'].sort()
 
     path_fmt_args = ', '.join([p + '=' + p for p in item['path_params']])
 
-    paramspec = ', '.join(item['path_params'])
-    queryspec = ', '.join([sanitize(q) for q in item['query_params']])
-    if(paramspec and queryspec):
-        paramspec += ', '
-    argspec = paramspec + queryspec
+    argspec = ', '.join(item['path_params'])
 
     if item['method']:
         if item['method'] in ['POST', 'PUT']:
@@ -517,11 +504,11 @@ for name in sorted(list(api_items.keys())):
             argspec += ', '
         argspec += '=None, '.join(item['opt_path_params']) + '=None'
 
-    if item['opt_query_params']:
+    if item['query_params']:
         if argspec:
             argspec += ', '
         argspec += '=None, '.join(
-            [sanitize(q) for q in item['opt_query_params']]) + '=None'
+            [sanitize(q) for q in item['query_params']]) + '=None'
 
     if argspec:
         argspec += ', '
@@ -546,34 +533,21 @@ for name in sorted(list(api_items.keys())):
         content += '            api_path = api_opt_path.format({})\n'.format(
             path_fmt_args)
 
-    if item['query_params'] or item['opt_query_params']:
+    if item['query_params']:
         content += '        api_query = {}\n'
         content += '        if "query" in kwargs.keys():\n'
         content += '            api_query.update(kwargs["query"])\n'
         content += '            del kwargs["query"]\n'
 
-    if item['query_params']:
-        content += '        api_query.update({\n'
-        for q in item['query_params']:
-            content += '            "{}": {},\n'.format(q, sanitize(q))
-        content += '        })\n'
-
-    for q in item['opt_query_params']:
+    for q in item['query_params']:
         content += '        if {}:\n'.format(sanitize(q))
         content += '            api_query.update({\n'
         content += '                "{}": {},\n'.format(q, sanitize(q))
         content += '            })\n'
 
-    # todo: query may be required
-    # if item['opt_query_params']:
-    #    opt_test = ' or '.join(
-    #       [sanitize(q) for q in item['opt_query_params']])
-    #    content += '        if not ({}):\n'.format(opt_test)
-    #    content += '            pass\n'
-
     content += '        return self.call(api_path'
 
-    if item['query_params'] or item['opt_query_params']:
+    if item['query_params']:
         content += ', query=api_query'
 
     if item['method']:
