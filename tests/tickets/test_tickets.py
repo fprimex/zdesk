@@ -13,33 +13,33 @@ def test_ticket_ops(zd):
     # create
     result = zd.ticket_create(data=new_ticket, retval='location')
 
-    assert(islocation(result),
-        'Create ticket response is not a location string')
+    assert islocation(result), \
+        'Create ticket response is not a location string'
 
     # get id from url
     ticket_id = get_id_from_url(result)
 
-    assert(ticket_id.isdigit(),
-        'Returned created ticket ID is not a string of decimal digits')
+    assert ticket_id.isdigit(), \
+        'Returned created ticket ID is not a string of decimal digits'
 
     # show
     result = zd.ticket_show(id=ticket_id)
 
-    assert(isinstance(result, dict),
-        'Show ticket response is not a dict')
+    assert isinstance(result, dict), \
+        'Show ticket response is not a dict'
 
     # list
     result = zd.tickets_list(get_all_pages=True)
 
-    assert(isinstance(result, dict),
-        'List tickets response is not a dict')
+    assert isinstance(result, dict), \
+        'List tickets response is not a dict'
 
-    assert(int(ticket_id) in [t['id'] for t in result['tickets']],
-        'Created ticket not present in ticket list')
+    assert int(ticket_id) in [t['id'] for t in result['tickets']], \
+        'Created ticket not present in ticket list'
 
     # Delete
     result = zd.ticket_delete(id=ticket_id, retval='code')
 
-    assert(isstatuscode(result),
-        'Delete ticket response is not a status code')
+    assert isstatuscode(result), \
+        'Delete ticket response is not a status code'
 
