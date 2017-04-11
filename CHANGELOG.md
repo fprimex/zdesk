@@ -1,3 +1,17 @@
+## 2.6.0
+- Fix incremental pagination by making an exception to status 422, removing the
+  existing query `kwargs`, and looking for incremental and certain conditions
+  to mark the end of `get_all_pages` (by Sarfaraz Soomro).
+- API generator updates corresponding to the end of web portal and forums
+  support, as well as the replacement of zopim with chat (by Craig Davis).
+- Add `raw_query` parameter for explicitly setting and overriding the query
+  string. The enables use cases where, for example, query parameters need to be
+  repeated and therefore cannot go into a dictionary.
+- Add `retval` parameter to allow for explicitly requesting a certain component
+  of a response. Valid values are 'content', 'code', 'location', and 'headers'.
+- Regenerate API from updated mirror. See [full
+  commit](#)
+
 ## 2.5.0
 - Use Pytest and implement some basic tests
 - Implement retry (major contribution by Dominik Miedziński)
