@@ -209,8 +209,10 @@ for doc_file in doc_files:
                 # e.g. GET /api/v2/tickets/{id}.json
                 is_singular = True
 
-            if '/'.join(path_parts[:3]) == '/api/v2':
+            if path_parts[0] == '':
                 del path_parts[0]
+
+            if '/'.join(path_parts[:2]) == 'api/v2':
                 del path_parts[0]
                 del path_parts[0]
 
