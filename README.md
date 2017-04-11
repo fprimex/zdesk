@@ -82,6 +82,8 @@ use. The current reserved kwargs (described in more detail below) are:
 * `mime_type`
 * `retry_on`
 * `max_retries`
+* `raw_query`
+* `retval`
 
 There are a few common query string parameters that the Zendesk API accepts for
 many calls. The current list at the time of this writing is:
@@ -104,6 +106,20 @@ that will be the return value.
 
 Passing `complete_response=True` will cause all response information to be
 returned, which is the result of a `requests.request`.
+
+## Getting a specific part of a result
+
+The Zendesk service sometimes changes what exactly is returned and the
+automatic return value determination may not be desired. Additionally, it can
+be tedious to always request `complete_response=True` and working with all of
+that information. So, now it is possible to pass `retval` in order to request a
+specific part of the request. Valid values are `'content'`, `'code'`,
+`'location'`, and `'headers'`.
+
+For example, you may not care to retrieve the `location` from a ticket
+creation, but you do want to check the HTTP return code to ensure success. You
+can now pass `retval='code'` and then simply check to ensure that the code is
+equal to (the integer) `201`.
 
 ## Getting all pages
 
@@ -177,6 +193,17 @@ specified.
 
     zd.help_center_article_attachment_create(article_id='205654433', data={},
             files={'file':('attach.zip', fdata, 'application/zip')})
+
+## Raw query strings
+
+In some cases it is necessary to pass query parameters that are the same
+parameter but differ by value, such as multiple `start_time` or `end_time`
+values. This makes it impossible to use a simple dictionary of query parameters
+and values. To enable this use case it is now possible to pass a string,
+starting with `?`, using `raw_query`. This value overrides all query parameters
+that are named or passed with `kwargs`, and is appended to the URL. The string
+will be appropriately encoded by `requests`, so there is no need to pre-encode
+it before passing.
 
 ## Rate limits and retrying
 
