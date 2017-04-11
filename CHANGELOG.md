@@ -10,7 +10,7 @@
 - Add `retval` parameter to allow for explicitly requesting a certain component
   of a response. Valid values are 'content', 'code', 'location', and 'headers'.
 - Regenerate API from updated mirror. See [full
-  commit](#)
+  commit](https://github.com/fprimex/zdesk/commit/6e22dea7af6b129a88f9ce30082660eff2eea621)
 
 ## 2.5.0
 - Use Pytest and implement some basic tests
