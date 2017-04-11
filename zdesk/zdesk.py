@@ -416,6 +416,16 @@ class Zendesk(ZendeskAPI):
                 # url we get above already has the start_time appended to it,
                 # specific to incremental exports
                 kwargs = {}
+            elif response.content.strip() and 'text' in response.headers['content-type']:
+                try:
+                    content = response.json()
+                    # set url to the next page if that was returned in the response
+                    url = content.get('next_page', None)
+                    # url we get above already has the start_time appended to it,
+                    # specific to incremental exports
+                    kwargs = {}
+                except ValueError:
+                    content = response.content
             else:
                 content = response.content
                 url = None
