@@ -262,7 +262,8 @@ class Zendesk(ZendeskAPI):
 
     def call(self, path, query=None, method='GET', data=None,
              files=None, get_all_pages=False, complete_response=False,
-             retry_on=None, max_retries=0, raw_query=None, **kwargs):
+             retry_on=None, max_retries=0, raw_query=None, retval=None,
+             **kwargs):
         """Make a REST call to the Zendesk web service.
 
         Parameters:
@@ -286,6 +287,11 @@ class Zendesk(ZendeskAPI):
             appended to the URL path and will completely override / discard
             any other query parameters. Enables use cases where query
             parameters need to be repeated in the query string.
+        retval - Request a specific part of the returned response. Valid
+            values are 'content', 'code', 'location', and 'headers'.
+            JSON content is still automatically deserialized if possible.
+            If retval is not specified, then the old behavior of trying
+            to determine an appropriate value to return is used.
         """
 
         # Rather obscure way to support retry_on per single API call
@@ -399,6 +405,9 @@ class Zendesk(ZendeskAPI):
                 else:
                     raise
 
+            # Deserialize json content if content exists.
+            # In some cases Zendesk returns ' ' strings.
+            # Also return false non strings (0, [], (), {})
             if response.content.strip() and 'json' in response.headers['content-type']:
                 content = response.json()
 
@@ -419,19 +428,28 @@ class Zendesk(ZendeskAPI):
                 })
 
             else:
-                # Deserialize json content if content exists.
-                # In some cases Zendesk returns ' ' strings.
-                # Also return false non strings (0, [], (), {})
-                if response.headers.get('location'):
-                    # Zendesk's response is sometimes the url of a newly
-                    # created user/ticket/group/etc and they pass this through
-                    # 'location'.  Otherwise, the body of 'content'
-                    # has our response.
-                    results.append(response.headers.get('location'))
-                elif content:
+                if retval == 'content':
                     results.append(content)
+                elif retval == 'code':
+                    results.append(response.status_code)
+                elif retval == 'location':
+                    results.append(response.headers.get('location'))
+                elif retval == 'headers':
+                    results.append(response.headers)
                 else:
-                    results.append(responses[response.status_code])
+                    # Attempt to automatically determine the value of
+                    # most interest to return.
+
+                    if response.headers.get('location'):
+                        # Zendesk's response is sometimes the url of a newly
+                        # created user/ticket/group/etc and they pass this through
+                        # 'location'.  Otherwise, the body of 'content'
+                        # has our response.
+                        results.append(response.headers.get('location'))
+                    elif content:
+                        results.append(content)
+                    else:
+                        results.append(responses[response.status_code])
 
             # if there is a next_page, and we are getting pages, then continue
             # making requests

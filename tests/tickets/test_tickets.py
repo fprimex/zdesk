@@ -11,7 +11,7 @@ def test_ticket_ops(zd):
     }
 
     # create
-    result = zd.ticket_create(data=new_ticket)
+    result = zd.ticket_create(data=new_ticket, retval='location')
 
     assert(islocation(result),
         'Create ticket response is not a location string')
@@ -38,8 +38,8 @@ def test_ticket_ops(zd):
         'Created ticket not present in ticket list')
 
     # Delete
-    result = zd.ticket_delete(id=ticket_id)
+    result = zd.ticket_delete(id=ticket_id, retval='code')
 
     assert(isstatuscode(result),
-        'Delete ticket response is not a status code string')
+        'Delete ticket response is not a status code')
 
