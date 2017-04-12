@@ -1,3 +1,0 @@
-inflection
-beautifulsoup4
-requests
