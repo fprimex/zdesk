@@ -8,6 +8,8 @@
 * Daniel Inniss (Porting work to `requests`)
 * Dominik Miedziński (Booksy International Sp. z o. o.)
 * Sarfaraz Soomro (Incremental ticket pagination)
+* Craig Davis (Major `api_gen` updates for zdesk 2.6.0)
+
 
 ## zendesk and zdesk 1.x
 
