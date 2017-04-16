@@ -284,7 +284,7 @@ zendesk.ticket_delete(id=ticket_id)
 ```
 
 See the [full example
-file](https://github.com/fprimex/zdesk/blob/master/examples/__init__.py) on
+file](https://github.com/fprimex/zdesk/blob/master/examples/example.py) on
 github, however this is not anywhere close to covering all of the over 400 REST
 API methods.
 
