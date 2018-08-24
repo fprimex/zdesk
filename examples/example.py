@@ -126,7 +126,7 @@ zendesk.ticket_show(id=ticket_id)
 commentbody = "Attaching example Python file"
 
 # must be in the examples directory when executing so this file can be found
-fname = '__init__.py'
+fname = 'example.py'
 
 with open(fname, 'rb') as fp:
     fdata = fp.read()

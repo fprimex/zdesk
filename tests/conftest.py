@@ -10,7 +10,7 @@ def zd(request):
 
         from zdtestcfg import testconfig
         config = testconfig
-    except ImportError:
+    except:
         try:
             import zdeskcfg
 
@@ -24,7 +24,7 @@ def zd(request):
             if True not in map(bool, config.values()):
                 config = {}
 
-        except ImportError:
+        except:
             config = {}
 
     if config:
