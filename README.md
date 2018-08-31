@@ -34,12 +34,12 @@ account in their application.
 
 See the [Zendesk developer site](https://developer.zendesk.com/) for API
 documentation. The underlying `zdesk_api` module has been [automatically
-generated](https://github.com/fprimex/zdesk/blob/master/api_gen/api_gen.py)
+generated](https://github.com/fprimex/zdgen)
 from this documentation.
 
 ## Requirements
 
-Zdesk works with both Python 2 and Python 3. Tested on Python 2.7.5 and 3.4.1.
+Zdesk works with both Python 2 and Python 3. Tested on Python 2.7.15 and 3.7.0.
 
 The requests package is used for authentication and requests
 
@@ -164,7 +164,7 @@ As a convenience, passing `get_all_pages` to any API method will do this for
 you, and will also merge all responses. The result is a single, large object
 that appears to be the result of one single call. The logic for this
 combination and reduction is well documented in the
-[source](https://github.com/fprimex/zdesk/blob/master/zdesk/zdesk.py#L220)
+[source](https://github.com/fprimex/zdesk/blob/master/zdesk/zdesk.py#L534)
 (look for the line reading `Now we need to try to combine or reduce the
 results`, if the line number has shifted since this writing).
 
