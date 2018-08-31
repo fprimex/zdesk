@@ -151,9 +151,9 @@ class Zendesk(ZendeskAPI):
     def _update_auth(self):
         if self.zdesk_oauth:
             self.client.auth = None
-            self.headers['Bearer'] = self.zdesk_oauth
+            self.headers['Authorization'] = 'Bearer ' + self.zdesk_oauth
         elif self.zdesk_email and (self.zdesk_api or self.zdesk_password):
-            self.headers.pop('Bearer', None)
+            self.headers.pop('Authorization', None)
             self.client.auth = (self.zdesk_email, self.zdesk_password)
         else:
             self.client.auth = None
