@@ -88,9 +88,10 @@ ACCEPT_RETRIES = ZendeskError, requests.RequestException
 class Zendesk(ZendeskAPI):
     """ Python API Wrapper for Zendesk"""
 
-    def __init__(self, zdesk_url, zdesk_email=None, zdesk_password=None,
-                 zdesk_token=False, headers=None, client_args=None,
-                 api_version=2, retry_on=None, max_retries=0):
+    def __init__(self, zdesk_url, zdesk_email=None, zdesk_oauth=None,
+                 zdesk_api=None, zdesk_password=None, zdesk_token=False,
+                 headers=None, client_args=None, api_version=2,
+                 retry_on=None, max_retries=0):
         """
         Instantiates an instance of Zendesk. Takes optional parameters for
         HTTP Basic Authentication
@@ -117,9 +118,15 @@ class Zendesk(ZendeskAPI):
             first one fails. No effect when retry_on evaluates to False.
             Defaults to 0.
         """
+        # Set headers
+        self.client_args = copy.deepcopy(client_args) or {}
+        self.headers = copy.deepcopy(headers) or {}
+
         # Set attributes necessary for API
         self._zdesk_url = None
         self._zdesk_email = None
+        self._zdesk_oauth = None
+        self._zdesk_api = None
         self._zdesk_password = None
         self._zdesk_token = False
 
@@ -127,12 +134,10 @@ class Zendesk(ZendeskAPI):
 
         self.zdesk_url = zdesk_url.rstrip('/')
         self.zdesk_email = zdesk_email
+        self.zdesk_oauth = zdesk_oauth
+        self.zdesk_api = zdesk_api
         self.zdesk_password = zdesk_password
         self.zdesk_token = zdesk_token
-
-        # Set headers
-        self.client_args = copy.deepcopy(client_args) or {}
-        self.headers = copy.deepcopy(headers) or {}
 
         if api_version != 2:
             raise ValueError("Unsupported Zendesk API Version: %d" %
@@ -144,7 +149,11 @@ class Zendesk(ZendeskAPI):
         self.max_retries = max_retries
 
     def _update_auth(self):
-        if self.zdesk_email and self.zdesk_password:
+        if self.zdesk_oauth:
+            self.client.auth = None
+            self.headers['Bearer'] = self.zdesk_oauth
+        elif self.zdesk_email and (self.zdesk_api or self.zdesk_password):
+            self.headers.pop('Bearer', None)
             self.client.auth = (self.zdesk_email, self.zdesk_password)
         else:
             self.client.auth = None
@@ -176,6 +185,34 @@ class Zendesk(ZendeskAPI):
     @zdesk_email.deleter
     def zdesk_email(self):
         self._zdesk_email = None
+        self._update_auth()
+
+    @property
+    def zdesk_oauth(self):
+        return self._zdesk_oauth
+
+    @zdesk_oauth.setter
+    def zdesk_oauth(self, value):
+        self._zdesk_oauth = value
+        self._update_auth()
+
+    @zdesk_oauth.deleter
+    def zdesk_oauth(self):
+        self._zdesk_oauth = None
+        self._update_auth()
+
+    @property
+    def zdesk_api(self):
+        return self._zdesk_api
+
+    @zdesk_api.setter
+    def zdesk_api(self, value):
+        self._zdesk_api = value
+        self._update_auth()
+
+    @zdesk_api.deleter
+    def zdesk_api(self):
+        self._zdesk_api = None
         self._update_auth()
 
     @property
