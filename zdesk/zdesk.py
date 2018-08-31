@@ -149,13 +149,13 @@ class Zendesk(ZendeskAPI):
         self.max_retries = max_retries
 
     def _update_auth(self):
-        if self.zdesk_oauth:
+        if self._zdesk_oauth:
             self.client.auth = None
             self.headers['Authorization'] = 'Bearer ' + self.zdesk_oauth
-        elif self.zdesk_email and self.zdesk_api:
+        elif self._zdesk_email and self._zdesk_api:
             self.headers.pop('Authorization', None)
             self.client.auth = (self.zdesk_email + '/token', self.zdesk_api)
-        elif self.zdesk_email and self.zdesk_password:
+        elif self._zdesk_email and self._zdesk_password:
             self.headers.pop('Authorization', None)
             self.client.auth = (self.zdesk_email, self.zdesk_password)
         else:
