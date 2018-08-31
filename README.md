@@ -14,6 +14,12 @@ to code it up myself.
 
 If you are interested, please email me directly: brent@fprimex.com
 
+# Special thanks to HashiCorp
+
+A big 'thank you' to [HashiCorp](https://www.hashicorp.com) for finding enough
+value in this library and the utilities I've written that use it to allow me to
+spend some more time on it.
+
 # Note about documentation on github
 
 Please refer to the documentation for the specific release you are running.
@@ -64,6 +70,31 @@ Zdesk is available on pypi, so installation should be fairly simple:
 * [zdgrab](https://github.com/fprimex/zdgrab): Download and decompress ticket attachments.
 
 # Notes on module usage
+
+## Authentication
+
+Zdesk supports three methods of authorizing to Zendesk instances: basic
+authentication with a password, basic authentication with an API token, and
+OAuth authentication with an OAuth bearer token. All three are supported by
+`zdeskcfg` as well.
+
+The options are as follows, by precedence:
+
+* `zdesk_oauth` - OAuth bearer token. An implicit grant token that works with
+this option can be generated at the [Zendesk developer
+site](https://developer.zendesk.com/requests/new).
+
+* `zdesk_email` + `zdesk_api` - Basic authentication with a Zendesk account email
+and an API token as generated from
+`https://your-company.zendesk.com/agent/admin/api/settings`.
+
+* `zdesk_email` + `zdesk_password` - Basic authentication with a Zendesk account
+email and the password for that user.
+
+* `zdesk_email` + `zdesk_password` + `zdesk_token = True` - Basic authentication
+with a Zendesk account email and an API token, indicating that the password
+supplied is actually an API token. This option is deprecated in favor of
+`zdesk_email` + `zdesk_api` and will be removed in a future release.
 
 ## API Keyword args
 
