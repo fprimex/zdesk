@@ -133,11 +133,11 @@ class Zendesk(ZendeskAPI):
         self.client = requests.Session()
 
         self.zdesk_url = zdesk_url.rstrip('/')
+        self.zdesk_token = zdesk_token
         self.zdesk_email = zdesk_email
         self.zdesk_oauth = zdesk_oauth
         self.zdesk_api = zdesk_api
         self.zdesk_password = zdesk_password
-        self.zdesk_token = zdesk_token
 
         if api_version != 2:
             raise ValueError("Unsupported Zendesk API Version: %d" %
@@ -152,7 +152,10 @@ class Zendesk(ZendeskAPI):
         if self.zdesk_oauth:
             self.client.auth = None
             self.headers['Authorization'] = 'Bearer ' + self.zdesk_oauth
-        elif self.zdesk_email and (self.zdesk_api or self.zdesk_password):
+        elif self.zdesk_email and self.zdesk_api:
+            self.headers.pop('Authorization', None)
+            self.client.auth = (self.zdesk_email + '/token', self.zdesk_api)
+        elif self.zdesk_email and self.zdesk_password:
             self.headers.pop('Authorization', None)
             self.client.auth = (self.zdesk_email, self.zdesk_password)
         else:
