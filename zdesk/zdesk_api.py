@@ -3425,10 +3425,10 @@ class ZendeskAPI(object):
         api_path = api_path.format(id=id)
         return self.call(api_path, method="DELETE", **kwargs)
 
-    def ticket_field_option_create(self, field_id, id, data, **kwargs):
+    def ticket_field_option_create(self, field_id, data, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/ticket_fields#create-or-update-a-ticket-field-option"
-        api_path = "/api/v2/ticket_fields/{field_id}/options/{id}.json"
-        api_path = api_path.format(field_id=field_id, id=id)
+        api_path = "/api/v2/ticket_fields/{field_id}/options.json"
+        api_path = api_path.format(field_id=field_id)
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def ticket_field_option_delete(self, field_id, id, **kwargs):
