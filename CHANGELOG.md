@@ -1,3 +1,13 @@
+## 2.7.1
+- Immediately noticed an OAuth bug. Reference private variables for some logic.
+
+## 2.7.0
+- Support for Python 3.5+
+- OAuth token support, and a more clear way of choosing between password, API
+  token, and OAuth token authentication.
+- Regenerate API from updated mirror. See [full
+  commit](https://github.com/fprimex/zdesk/commit/1cf01a3b730c84b531261bba98b2ab5aa6dd0d18)
+
 ## 2.6.0
 - Fix incremental pagination by making an exception to status 422, removing the
   existing query `kwargs`, and looking for incremental and certain conditions
