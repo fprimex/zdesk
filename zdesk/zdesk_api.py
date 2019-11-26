@@ -3014,6 +3014,25 @@ class ZendeskAPI(object):
             })
         return self.call(api_path, query=api_query, **kwargs)
 
+
+    def search_incremental(self, query=None, include=None, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/search#list-search-results"
+        api_path = "/api/v2/search/incremental.json"
+        api_query = {}
+        if "query" in kwargs.keys():
+            api_query.update(kwargs["query"])
+            del kwargs["query"]
+        if query:
+            api_query.update({
+                "query": query,
+            })
+        if include:
+            api_query.update({
+                "include": include,
+            })
+        return self.call(api_path, query=api_query, **kwargs)
+
+
     def sessions_list(self, **kwargs):
         "https://developer.zendesk.com/rest_api/docs/core/sessions#list-sessions"
         api_path = "/api/v2/sessions.json"
