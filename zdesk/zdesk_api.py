@@ -3016,7 +3016,7 @@ class ZendeskAPI(object):
 
 
     def search_incremental(self, query=None, include=None, **kwargs):
-        "https://developer.zendesk.com/rest_api/docs/core/search#list-search-results"
+        "https://developer.zendesk.com/rest_api/docs/support/incremental_export"
         api_path = "/api/v2/search/incremental.json"
         api_query = {}
         if "query" in kwargs.keys():
