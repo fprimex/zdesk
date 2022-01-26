@@ -2140,7 +2140,7 @@ class ZendeskAPI(object):
 
     def jira_links_list(self, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/jira/links/" 
-        api_path = "/api/v2/jira/links"
+        api_path = "/api/v2/jira/links/"
         return self.call(api_path, **kwargs)
 
     def job_status_show(self, id, **kwargs):
