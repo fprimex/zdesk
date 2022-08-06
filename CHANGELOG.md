@@ -1,3 +1,11 @@
+## 2.8.0
+- Regenerate API from updated mirror. see [full
+  commit](https://github.com/fprimex/zdesk/commit/4982b3dad9581fbb49d71307abc229dc4169ab74).
+  Most notably, Zendesk has replace many, many instances of using `id` with,
+  e.g., `ticket_id`, `article_id`, etc. Most of these are positional arguments,
+  so if you were using `foo(id=1234)` I recommend changing to `foo(1234)` to
+  (hopefully) future proof a bit when they decide to change it again.
+
 ## 2.7.1
 - Immediately noticed an OAuth bug. Reference private variables for some logic.
 
