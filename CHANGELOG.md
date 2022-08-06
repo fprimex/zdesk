@@ -5,6 +5,13 @@
   e.g., `ticket_id`, `article_id`, etc. Most of these are positional arguments,
   so if you were using `foo(id=1234)` I recommend changing to `foo(1234)` to
   (hopefully) future proof a bit when they decide to change it again.
+- Update iterable code for Python 3.10 compatibility. Tests pass with 3.10.3
+  and 3.9.5.
+- This is not a change, but I want to note here that several of `zdesk`'s
+  dependencies have deprecations. Most notably, if you're using `zdeskcfg`,
+  `plac_ini` has a deprecation that will be removed in 3.12. None of these seem
+  particularly difficult to overcome, but just make sure you test before
+  upgrading.
 
 ## 2.7.1
 - Immediately noticed an OAuth bug. Reference private variables for some logic.
