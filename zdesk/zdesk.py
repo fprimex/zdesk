@@ -448,28 +448,48 @@ class Zendesk(ZendeskAPI):
             # Deserialize json content if content exists.
             # In some cases Zendesk returns ' ' strings.
             # Also return false non strings (0, [], (), {})
+
+            
             if response.content.strip() and 'json' in response.headers['content-type']:
                 content = response.json()
-
-                # set url to the next page if that was returned in the response
-                url = content.get('next_page', None)
-                # url we get above already has the start_time appended to it,
-                # specific to incremental exports
-                kwargs = {}
             elif response.content.strip() and 'text' in response.headers['content-type']:
                 try:
                     content = response.json()
-                    # set url to the next page if that was returned in the response
-                    url = content.get('next_page', None)
-                    # url we get above already has the start_time appended to it,
-                    # specific to incremental exports
-                    kwargs = {}
                 except ValueError:
                     content = response.content
             else:
                 content = response.content
                 url = None
 
+            # set url to the next page if that was returned in the response
+            # several potential responses, depending on the endpoint
+
+            # meta response
+            if content.get('meta', False):
+                if content['meta'].get('has_more', False):
+                    if content['meta'].get('links', None):
+                        url = content['links']['next'] 
+                    else:
+                        url = content['meta']['after_cursor']
+                else:
+                    url = None
+
+            # incremental responses have an end_of_stream
+            # attribute. stop process if this is True
+            if not content.get('end_of_stream', True):
+                url = None
+
+            # possible response from incremental or paged request
+            elif content.get('next_page', None):
+                url = content.get('next_page')
+
+            # response from incremental cursor response
+            elif content.get('after_url', None):
+                url = content.get('after_url')
+            
+            # url we get above already has the start_time appended to it,
+            # specific to incremental exports
+            kwargs = {}
             if complete_response:
                 results.append({
                     'response': response,
@@ -501,19 +521,6 @@ class Zendesk(ZendeskAPI):
                     else:
                         results.append(responses[response.status_code])
 
-            # if there is a next_page, and we are getting pages, then continue
-            # making requests
-
-            # deal with how incremental export results are returned
-            # there could be two cases
-            # response code == 422 returned when end_time < five minutes recent
-            # or count < 1000
-            # this is an ugly check, and we have to check this just for incremental export end-points
-            # non-incremental load end-points have a 100 item/page limit and return next_page = null for last page
-            # also note that incremental/ticket_metric_events end-point has a 10,000 items per page limit
-            url = None if (url is not None and
-                           'incremental' in url and
-                           content.get('count') < 1000) else url
             all_requests_complete = not (get_all_pages and url)
             request_count = 0
 
