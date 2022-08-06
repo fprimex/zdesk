@@ -25,8 +25,8 @@ def test_raw_query(zd):
     assert ticket_id.isdigit(), \
         'Returned created raw_query_test ticket ID is not a string of decimal digits'
 
-    response_query = zd.ticket_show(id=ticket_id, include='comment_count')
-    response_raw = zd.ticket_show(id=ticket_id,
+    response_query = zd.ticket_show(ticket_id, include='comment_count')
+    response_raw = zd.ticket_show(ticket_id,
                                   raw_query='?include=comment_count',
                                   retval ='content')
 
@@ -66,7 +66,7 @@ def test_raw_query(zd):
     #        'raw_query search returned different tickets' 
 
     # Delete
-    result = zd.ticket_delete(id=ticket_id, retval='code')
+    result = zd.ticket_delete(ticket_id, retval='code')
 
     assert isstatuscode(result), \
         'Delete ticket raw_query_test response is not a status code string'

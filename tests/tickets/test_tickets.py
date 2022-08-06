@@ -23,7 +23,7 @@ def test_ticket_ops(zd):
         'Returned created ticket ID is not a string of decimal digits'
 
     # show
-    result = zd.ticket_show(id=ticket_id)
+    result = zd.ticket_show(ticket_id)
 
     assert isinstance(result, dict), \
         'Show ticket response is not a dict'
@@ -38,7 +38,7 @@ def test_ticket_ops(zd):
         'Created ticket not present in ticket list'
 
     # Delete
-    result = zd.ticket_delete(id=ticket_id, retval='code')
+    result = zd.ticket_delete(ticket_id, retval='code')
 
     assert isstatuscode(result), \
         'Delete ticket response is not a status code'
