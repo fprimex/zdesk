@@ -14,6 +14,12 @@ else:
     from http.client import responses
     from urllib.parse import urlsplit
 
+# Compatability with Python 3.10
+try:
+    from collections.abc import Iterable
+except ImportError:
+    from collections import Iterable
+
 from .zdesk_api import ZendeskAPI
 
 
@@ -269,7 +275,7 @@ class Zendesk(ZendeskAPI):
             else:
                 raise ValueError(exc)
 
-        if isinstance(value, collections.Iterable):
+        if isinstance(value, Iterable):
             for v in value:
                 _validate(v)
             self._retry_on = set(value)
