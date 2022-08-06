@@ -54,26 +54,6 @@ class ZendeskAPI(object):
     # https://developer.zendesk.com/api-reference/help_center/help-center-api/posts#sorting
 
     # Duplicate API endpoint discarded:
-    # deleted_ticket_delete from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#delete-ticket-permanently
-
-    # Duplicate API endpoint discarded:
-    # deleted_ticket_restore_update from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#restore-a-previously-deleted-ticket
-
-    # Duplicate API endpoint discarded:
-    # deleted_tickets_destroy_many from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#delete-multiple-tickets-permanently
-
-    # Duplicate API endpoint discarded:
-    # deleted_tickets_list from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#list-deleted-tickets
-
-    # Duplicate API endpoint discarded:
-    # deleted_tickets_restore_many_update from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#restore-previously-deleted-tickets-in-bulk
-
-    # Duplicate API endpoint discarded:
     # gather_badge_create from
     # https://developer.zendesk.com/api-reference/help_center/help-center-api/badges#upload-badge-icon
 
@@ -157,22 +137,6 @@ class ZendeskAPI(object):
     # oauth_tokens_list from
     # https://developer.zendesk.com/api-reference/ticketing/oauth_tokens#list-tokens
 
-    # Duplicate API endpoint discarded:
-    # organization_tickets from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#list-tickets
-
-    # Duplicate API endpoint discarded:
-    # organization_tickets_count from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#count-tickets
-
-    # Duplicate API endpoint discarded:
-    # problems_autocomplete from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#autocomplete-problems
-
-    # Duplicate API endpoint discarded:
-    # problems_list from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#list-ticket-problems
-
     # Duplicate API endpoint differs only by extension:
     # recipient_addresses_list from
     # https://developer.zendesk.com/api-reference/ticketing/support_addresses#list-support-addresses
@@ -197,10 +161,6 @@ class ZendeskAPI(object):
     # requests_search from
     # https://developer.zendesk.com/api-reference/ticketing/ticket-requests#search-requests
 
-    # Duplicate API endpoint discarded:
-    # satisfaction_ratings_count_list from
-    # https://developer.zendesk.com/api-reference/ticketing/satisfaction_ratings#count-satisfaction-ratings
-
     # Duplicate API endpoint differs only by extension:
     # search from
     # https://developer.zendesk.com/api-reference/ticketing/search#response-format
@@ -218,96 +178,16 @@ class ZendeskAPI(object):
     # https://developer.zendesk.com/api-reference/ticketing/ticket_audits#list-all-ticket-audits
 
     # Duplicate API endpoint discarded:
-    # ticket_collaborators from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#list-collaborators-for-a-ticket
-
-    # Duplicate API endpoint discarded:
     # ticket_comments_count from
     # https://developer.zendesk.com/api-reference/ticketing/ticket_comments#count-ticket-comments
-
-    # Duplicate API endpoint discarded:
-    # ticket_create from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#create-ticket
-
-    # Duplicate API endpoint discarded:
-    # ticket_delete from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#delete-ticket
-
-    # Duplicate API endpoint discarded:
-    # ticket_email_ccs from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#list-email-ccs-for-a-ticket
 
     # Duplicate API endpoint discarded:
     # ticket_fields_count_list from
     # https://developer.zendesk.com/api-reference/ticketing/ticket_fields#count-ticket-fields
 
-    # Duplicate API endpoint discarded:
-    # ticket_followers from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#list-followers-for-a-ticket
-
-    # Duplicate API endpoint discarded:
-    # ticket_incidents from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#list-ticket-incidents
-
-    # Duplicate API endpoint discarded:
-    # ticket_mark_as_spam from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#mark-ticket-as-spam-and-suspend-requester
-
-    # Duplicate API endpoint discarded:
-    # ticket_merge from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#merge-tickets-into-target-ticket
-
-    # Duplicate API endpoint discarded:
-    # ticket_related from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#ticket-related-information
-
-    # Duplicate API endpoint discarded:
-    # ticket_show from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#show-ticket
-
-    # Duplicate API endpoint discarded:
-    # ticket_update from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#update-ticket
-
-    # Duplicate API endpoint discarded:
-    # tickets_count_list from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#count-tickets
-
-    # Duplicate API endpoint discarded:
-    # tickets_create_many from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#create-many-tickets
-
-    # Duplicate API endpoint discarded:
-    # tickets_destroy_many from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#bulk-delete-tickets
-
-    # Duplicate API endpoint differs only by extension:
-    # tickets_list from
-    # https://developer.zendesk.com/api-reference/ticketing/#list-tickets
-
-    # Duplicate API endpoint discarded:
-    # tickets_list from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets/api-reference/voice/talk-partner-edition-api/reference/#creating-voicemail-tickets
-
     # Duplicate API endpoint differs only by extension:
     # tickets_list from
     # https://developer.zendesk.com/api-reference/ticketing/tickets#list-tickets
-
-    # Duplicate API endpoint discarded:
-    # tickets_mark_many_as_spam from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#bulk-mark-tickets-as-spam
-
-    # Duplicate API endpoint discarded:
-    # tickets_recent_list from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#list-tickets
-
-    # Duplicate API endpoint discarded:
-    # tickets_show_many from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#show-multiple-tickets
-
-    # Duplicate API endpoint discarded:
-    # tickets_update_many from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#update-many-tickets
 
     # Duplicate API endpoint discarded:
     # trigger_create from
@@ -320,30 +200,6 @@ class ZendeskAPI(object):
     # Duplicate API endpoint differs only by extension:
     # user_sessions from
     # https://developer.zendesk.com/api-reference/ticketing/sessions#bulk-delete-sessions
-
-    # Duplicate API endpoint discarded:
-    # user_tickets_assigned from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#list-tickets
-
-    # Duplicate API endpoint discarded:
-    # user_tickets_assigned_count from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#count-tickets
-
-    # Duplicate API endpoint discarded:
-    # user_tickets_ccd from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#list-tickets
-
-    # Duplicate API endpoint discarded:
-    # user_tickets_ccd_count from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#count-tickets
-
-    # Duplicate API endpoint discarded:
-    # user_tickets_followed from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#list-tickets
-
-    # Duplicate API endpoint discarded:
-    # user_tickets_requested from
-    # https://developer.zendesk.com/api-reference/ticketing/tickets#list-tickets
 
     # Duplicate API endpoint discarded:
     # views_count_list from
@@ -399,6 +255,12 @@ class ZendeskAPI(object):
     def agent_delete(self, agent_id, **kwargs):
         "https://developer.zendesk.com/api-reference/live-chat/agents#delete-agent"
         api_path = "/api/v2/agents/{agent_id}"
+        api_path = api_path.format(agent_id=agent_id)
+        return self.call(api_path, method="DELETE", **kwargs)
+
+    def agent_shortcuts_delete(self, agent_id, **kwargs):
+        "https://developer.zendesk.com/api-reference/live-chat/agents#delete-shortcuts-by-agent-id"
+        api_path = "/api/v2/agents/{agent_id}/shortcuts"
         api_path = api_path.format(agent_id=agent_id)
         return self.call(api_path, method="DELETE", **kwargs)
 
@@ -572,6 +434,12 @@ class ZendeskAPI(object):
         api_path = api_path.format(attachment_id=attachment_id)
         return self.call(api_path, **kwargs)
 
+    def attachment_update(self, attachment_id, data, **kwargs):
+        "https://developer.zendesk.com/api-reference/ticketing/ticket-attachments#update-attachment-for-malware"
+        api_path = "/api/v2/attachments/{attachment_id}"
+        api_path = api_path.format(attachment_id=attachment_id)
+        return self.call(api_path, method="PUT", data=data, **kwargs)
+
     def audit_log_show(self, audit_log_id, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/audit_logs#show-audit-log"
         api_path = "/api/v2/audit_logs/{audit_log_id}"
@@ -631,10 +499,18 @@ class ZendeskAPI(object):
         api_path = "/api/v2/automations"
         return self.call(api_path, **kwargs)
 
-    def automations_search(self, **kwargs):
+    def automations_search(self, query=None, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/automations#search-automations"
         api_path = "/api/v2/automations/search"
-        return self.call(api_path, **kwargs)
+        api_query = {}
+        if "query" in kwargs.keys():
+            api_query.update(kwargs["query"])
+            del kwargs["query"]
+        if query:
+            api_query.update({
+                "query": query,
+            })
+        return self.call(api_path, query=api_query, **kwargs)
 
     def automations_update_many(self, data, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/automations#update-many-automations"
@@ -890,6 +766,29 @@ class ZendeskAPI(object):
         api_path = "/api/v2/channels/voice/callback_requests"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
+    def channels_voice_digital_line_create(self, data, **kwargs):
+        "https://developer.zendesk.com/api-reference/voice/talk-api/digital_lines#create-digital-line"
+        api_path = "/api/v2/channels/voice/digital_lines"
+        return self.call(api_path, method="POST", data=data, **kwargs)
+
+    def channels_voice_digital_line_delete(self, digital_line_id, **kwargs):
+        "https://developer.zendesk.com/api-reference/voice/talk-api/digital_lines#delete-digital-line"
+        api_path = "/api/v2/channels/voice/digital_lines/{digital_line_id}"
+        api_path = api_path.format(digital_line_id=digital_line_id)
+        return self.call(api_path, method="DELETE", **kwargs)
+
+    def channels_voice_digital_line_show(self, digital_line_id, **kwargs):
+        "https://developer.zendesk.com/api-reference/voice/talk-api/digital_lines#show-digital-line"
+        api_path = "/api/v2/channels/voice/digital_lines/{digital_line_id}"
+        api_path = api_path.format(digital_line_id=digital_line_id)
+        return self.call(api_path, **kwargs)
+
+    def channels_voice_digital_line_update(self, digital_line_id, data, **kwargs):
+        "https://developer.zendesk.com/api-reference/voice/talk-api/digital_lines#update-digital-line"
+        api_path = "/api/v2/channels/voice/digital_lines/{digital_line_id}"
+        api_path = api_path.format(digital_line_id=digital_line_id)
+        return self.call(api_path, method="PUT", data=data, **kwargs)
+
     def channels_voice_greeting_categories_list(self, **kwargs):
         "https://developer.zendesk.com/api-reference/voice/talk-api/greetings#list-greeting-categories"
         api_path = "/api/v2/channels/voice/greeting_categories"
@@ -1023,6 +922,11 @@ class ZendeskAPI(object):
         api_path = api_path.format(ivr_id=ivr_id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
+    def channels_voice_lines_list(self, **kwargs):
+        "https://developer.zendesk.com/api-reference/voice/talk-api/lines#list-lines"
+        api_path = "/api/v2/channels/voice/lines"
+        return self.call(api_path, **kwargs)
+
     def channels_voice_phone_number_create(self, data, **kwargs):
         "https://developer.zendesk.com/api-reference/voice/talk-api/phone_numbers#create-phone-number"
         api_path = "/api/v2/channels/voice/phone_numbers"
@@ -1149,6 +1053,19 @@ class ZendeskAPI(object):
         api_path = "/api/v2/chats/{chat_id}"
         api_path = api_path.format(chat_id=chat_id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
+
+    def chats_delete(self, ids=None, **kwargs):
+        "https://developer.zendesk.com/api-reference/live-chat/chats#bulk-delete-chats"
+        api_path = "/api/v2/chats"
+        api_query = {}
+        if "query" in kwargs.keys():
+            api_query.update(kwargs["query"])
+            del kwargs["query"]
+        if ids:
+            api_query.update({
+                "ids": ids,
+            })
+        return self.call(api_path, query=api_query, method="DELETE", **kwargs)
 
     def chats_list(self, ids=None, **kwargs):
         "https://developer.zendesk.com/api-reference/live-chat/introduction/documentation/live-chat/getting-started/restrictions/"
@@ -1430,19 +1347,19 @@ class ZendeskAPI(object):
         return self.call(api_path, **kwargs)
 
     def deleted_ticket_delete(self, ticket_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#delete-ticket-permanently"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#delete-ticket-permanently"
         api_path = "/api/v2/deleted_tickets/{ticket_id}"
         api_path = api_path.format(ticket_id=ticket_id)
         return self.call(api_path, method="DELETE", **kwargs)
 
     def deleted_ticket_restore_update(self, ticket_id, data, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#restore-a-previously-deleted-ticket"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#restore-a-previously-deleted-ticket"
         api_path = "/api/v2/deleted_tickets/{ticket_id}/restore"
         api_path = api_path.format(ticket_id=ticket_id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def deleted_tickets_destroy_many(self, ids=None, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#delete-multiple-tickets-permanently"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#delete-multiple-tickets-permanently"
         api_path = "/api/v2/deleted_tickets/destroy_many"
         api_query = {}
         if "query" in kwargs.keys():
@@ -1455,12 +1372,12 @@ class ZendeskAPI(object):
         return self.call(api_path, query=api_query, method="DELETE", **kwargs)
 
     def deleted_tickets_list(self, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#list-deleted-tickets"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#list-deleted-tickets"
         api_path = "/api/v2/deleted_tickets"
         return self.call(api_path, **kwargs)
 
     def deleted_tickets_restore_many_update(self, data, ids=None, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#restore-previously-deleted-tickets-in-bulk"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#restore-previously-deleted-tickets-in-bulk"
         api_path = "/api/v2/deleted_tickets/restore_many"
         api_query = {}
         if "query" in kwargs.keys():
@@ -1650,18 +1567,6 @@ class ZendeskAPI(object):
         api_path = "/api/v2/end_users/{user_id}/identities/{user_identity_id}"
         api_path = api_path.format(user_id=user_id, user_identity_id=user_identity_id)
         return self.call(api_path, **kwargs)
-
-    def end_user_show(self, user_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/end_user#show-end-user"
-        api_path = "/api/v2/end_users/{user_id}"
-        api_path = api_path.format(user_id=user_id)
-        return self.call(api_path, **kwargs)
-
-    def end_user_update(self, user_id, data, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/end_user#update-end-user"
-        api_path = "/api/v2/end_users/{user_id}"
-        api_path = api_path.format(user_id=user_id)
-        return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def gather_badge_assignment_create(self, data, **kwargs):
         "https://developer.zendesk.com/api-reference/help_center/help-center-api/badge_assignments#create-badge-assignment"
@@ -2298,12 +2203,6 @@ class ZendeskAPI(object):
         api_path = api_path.format(article_id=article_id)
         return self.call(api_path, method="POST", data=data, **kwargs)
 
-    def help_center_article_translation_delete(self, article_id, translation_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/help_center/help-center-api/translations#delete-translation"
-        api_path = "/api/v2/help_center/articles/{article_id}/translations/{translation_id}"
-        api_path = api_path.format(article_id=article_id, translation_id=translation_id)
-        return self.call(api_path, method="DELETE", **kwargs)
-
     def help_center_article_translation_show(self, article_id, locale, **kwargs):
         "https://developer.zendesk.com/api-reference/help_center/help-center-api/translations#show-translation"
         api_path = "/api/v2/help_center/articles/{article_id}/translations/{locale}"
@@ -2640,6 +2539,12 @@ class ZendeskAPI(object):
             api_path = api_opt_path.format(locale=locale)
         return self.call(api_path, **kwargs)
 
+    def help_center_translation_delete(self, translation_id, **kwargs):
+        "https://developer.zendesk.com/api-reference/help_center/help-center-api/translations#delete-translation"
+        api_path = "/api/v2/help_center/translations/{translation_id}"
+        api_path = api_path.format(translation_id=translation_id)
+        return self.call(api_path, method="DELETE", **kwargs)
+
     def help_center_user_articles(self, user_id, **kwargs):
         "https://developer.zendesk.com/api-reference/help_center/help-center-api/articles#list-articles"
         api_path = "/api/v2/help_center/users/{user_id}/articles"
@@ -2878,8 +2783,21 @@ class ZendeskAPI(object):
             })
         return self.call(api_path, query=api_query, **kwargs)
 
+    def incremental_users_cursor_list(self, start_time=None, **kwargs):
+        "https://developer.zendesk.com/api-reference/ticketing/incremental_exports#incremental-user-export-cursor-based"
+        api_path = "/api/v2/incremental/users/cursor"
+        api_query = {}
+        if "query" in kwargs.keys():
+            api_query.update(kwargs["query"])
+            del kwargs["query"]
+        if start_time:
+            api_query.update({
+                "start_time": start_time,
+            })
+        return self.call(api_path, query=api_query, **kwargs)
+
     def incremental_users_list(self, start_time=None, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/incremental_exports#incremental-user-export"
+        "https://developer.zendesk.com/api-reference/ticketing/incremental_exports#incremental-user-export-time-based"
         api_path = "/api/v2/incremental/users"
         api_query = {}
         if "query" in kwargs.keys():
@@ -2942,35 +2860,35 @@ class ZendeskAPI(object):
             })
         return self.call(api_path, query=api_query, **kwargs)
 
-    def locale_show(self, id, **kwargs):
+    def locale_show(self, locale_id, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/locales#show-locale"
-        api_path = "/api/v2/locales/{id}.json"
-        api_path = api_path.format(id=id)
+        api_path = "/api/v2/locales/{locale_id}"
+        api_path = api_path.format(locale_id=locale_id)
         return self.call(api_path, **kwargs)
 
     def locales_agent_list(self, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/locales#list-locales-for-agent"
-        api_path = "/api/v2/locales/agent.json"
+        api_path = "/api/v2/locales/agent"
         return self.call(api_path, **kwargs)
 
     def locales_current_list(self, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/locales#show-current-locale"
-        api_path = "/api/v2/locales/current.json"
+        api_path = "/api/v2/locales/current"
         return self.call(api_path, **kwargs)
 
     def locales_detect_best_locale(self, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/locales#detect-best-language-for-user"
-        api_path = "/api/v2/locales/detect_best_locale.json"
+        api_path = "/api/v2/locales/detect_best_locale"
         return self.call(api_path, **kwargs)
 
     def locales_list(self, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/locales#list-locales"
-        api_path = "/api/v2/locales.json"
+        api_path = "/api/v2/locales"
         return self.call(api_path, **kwargs)
 
     def locales_public_list(self, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/locales#list-available-public-locales"
-        api_path = "/api/v2/locales/public.json"
+        api_path = "/api/v2/locales/public"
         return self.call(api_path, **kwargs)
 
     def macro_apply(self, macro_id, **kwargs):
@@ -3449,13 +3367,13 @@ class ZendeskAPI(object):
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def organization_tickets(self, organization_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#list-tickets"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#list-tickets"
         api_path = "/api/v2/organizations/{organization_id}/tickets"
         api_path = api_path.format(organization_id=organization_id)
         return self.call(api_path, **kwargs)
 
     def organization_tickets_count(self, organization_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#count-tickets"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#count-tickets"
         api_path = "/api/v2/organizations/{organization_id}/tickets/count"
         api_path = api_path.format(organization_id=organization_id)
         return self.call(api_path, **kwargs)
@@ -3540,12 +3458,12 @@ class ZendeskAPI(object):
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def problems_autocomplete(self, data, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#autocomplete-problems"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#autocomplete-problems"
         api_path = "/api/v2/problems/autocomplete"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def problems_list(self, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#list-ticket-problems"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#list-ticket-problems"
         api_path = "/api/v2/problems"
         return self.call(api_path, **kwargs)
 
@@ -3595,6 +3513,18 @@ class ZendeskAPI(object):
                 "include": include,
             })
         return self.call(api_path, query=api_query, **kwargs)
+
+    def relationship_field_show(self, target_type, target_id, field_id, source_type, **kwargs):
+        "https://developer.zendesk.com/api-reference/ticketing/lookup_relationships#get-sources-by-target"
+        api_path = "/api/v2/{target_type}/{target_id}/relationship_fields/{field_id}/{source_type}"
+        api_path = api_path.format(target_type=target_type, target_id=target_id, field_id=field_id, source_type=source_type)
+        return self.call(api_path, **kwargs)
+
+    def relationships_definition_show(self, target_type, **kwargs):
+        "https://developer.zendesk.com/api-reference/ticketing/lookup_relationships#filter-definitions"
+        api_path = "/api/v2/relationships/definitions/{target_type}"
+        api_path = api_path.format(target_type=target_type)
+        return self.call(api_path, **kwargs)
 
     def request_comment_show(self, request_id, ticket_comment_id, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/ticket-requests#getting-comments"
@@ -4114,23 +4044,28 @@ class ZendeskAPI(object):
             })
         return self.call(api_path, query=api_query, **kwargs)
 
-    def suspended_ticket_delete(self, suspended_ticket_id, **kwargs):
+    def suspended_ticket_delete(self, id, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/suspended_tickets#delete-suspended-ticket"
-        api_path = "/api/v2/suspended_tickets/{suspended_ticket_id}"
-        api_path = api_path.format(suspended_ticket_id=suspended_ticket_id)
+        api_path = "/api/v2/suspended_tickets/{id}"
+        api_path = api_path.format(id=id)
         return self.call(api_path, method="DELETE", **kwargs)
 
-    def suspended_ticket_recover(self, suspended_ticket_id, data, **kwargs):
+    def suspended_ticket_recover(self, id, data, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/suspended_tickets#recover-suspended-ticket"
-        api_path = "/api/v2/suspended_tickets/{suspended_ticket_id}/recover"
-        api_path = api_path.format(suspended_ticket_id=suspended_ticket_id)
+        api_path = "/api/v2/suspended_tickets/{id}/recover"
+        api_path = api_path.format(id=id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
-    def suspended_ticket_show(self, suspended_ticket_id, **kwargs):
+    def suspended_ticket_show(self, id, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/suspended_tickets#show-suspended-ticket"
-        api_path = "/api/v2/suspended_tickets/{suspended_ticket_id}"
-        api_path = api_path.format(suspended_ticket_id=suspended_ticket_id)
+        api_path = "/api/v2/suspended_tickets/{id}"
+        api_path = api_path.format(id=id)
         return self.call(api_path, **kwargs)
+
+    def suspended_tickets_attachment_create(self, data, **kwargs):
+        "https://developer.zendesk.com/api-reference/ticketing/suspended_tickets#suspended-ticket-attachments"
+        api_path = "/api/v2/suspended_tickets/attachments"
+        return self.call(api_path, method="POST", data=data, **kwargs)
 
     def suspended_tickets_destroy_many(self, ids=None, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/suspended_tickets#delete-multiple-suspended-tickets"
@@ -4144,6 +4079,11 @@ class ZendeskAPI(object):
                 "ids": ids,
             })
         return self.call(api_path, query=api_query, method="DELETE", **kwargs)
+
+    def suspended_tickets_export_create(self, data, **kwargs):
+        "https://developer.zendesk.com/api-reference/ticketing/suspended_tickets#export-suspended-tickets"
+        api_path = "/api/v2/suspended_tickets/export"
+        return self.call(api_path, method="POST", data=data, **kwargs)
 
     def suspended_tickets_list(self, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/suspended_tickets#list-suspended-tickets"
@@ -4242,7 +4182,7 @@ class ZendeskAPI(object):
         return self.call(api_path, **kwargs)
 
     def ticket_collaborators(self, ticket_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#list-collaborators-for-a-ticket"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#list-collaborators-for-a-ticket"
         api_path = "/api/v2/tickets/{ticket_id}/collaborators"
         api_path = api_path.format(ticket_id=ticket_id)
         return self.call(api_path, **kwargs)
@@ -4278,18 +4218,18 @@ class ZendeskAPI(object):
         return self.call(api_path, **kwargs)
 
     def ticket_create(self, data, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#create-ticket"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#create-ticket"
         api_path = "/api/v2/tickets"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def ticket_delete(self, ticket_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#delete-ticket"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#delete-ticket"
         api_path = "/api/v2/tickets/{ticket_id}"
         api_path = api_path.format(ticket_id=ticket_id)
         return self.call(api_path, method="DELETE", **kwargs)
 
     def ticket_email_ccs(self, ticket_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#list-email-ccs-for-a-ticket"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#list-email-ccs-for-a-ticket"
         api_path = "/api/v2/tickets/{ticket_id}/email_ccs"
         api_path = api_path.format(ticket_id=ticket_id)
         return self.call(api_path, **kwargs)
@@ -4352,7 +4292,7 @@ class ZendeskAPI(object):
         return self.call(api_path, **kwargs)
 
     def ticket_followers(self, ticket_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#list-followers-for-a-ticket"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#list-followers-for-a-ticket"
         api_path = "/api/v2/tickets/{ticket_id}/followers"
         api_path = api_path.format(ticket_id=ticket_id)
         return self.call(api_path, **kwargs)
@@ -4410,7 +4350,7 @@ class ZendeskAPI(object):
         return self.call(api_path, query=api_query, **kwargs)
 
     def ticket_incidents(self, ticket_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#list-ticket-incidents"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#list-ticket-incidents"
         api_path = "/api/v2/tickets/{ticket_id}/incidents"
         api_path = api_path.format(ticket_id=ticket_id)
         return self.call(api_path, **kwargs)
@@ -4422,13 +4362,13 @@ class ZendeskAPI(object):
         return self.call(api_path, **kwargs)
 
     def ticket_mark_as_spam(self, ticket_id, data, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#mark-ticket-as-spam-and-suspend-requester"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#mark-ticket-as-spam-and-suspend-requester"
         api_path = "/api/v2/tickets/{ticket_id}/mark_as_spam"
         api_path = api_path.format(ticket_id=ticket_id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def ticket_merge(self, ticket_id, data, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#merge-tickets-into-target-ticket"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#merge-tickets-into-target-ticket"
         api_path = "/api/v2/tickets/{ticket_id}/merge"
         api_path = api_path.format(ticket_id=ticket_id)
         return self.call(api_path, method="POST", data=data, **kwargs)
@@ -4457,7 +4397,7 @@ class ZendeskAPI(object):
         return self.call(api_path, **kwargs)
 
     def ticket_related(self, ticket_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#ticket-related-information"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#ticket-related-information"
         api_path = "/api/v2/tickets/{ticket_id}/related"
         api_path = api_path.format(ticket_id=ticket_id)
         return self.call(api_path, **kwargs)
@@ -4469,7 +4409,7 @@ class ZendeskAPI(object):
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def ticket_show(self, ticket_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#show-ticket"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#show-ticket"
         api_path = "/api/v2/tickets/{ticket_id}"
         api_path = api_path.format(ticket_id=ticket_id)
         return self.call(api_path, **kwargs)
@@ -4541,7 +4481,7 @@ class ZendeskAPI(object):
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def ticket_update(self, ticket_id, data, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#update-ticket"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#update-ticket"
         api_path = "/api/v2/tickets/{ticket_id}"
         api_path = api_path.format(ticket_id=ticket_id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
@@ -4557,17 +4497,17 @@ class ZendeskAPI(object):
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def tickets_count_list(self, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#count-tickets"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#count-tickets"
         api_path = "/api/v2/tickets/count"
         return self.call(api_path, **kwargs)
 
     def tickets_create_many(self, data, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#create-many-tickets"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#create-many-tickets"
         api_path = "/api/v2/tickets/create_many"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
     def tickets_destroy_many(self, ids=None, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#bulk-delete-tickets"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#bulk-delete-tickets"
         api_path = "/api/v2/tickets/destroy_many"
         api_query = {}
         if "query" in kwargs.keys():
@@ -4580,7 +4520,7 @@ class ZendeskAPI(object):
         return self.call(api_path, query=api_query, method="DELETE", **kwargs)
 
     def tickets_list(self, include=None, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing//api-reference/voice/talk-partner-edition-api/reference/#creating-voicemail-tickets"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets/api-reference/voice/talk-partner-edition-api/reference/#creating-voicemail-tickets"
         api_path = "/api/v2/tickets.json"
         api_query = {}
         if "query" in kwargs.keys():
@@ -4593,7 +4533,7 @@ class ZendeskAPI(object):
         return self.call(api_path, query=api_query, **kwargs)
 
     def tickets_mark_many_as_spam(self, data, ids=None, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#bulk-mark-tickets-as-spam"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#bulk-mark-tickets-as-spam"
         api_path = "/api/v2/tickets/mark_many_as_spam"
         api_query = {}
         if "query" in kwargs.keys():
@@ -4606,12 +4546,12 @@ class ZendeskAPI(object):
         return self.call(api_path, query=api_query, method="PUT", data=data, **kwargs)
 
     def tickets_recent_list(self, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#list-tickets"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#list-tickets"
         api_path = "/api/v2/tickets/recent"
         return self.call(api_path, **kwargs)
 
     def tickets_show_many(self, ids=None, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#show-multiple-tickets"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#show-multiple-tickets"
         api_path = "/api/v2/tickets/show_many"
         api_query = {}
         if "query" in kwargs.keys():
@@ -4642,7 +4582,7 @@ class ZendeskAPI(object):
         return self.call(api_path, query=api_query, **kwargs)
 
     def tickets_update_many(self, data, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#update-many-tickets"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#update-many-tickets"
         api_path = "/api/v2/tickets/update_many"
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
@@ -4940,6 +4880,18 @@ class ZendeskAPI(object):
         api_path = api_path.format(user_id=user_id)
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
+    def user_organization_delete(self, user_id, organization_id, **kwargs):
+        "https://developer.zendesk.com/api-reference/ticketing/organization_memberships#unassign-organization"
+        api_path = "/api/v2/users/{user_id}/organizations/{organization_id}"
+        api_path = api_path.format(user_id=user_id, organization_id=organization_id)
+        return self.call(api_path, method="DELETE", **kwargs)
+
+    def user_organization_make_default(self, user_id, organization_id, data, **kwargs):
+        "https://developer.zendesk.com/api-reference/ticketing/organization_memberships#set-organization-as-default"
+        api_path = "/api/v2/users/{user_id}/organizations/{organization_id}/make_default"
+        api_path = api_path.format(user_id=user_id, organization_id=organization_id)
+        return self.call(api_path, method="PUT", data=data, **kwargs)
+
     def user_organization_membership_create(self, user_id, data, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/organization_memberships#create-membership"
         api_path = "/api/v2/users/{user_id}/organization_memberships"
@@ -5073,37 +5025,37 @@ class ZendeskAPI(object):
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
     def user_tickets_assigned(self, user_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#list-tickets"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#list-tickets"
         api_path = "/api/v2/users/{user_id}/tickets/assigned"
         api_path = api_path.format(user_id=user_id)
         return self.call(api_path, **kwargs)
 
     def user_tickets_assigned_count(self, user_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#count-tickets"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#count-tickets"
         api_path = "/api/v2/users/{user_id}/tickets/assigned/count"
         api_path = api_path.format(user_id=user_id)
         return self.call(api_path, **kwargs)
 
     def user_tickets_ccd(self, user_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#list-tickets"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#list-tickets"
         api_path = "/api/v2/users/{user_id}/tickets/ccd"
         api_path = api_path.format(user_id=user_id)
         return self.call(api_path, **kwargs)
 
     def user_tickets_ccd_count(self, user_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#count-tickets"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#count-tickets"
         api_path = "/api/v2/users/{user_id}/tickets/ccd/count"
         api_path = api_path.format(user_id=user_id)
         return self.call(api_path, **kwargs)
 
     def user_tickets_followed(self, user_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#list-tickets"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#list-tickets"
         api_path = "/api/v2/users/{user_id}/tickets/followed"
         api_path = api_path.format(user_id=user_id)
         return self.call(api_path, **kwargs)
 
     def user_tickets_requested(self, user_id, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/#list-tickets"
+        "https://developer.zendesk.com/api-reference/ticketing/tickets#list-tickets"
         api_path = "/api/v2/users/{user_id}/tickets/requested"
         api_path = api_path.format(user_id=user_id)
         return self.call(api_path, **kwargs)
@@ -5156,6 +5108,11 @@ class ZendeskAPI(object):
         "https://developer.zendesk.com/api-reference/ticketing/users#list-users"
         api_path = "/api/v2/users"
         return self.call(api_path, **kwargs)
+
+    def users_logout_many(self, data, **kwargs):
+        "https://developer.zendesk.com/api-reference/ticketing/users#logout-many-users"
+        api_path = "/api/v2/users/logout_many"
+        return self.call(api_path, method="POST", data=data, **kwargs)
 
     def users_me(self, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/users#show-self"
@@ -5322,10 +5279,18 @@ class ZendeskAPI(object):
         api_path = "/api/v2/views/preview/count"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
-    def views_search(self, **kwargs):
+    def views_search(self, query=None, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/views#search-views"
         api_path = "/api/v2/views/search"
-        return self.call(api_path, **kwargs)
+        api_query = {}
+        if "query" in kwargs.keys():
+            api_query.update(kwargs["query"])
+            del kwargs["query"]
+        if query:
+            api_query.update({
+                "query": query,
+            })
+        return self.call(api_path, query=api_query, **kwargs)
 
     def views_show_many(self, ids=None, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/views#list-views-by-id"
