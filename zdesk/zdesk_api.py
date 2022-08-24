@@ -5149,10 +5149,22 @@ class ZendeskAPI(object):
         api_path = "/api/v2/users/request_create"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
-    def users_search(self, **kwargs):
+    def users_search(self, query=None, external_ids=None, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/users#search-users"
         api_path = "/api/v2/users/search"
-        return self.call(api_path, **kwargs)
+        api_query = {}
+        if "query" in kwargs.keys():
+            api_query.update(kwargs["query"])
+            del kwargs["query"]
+        if query:
+            api_query.update({
+                "query": query,
+            })
+        if external_ids:
+            api_query.update({
+                "external_ids": external_ids,
+            })
+        return self.call(api_path, query=api_query, method="GET", **kwargs)
 
     def users_show_many(self, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/users#show-many-users"
