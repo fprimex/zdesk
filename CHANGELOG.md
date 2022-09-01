@@ -1,3 +1,6 @@
+## 2.8.1
+- Patch `users_search` manually to fix #66.
+
 ## 2.8.0
 - Regenerate API from updated mirror. see [full
   commit](https://github.com/fprimex/zdesk/commit/4982b3dad9581fbb49d71307abc229dc4169ab74).
