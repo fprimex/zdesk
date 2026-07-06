@@ -1,18 +1,11 @@
-# Zdesk is seeking a contributing team or maintainer
+# Zdesk (and my other Zendesk related projects) Are Now Archived.
 
-Active development on zdesk has been pretty slow for some time now. The zdesk
-port is not official, and has been authored by just myself (Brent). While I
-have received contributions, I am just one person. Add in a very busy personal
-life and no direct professional obligation to maintain this library and you
-have a recipe for stagnation.
+I have not worked on this codebase for quite some time, and don't wish to give
+people false hope that I am going to maintain it going forward. I had hoped
+someone in the community might be willing to work with me as a maintainer, but
+that has not happened.
 
-I am seeking to connect with users who would be interested in contributing to
-this project directly (commit access), or otherwise a suitable maintainer to
-pass this library on to. I think there is a lot of promise in the generator
-approach to do some more interesting things, but I simply cannot find the time
-to code it up myself.
-
-If you are interested, please email me directly: brent@fprimex.com
+Cheers, it's been fun :)
 
 # Special thanks to HashiCorp
 
