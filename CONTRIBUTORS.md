@@ -9,6 +9,7 @@
 * Dominik Miedziński (Booksy International Sp. z o. o.)
 * Sarfaraz Soomro (Incremental ticket pagination)
 * Craig Davis (Major `api_gen` updates for zdesk 2.6.0)
+* Otto Tamas (Pagination improvements - zdesk 2.8.6)
 
 
 ## zendesk and zdesk 1.x

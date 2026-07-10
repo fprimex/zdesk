@@ -1,3 +1,8 @@
+## 2.8.6
+- Add support for cursor based pagination and make it default
+- Allow disabling cursor based pagination, because certain endpoints don't support it yet.
+- Add support for incremental api cursor and time pagination.
+
 ## 2.8.0
 - Regenerate API from updated mirror. see [full
   commit](https://github.com/fprimex/zdesk/commit/4982b3dad9581fbb49d71307abc229dc4169ab74).
