@@ -2539,6 +2539,11 @@ class ZendeskAPI(object):
             api_path = api_opt_path.format(locale=locale)
         return self.call(api_path, **kwargs)
 
+    def help_center_integration_keys(self, **kwargs):
+        "https://developer.zendesk.com/api-reference/help_center/help-center-api/help_center_jwts/#list-public-keys"
+        api_path = "/api/v2/help_center/integration/keys"
+        return self.call(api_path, **kwargs)
+
     def help_center_translation_delete(self, translation_id, **kwargs):
         "https://developer.zendesk.com/api-reference/help_center/help-center-api/translations#delete-translation"
         api_path = "/api/v2/help_center/translations/{translation_id}"
@@ -4586,6 +4591,19 @@ class ZendeskAPI(object):
         api_path = "/api/v2/tickets/update_many"
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
+    def tickets_update_many_by_fields_dict(self, data, ids=None, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/tickets#update-many-tickets"
+        api_path = "/api/v2/tickets/update_many.json"
+        api_query = {}
+        if "query" in kwargs.keys():
+            api_query.update(kwargs["query"])
+            del kwargs["query"]
+        if ids:
+            api_query.update({
+                "ids": ids,
+            })
+        return self.call(api_path, query=api_query, method="PUT", data=data, **kwargs)
+
     def trigger_categories_job_create(self, data, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/trigger_categories#create-batch-job-for-trigger-categories"
         api_path = "/api/v2/trigger_categories/jobs"
@@ -5149,10 +5167,22 @@ class ZendeskAPI(object):
         api_path = "/api/v2/users/request_create"
         return self.call(api_path, method="POST", data=data, **kwargs)
 
-    def users_search(self, **kwargs):
-        "https://developer.zendesk.com/api-reference/ticketing/users#search-users"
-        api_path = "/api/v2/users/search"
-        return self.call(api_path, **kwargs)
+    def users_search(self, external_id=None, query=None, **kwargs):
+        "https://developer.zendesk.com/rest_api/docs/core/users#search-users"
+        api_path = "/api/v2/users/search.json"
+        api_query = {}
+        if "query" in kwargs.keys():
+            api_query.update(kwargs["query"])
+            del kwargs["query"]
+        if external_id:
+            api_query.update({
+                "external_id": external_id,
+            })
+        if query:
+            api_query.update({
+                "query": query,
+            })
+        return self.call(api_path, query=api_query, **kwargs)
 
     def users_show_many(self, **kwargs):
         "https://developer.zendesk.com/api-reference/ticketing/users#show-many-users"
@@ -5373,4 +5403,21 @@ class ZendeskAPI(object):
         api_path = "/api/v2/workspaces/reorder"
         return self.call(api_path, method="PUT", data=data, **kwargs)
 
+    def custom_object_record_create(self, custom_object_key, data, **kwargs):
+        "https://developer.zendesk.com/api-reference/custom-data/custom-objects/custom_object_records/#create-custom-object-record"
+        api_path = "/api/v2/custom_objects/{custom_object_key}/records"
+        api_path = api_path.format(custom_object_key=custom_object_key)
+        return self.call(api_path, method="POST", data=data, **kwargs)
+
+    def custom_object_record_show(self, custom_object_key, custom_object_record_id, data, **kwargs):
+        "https://developer.zendesk.com/api-reference/custom-data/custom-objects/custom_object_records/#show-custom-object-record"
+        api_path = "/api/v2/custom_objects/{custom_object_key}/records/{custom_object_record_id}"
+        api_path = api_path.format(custom_object_key=custom_object_key, custom_object_record_id=custom_object_record_id)
+        return self.call(api_path, method="GET", data=data, **kwargs)
+
+    def custom_object_record_delete(self, custom_object_key, custom_object_record_id, data, **kwargs):
+        "https://developer.zendesk.com/api-reference/custom-data/custom-objects/custom_object_records/#delete-custom-object-record"
+        api_path = "/api/v2/custom_objects/{custom_object_key}/records/{custom_object_record_id}"
+        api_path = api_path.format(custom_object_key=custom_object_key, custom_object_record_id=custom_object_record_id)
+        return self.call(api_path, method="DELETE", data=data, **kwargs)
 

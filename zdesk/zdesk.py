@@ -72,10 +72,11 @@ def get_id_from_url(url):
 
 
 class ZendeskError(Exception):
-    def __init__(self, msg, code, response):
+    def __init__(self, msg, code, response, partial_results = None):
         self.msg = msg
         self.error_code = code
         self.response = response
+        self.partial_results = partial_results
 
     def __str__(self):
         return repr('%s: %s %s' % (self.error_code, self.msg, self.response))
@@ -309,7 +310,7 @@ class Zendesk(ZendeskAPI):
     def call(self, path, query=None, method='GET', data=None,
              files=None, get_all_pages=False, complete_response=False,
              retry_on=None, max_retries=0, raw_query=None, retval=None,
-             **kwargs):
+             cursor_pagination=True, **kwargs):
         """Make a REST call to the Zendesk web service.
 
         Parameters:
@@ -333,6 +334,10 @@ class Zendesk(ZendeskAPI):
             appended to the URL path and will completely override / discard
             any other query parameters. Enables use cases where query
             parameters need to be repeated in the query string.
+        cursor_pagination - Whether to use cursor-based pagination or not.
+            Defaults to True. Some endpoints don't support cursor-based
+            pagination yet, so you can set this to False to revert to
+            offset/page based pagination.
         retval - Request a specific part of the returned response. Valid
             values are 'content', 'code', 'location', and 'headers'.
             JSON content is still automatically deserialized if possible.
@@ -372,6 +377,9 @@ class Zendesk(ZendeskAPI):
                 kwargs.update(query)
             else:
                 kwargs = query
+
+        if get_all_pages and cursor_pagination:
+            kwargs['page[size]'] = kwargs.pop('per_page', 100)
 
         if raw_query:
             path = path + raw_query
@@ -434,47 +442,26 @@ class Zendesk(ZendeskAPI):
 
             code = response.status_code
             try:
-                if not 200 <= code < 300 and code != 422:
+                if not 200 <= code < 300:
+                    partial_results = self._combine_results(results) if results else None
                     if code == 401:
                         raise AuthenticationError(
-                            response.content, code, response)
+                            response.content, code, response, partial_results)
                     elif code == 429:
                         raise RateLimitError(
-                            response.content, code, response)
+                            response.content, code, response, partial_results)
                     else:
                         raise ZendeskError(
-                            response.content, code, response)
+                            response.content, code, response, partial_results)
             except ZendeskError:
-                if request_count <= self.max_retries:
+                if request_count <= self.max_retries and code != 422:
                     self._handle_retry(response)
                     continue
                 else:
                     raise
 
-            # Deserialize json content if content exists.
-            # In some cases Zendesk returns ' ' strings.
-            # Also return false non strings (0, [], (), {})
-            if response.content.strip() and 'json' in response.headers['content-type']:
-                content = response.json()
-
-                # set url to the next page if that was returned in the response
-                url = content.get('next_page', None)
-                # url we get above already has the start_time appended to it,
-                # specific to incremental exports
-                kwargs = {}
-            elif response.content.strip() and 'text' in response.headers['content-type']:
-                try:
-                    content = response.json()
-                    # set url to the next page if that was returned in the response
-                    url = content.get('next_page', None)
-                    # url we get above already has the start_time appended to it,
-                    # specific to incremental exports
-                    kwargs = {}
-                except ValueError:
-                    content = response.content
-            else:
-                content = response.content
-                url = None
+            
+            content, url, kwargs = self._parse_response(response, kwargs)
 
             if complete_response:
                 results.append({
@@ -519,6 +506,7 @@ class Zendesk(ZendeskAPI):
             # also note that incremental/ticket_metric_events end-point has a 10,000 items per page limit
             url = None if (url is not None and
                            'incremental' in url and
+                           'count' in content and
                            content.get('count') < 1000) else url
             all_requests_complete = not (get_all_pages and url)
             request_count = 0
@@ -553,7 +541,47 @@ class Zendesk(ZendeskAPI):
             # we have a list of simple objects like strings, but they are not
             # all the same so send them all back.
             return results
+        
+        return self._combine_results(results)
 
+    def _parse_response(self, response, kwargs):
+        # Deserialize json content if content exists.
+        # In some cases Zendesk returns ' ' strings.
+        # Also return false non strings (0, [], (), {})
+        if not response.content.strip():
+            return response.content, None, kwargs
+        
+        if 'json' in response.headers['content-type']:
+            json = response.json()
+        elif 'text' in response.headers['content-type']:
+            try:
+                json = response.json()
+            except ValueError:
+                json = None
+
+        if json:
+            url = None
+
+            # set url to the next page if that was returned in the response
+            if {'meta', 'links'} <= json.keys():
+                # cursor based pagination
+                if json.get('meta', {}).get('has_more'):
+                    url = json.get('links', {}).get('next')
+            else:
+                # offset based pagination
+                if not json.get('end_of_stream', False):
+                    url = json.get('next_page', None)
+
+                    # incremental api cursor pagination uses after_url instead
+                    url = url if url else json.get('after_url', None)
+
+            # url we get above already has kwargs appended,
+            return json, url, {}
+        
+        return response.content, None, kwargs
+
+
+    def _combine_results(self, results):
         # may have a sequence of response contents
         # (dicts, possibly lists in the future as that is valid json also)
         combined_dict_results = {}

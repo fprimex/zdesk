@@ -147,19 +147,24 @@ equal to (the integer) `201`.
 
 ## Getting all pages
 
-There is a common pattern where a request will return one page of data along
-with a `next_page` location. In order to retrieve all results, it is necessary
-to continue retrieving every `next_page` location. The results then all need to
-be processed together. A loop to get all pages ends up stamped throughout
-Zendesk code, since many API methods return paged lists of objects.
+Some endpoints support pagination in order to efficiently serve a larger
+amount of data. As a convenience, passing `get_all_pages` to endpoints
+that support pagination will follow links to progressively fetch all
+data. The result is a single, large object that appears to be the result 
+of one single call.
 
-As a convenience, passing `get_all_pages` to any API method will do this for
-you, and will also merge all responses. The result is a single, large object
-that appears to be the result of one single call. The logic for this
-combination and reduction is well documented in the
-[source](https://github.com/fprimex/zdesk/blob/master/zdesk/zdesk.py#L534)
-(look for the line reading `Now we need to try to combine or reduce the
-results`, if the line number has shifted since this writing).
+- by default, cursor based pagination is used as recommended by the
+zdesk API documentation to favor efficiency.
+- you can optionally opt for falling back to offset based pagination by
+passing `cursor_pagination=False` flag.
+- a limited number of endpoints don't support cursor based pagination yet.
+If you get errors saying that `page[size]` parameter is not supported, then
+try setting `cursor_pagination=False`. Note that offset based pagination now
+has a hard limit (usually 10k) on the returned number of items, so I discourage 
+using it for endpoints that support cursor based pagination.
+- the incremental API has different mechanics for pagination, which are also
+supported by this lib. `cursor_pagination=False` might be required for most
+incremental API endpoints.
 
 ## MIME types for data
 
