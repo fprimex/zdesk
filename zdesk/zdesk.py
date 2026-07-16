@@ -1,20 +1,13 @@
-import collections
 import copy
 import inspect
 import sys
 import time
 
 import requests
-import six
+from http.client import responses
+from urllib.parse import urlsplit
 
-if six.PY2:
-    from httplib import responses
-    from urlparse import urlsplit
-else:
-    from http.client import responses
-    from urllib.parse import urlsplit
-
-# Compatability with Python 3.10
+# Compatibility with Python 3.10
 try:
     from collections.abc import Iterable
 except ImportError:
@@ -626,10 +619,10 @@ class Zendesk(ZendeskAPI):
         if issubclass(exc_t, ZendeskError):
             code = exc_v.error_code
             if exc_t not in retry_on_exc and code not in retry_on_codes:
-                six.reraise(exc_t, exc_v, exc_tb)
+                raise
         else:
             if not issubclass(exc_t, retry_on_exc):
-                six.reraise(exc_t, exc_v, exc_tb)
+                raise
 
         if resp is not None:
             try:
